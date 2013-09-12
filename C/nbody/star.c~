@@ -80,7 +80,7 @@ void calculateForce(sStar* s1, sStar* s2)
 {
   float dist = calcDistance(s1, s2);
   float dx = s2->X - s1->X;
-  float dy = s1->Y - s2->Y;
+  float dy = s2->Y - s1->Y;
   float angle = atan2(dy, dx);
   float xMul = (dx < 0) ? -1.0f : 1.0f;
   float yMul = (dy < 0) ? -1.0f : 1.0f;
@@ -88,8 +88,10 @@ void calculateForce(sStar* s1, sStar* s2)
   float m2 = s2->Mass;
   float m = m1 * m2;
   float F = (G_CONST * m) / (dist*dist);
-  printf("Distance:\t%f\ndx:\t%f\ndy:\t%f\nangle:\t%f\nxMul:\t%f\nyMul:\t%f\nm1:\t%f\nm2:\t%f\nm:\t%f\nF:\t%f\nM2:\t%f\n----\n",
-	 dist, dx, dy, angle, xMul, yMul, m1, m2, m, F, 2500.0f * 2500.0f);
+  if(F > 100.0f)
+    F = 100.0f;
+     printf("Distance:\t%f\ndx:\t%f\ndy:\t%f\nangle:\t%f\nxMul:\t%f\nyMul:\t%f\nm1:\t%f\nm2:\t%f\nm:\t%f\nF:\t%f\nc(a):\t%f\ns(a):\t%f----\n",
+	    dist, dx, dy, angle, xMul, yMul, m1, m2, m, F, cos(angle), sin(angle));
  
   s1->fX += F * cos(angle) * xMul;
   s1->fY += F * sin(angle) * yMul;
