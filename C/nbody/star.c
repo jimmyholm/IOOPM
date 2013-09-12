@@ -91,7 +91,7 @@ void calculateForce(sStar* s1, sStar* s2)
   if(F > 100.0f)
     F = 100.0f;
      printf("Distance:\t%f\ndx:\t%f\ndy:\t%f\nangle:\t%f\nxMul:\t%f\nyMul:\t%f\nm1:\t%f\nm2:\t%f\nm:\t%f\nF:\t%f\nc(a):\t%f\ns(a):\t%f----\n",
-	    dist, dx, dy, angle, xMul, yMul, m1, m2, m, F, cos(angle), sn(angle));
+	    dist, dx, dy, angle, xMul, yMul, m1, m2, m, F, cos(angle), sin(angle));
  
   s1->fX += F * cos(angle) * xMul;
   s1->fY += F * sin(angle) * yMul;
