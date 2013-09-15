@@ -44,9 +44,14 @@ int main(int argc, char* argv[])
   // Similarly, make sure the renderer gets creted properly
   if(!render)
   {
-    puts("Failed to create renderer!");
-    SDL_DestroyWindow(screen);
-    SDL_Quit();
+    puts("Hardware renderer not available; falling back on software.");
+    render = SDL_CreateRenderer(screen, -1, SDL_RENDERER_SOFTWARE);
+    if(!render)
+    {
+      puts("Failed to create renderer!");
+      SDL_DestroyWindow(screen);
+      SDL_Quit();
+    }
   }
   // We'll be doing our drawing onto a texture, created here.
   SDL_Texture* Texture = SDL_CreateTexture(render, SDL_PIXELFORMAT_ARGB8888,

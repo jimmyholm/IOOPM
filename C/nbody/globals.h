@@ -5,13 +5,18 @@
 #define WIDTH 800
 #define HEIGHT 600
 
+// In order to get workable values for G and our masses, we've chosen to scale
+// the numbers to make them sensible!
 // Interpretation of the Gravitational constant (6.673 * 10 ^ -11)
-#define G_CONST 0.06673f
-// Maximum mass of a star
-#define MAXMASS 2500.0f
+#define G_CONST 6.673f
+// Maximum mass of a star 2 * the scaled mass of our sun
+#define MAXMASS 3978.2f
 
 // Functions for creating pseudo-randomized integers and floating point values.
 int RandInt(int min, int max);
 float RandFloat(float min, float max);
+extern float maxForce;
+// Draw a circle of given radius and color. Super slow.
+void drawCircle(int x, int y, unsigned int color, int radius, unsigned int* Pixels);
 
 #endif

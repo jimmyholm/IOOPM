@@ -23,20 +23,18 @@ sSimulation* createSimulation(unsigned int stars)
   float t = .0f;
   float u = .0f;
   float r = .0f;
-  int halfHeight = HEIGHT/2;
+  int maxRadius = HEIGHT/4;
   for(int i = 0; i < stars; i++)
   {
-    // Create stars inside of a circle with a radius of height/2 pixels
+    // Create stars inside of a circle with a radius of height/4 pixels
     t = 2*3.14f*RandFloat(0.0f,1.0f);
     u = RandFloat(0.0f,1.0f) + RandFloat(0.0f,1.0f);
     r = (u>1) ? 2-u : u;
-    x = 400 + (r*cos(t)*halfHeight);
-    y = 300 + (r*sin(t)*halfHeight);
-    
-    /* Create a minor, randomized starting velocity, as well as a randomized mass multiplier.*/
-    vx = 0.0f; //RandFloat(-1.0f, 1.0f);
-    vy = 0.0f; //RandFloat(-1.0f, 1.0f);
-    mass = RandFloat(0.1f, 1.0f) * MAXMASS;
+    x = 400 + (r*cos(t)*maxRadius);
+    y = 300 + (r*sin(t)*maxRadius);
+    vx = 0.0f;
+    vy = 0.0f;
+    mass = RandFloat(0.5f, 1.0f) * MAXMASS;
     ret->Stars[i] = createStar(x, y, vx, vy, mass);
   }
   return ret;
@@ -65,7 +63,8 @@ void calculateNextFrame(sSimulation* sim)
   // Reset forces prior to calculating the next frame
   for(int i = 0; i < Stars; i++)
   {
-    sim->Stars[i]->fX = sim->Stars[i]->fY = 0.0f;
+    sim->Stars[i]->fX = 0.0f;
+    sim->Stars[i]->fY = 0.0f;
   }
   // For each star in the simulation, we need to calculate the force acted upon it by every other star in the simulation. 
   for(int i = 0; i < Stars-1; i++)
@@ -73,12 +72,7 @@ void calculateNextFrame(sSimulation* sim)
 
     for(int j = i+1; j < Stars; j++)
     {
-      // Use Newton's gravitational formula to calculate the force enacted upon this star by the relevant star being checked against.
       calculateForce(sim->Stars[i], sim->Stars[j]);
-      /*star->fX = calculateHorizontalForce(star, sim->Stars[j]);
-       star->fY = calculateVerticalForce(star, sim->Stars[j]);
-       sim->Stars[j]->fX = star->fX*(-1.0f);
-       sim->Stars[j]->fY = star->fY*(-1.0f);*/
     }
   }
 }

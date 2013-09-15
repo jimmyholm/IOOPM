@@ -28,12 +28,6 @@ void destroyStar(sStar* st);
 // Render a star as a coloured cross where the colour is dependent on the star's mass.
 void drawStar(sStar* st, Uint32* Pixels);
 
-// Calculate force acted upon star one by star two along the X-axis.
-float calculateHorizontalForce(sStar* s1, sStar* s2);
-
-// Calculate the force acted upon start one by star two along the Y-axis.
-float calculateVerticalForce(sStar* s1, sStar* s2);
-
 // Calculate distance between two stars
 float calculateDistance(sStar* s1, sStar* s2);
 
