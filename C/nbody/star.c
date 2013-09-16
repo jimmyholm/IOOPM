@@ -44,7 +44,7 @@ void drawStar(sStar* star, Uint32* Pixels)
   // Index into the one dimensional pixel array using the x & y coordinates of the star.
   // size_t index = x + (WIDTH * y);
   Uint32 color = star->Color;
-  float radius = (star->Mass / MAXMASS) * 2.5;
+  float radius = (star->Mass / MAXMASS) * 3;
   drawCircle(x, y, color, (int)radius, Pixels);
 }
 
@@ -57,7 +57,7 @@ float calcDistance(sStar* s1, sStar* s2)
 
 void calculateForce(sStar* s1, sStar* s2)
 {
-  float dist = calcDistance(s1, s2) * 350.0f;
+  float dist = calcDistance(s1, s2) * 5000.0f;
   float dx = s2->X - s1->X;
   float dy = s2->Y - s1->Y;
   float angle = atan2(dy, dx);
@@ -65,10 +65,10 @@ void calculateForce(sStar* s1, sStar* s2)
   float m2 = s2->Mass;
   float m = m1 * m2;
   float F = (G_CONST * m) / ((dist*dist));
-  if(F > 9000.0f)
-    F = 9000.0f;
-  if(F < -9000.0f)
-    F = -9000.0f;
+  if(F > 1000000.0f)
+    F = 1000000.0f;
+  if(F < -1000000.0f)
+    F = -1000000.0f;
   s1->fX += F * cos(angle);
   s1->fY += F * sin(angle);
   s2->fX += -1.0f * s1->fX;

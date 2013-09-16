@@ -1,6 +1,7 @@
 #include "globals.h"
 #include <stdlib.h>
 
+
 int RandInt(int min, int max)
 {
   float rnd = (float)rand() / (float)RAND_MAX;

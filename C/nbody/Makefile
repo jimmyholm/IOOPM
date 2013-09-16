@@ -11,7 +11,7 @@ debug: $(OBJ)
 
 .PHONY : release
 release: $(OBJ)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ) $(SDL_LIBS) 
+	$(CC) -O3 $(CFLAGS) -o $(TARGET) $(OBJ) $(SDL_LIBS) /lib/x86_64-linux-gnu/libm.so.6
 
 main.o: star.h simulation.h
 	$(CC) -c $(CFLAGS) -o main.o main.c

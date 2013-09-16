@@ -23,18 +23,20 @@ sSimulation* createSimulation(unsigned int stars)
   float t = .0f;
   float u = .0f;
   float r = .0f;
-  int maxRadius = HEIGHT/4;
+  int maxRadius = HEIGHT/2;
   for(int i = 0; i < stars; i++)
   {
-    // Create stars inside of a circle with a radius of height/4 pixels
-    t = 2*3.14f*RandFloat(0.0f,1.0f);
-    u = RandFloat(0.0f,1.0f) + RandFloat(0.0f,1.0f);
-    r = (u>1) ? 2-u : u;
-    x = 400 + (r*cos(t)*maxRadius);
-    y = 300 + (r*sin(t)*maxRadius);
-    vx = 0.0f;
-    vy = 0.0f;
-    mass = RandFloat(0.5f, 1.0f) * MAXMASS;
+    // Create a spiral-shaped galaxy of stars.
+    t += RandFloat(0.523f, 1.1775f);
+    u += RandFloat(1.5f, 3.0f);
+    if(u >= maxRadius)
+      u -= maxRadius;
+    x = 400 + (u*cos(t));
+    y = 300 + (u*sin(t));
+    float V = RandFloat(0.0f, 2.5f);
+    vx = V * cos(t);
+    vy = V * sin(t);
+    mass = RandFloat(0.7f, 1.0f) * MAXMASS;
     ret->Stars[i] = createStar(x, y, vx, vy, mass);
   }
   return ret;
