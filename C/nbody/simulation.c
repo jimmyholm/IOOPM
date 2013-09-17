@@ -22,7 +22,6 @@ sSimulation* createSimulation(unsigned int stars)
   float mass = .0f;
   float t = .0f;
   float u = .0f;
-  float r = .0f;
   int maxRadius = HEIGHT/2;
   for(int i = 0; i < stars; i++)
   {
@@ -36,7 +35,7 @@ sSimulation* createSimulation(unsigned int stars)
     float V = RandFloat(0.0f, 2.5f);
     vx = V * cos(t);
     vy = V * sin(t);
-    mass = RandFloat(0.7f, 1.0f) * MAXMASS;
+    mass = RandFloat(0.5f, 1.0f) * MAXMASS;
     ret->Stars[i] = createStar(x, y, vx, vy, mass);
   }
   return ret;
@@ -71,7 +70,6 @@ void calculateNextFrame(sSimulation* sim)
   // For each star in the simulation, we need to calculate the force acted upon it by every other star in the simulation. 
   for(int i = 0; i < Stars-1; i++)
   {
-
     for(int j = i+1; j < Stars; j++)
     {
       calculateForce(sim->Stars[i], sim->Stars[j]);
@@ -93,8 +91,8 @@ void updateSimulation(sSimulation* sim, float timeElapsed)
     star->aY = (star->fY / (star->Mass));
     star->vX += (star->aX * timeElapsed);
     star->vY += (star->aY * timeElapsed);
-    star->X += (star->vX*timeElapsed) + ((star->aX * t2) / 2);
-    star->Y += (star->vY*timeElapsed) + ((star->aY * t2) / 2);
+    star->X += (star->vX * timeElapsed) + ((star->aX * t2) / 2);
+    star->Y += (star->vY * timeElapsed) + ((star->aY * t2) / 2);
   }
 }
 

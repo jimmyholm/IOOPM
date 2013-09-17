@@ -41,10 +41,9 @@ void drawStar(sStar* star, Uint32* Pixels)
   // Can't draw outside of window boundaries.
   if(x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
     return;
-  // Index into the one dimensional pixel array using the x & y coordinates of the star.
-  // size_t index = x + (WIDTH * y);
+  // Draw out a star  based on its mass to max-mass ratio
   Uint32 color = star->Color;
-  float radius = (star->Mass / MAXMASS) * 3;
+  float radius = (star->Mass / MAXMASS) * 2.5f;
   drawCircle(x, y, color, (int)radius, Pixels);
 }
 

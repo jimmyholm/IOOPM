@@ -15,7 +15,7 @@
 // Functions for creating pseudo-randomized integers and floating point values.
 int RandInt(int min, int max);
 float RandFloat(float min, float max);
-// Draw a circle of given radius and color. Super slow.
+// Draw a circle of given radius and color. Super slow brute force fun!
 void drawCircle(int x, int y, unsigned int color, int radius, unsigned int* Pixels);
 
 #endif
