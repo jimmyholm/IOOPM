@@ -106,6 +106,7 @@ int main(int argc, char* argv[])
       fps = 0;
       fpsTicks = 0;
       SDL_SetWindowTitle(screen, str);
+      free(str);
     }
     prevTicks = ticks;
   }
