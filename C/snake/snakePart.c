@@ -33,3 +33,13 @@ snakePart createSnake(int x, int y, int food)
   toReturn->food = food;
   toReturn->tail = NULL;
 }
+
+int colliding(int x, int y, snakePart snake)
+{
+  if(snake->tail == NULL && !(snake->xPos == x && snake->yPos == y))
+    return 0;
+  else if(colliding(x,y,snake->tail) == 0 && !(snake->xPos == x && snake->yPos == y))
+    return 0;
+  else
+    return 1;
+}
