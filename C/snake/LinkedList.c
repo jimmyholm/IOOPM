@@ -23,7 +23,7 @@ typedef struct sListIterator
   sLinkedList* List;
 } sListIterator;
 
-void listInitialize(sLinkedList** List, size_t ElementSize,void(*EraseFun)(void*))
+void listInitialize(sLinkedList** List, size_t ElementSize, void(*EraseFun)(void*))
 {
   if(*List != NULL)
     return;
