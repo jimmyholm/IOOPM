@@ -19,24 +19,25 @@ game* initGame(sSdlWrapper* wrapper)
   game* ret = malloc(sizeof(game));
   ret->score = 0;
   ret->wrap = wrapper;
-  ret->snake = createSnake(2, 2, 3);
+  ret->snake = createSnake(2, 2, 0);
+  ret->snake->tail = createSnake(2,1,3);
   return ret;
 }
 
 void tick(game* game)
 {
   int x = 0;
-  int y = 1;//0;
+  int y = 0;
   snakePart* snake = game->snake;
   snakePart* tail = (snakePart*)snake->tail;
   //check for user input and edit snake movement accordingly
-  /*if(keyDown(game->wrap,'a'))
+  if(keyDown(game->wrap, SDLK_a))
     x = -1;
-  else if(keyDown(game->wrap, 'd'))
+  else if(keyDown(game->wrap, SDLK_d))
     x = 1;
-  else if(keyDown(game->wrap, 'w'))
+  else if(keyDown(game->wrap, SDLK_w))
     y = -1;
-  else if(keyDown(game->wrap, 's'))
+  else if(keyDown(game->wrap, SDLK_s))
     y = 1;
 //if no input was detected either move down or move the way the snake is facing
   if(x == 0 && y == 0)
@@ -48,7 +49,7 @@ void tick(game* game)
        x = tail->xPos - snake->xPos;
        y = tail->yPos - snake->yPos;
      }
-     }*/
+  }
 //calculate the new position
   x += snake->xPos;
   y += snake->yPos;

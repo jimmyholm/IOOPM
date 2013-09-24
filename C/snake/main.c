@@ -2,12 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "SDLWrapper.h"
-#include "LinkedList.h"
+//#include "LinkedList.h"
 #include "game.h"
+#include <unistd.h>
 
 int main(int argc, char* argv[])
 {
-  
+  /*
   sLinkedList* list = NULL;
   listInitialize(&list, sizeof(int));
   for(int i = 0; i < 10; i++)
@@ -25,7 +26,7 @@ int main(int argc, char* argv[])
   free(It);
   listClear(list);
   free(list);
-  
+  */
 
   sSdlWrapper* wrap = initializeSDLWrapper("Test", 800, 600, 32, 1, 1);
   game* gameEngine = initGame(wrap);
@@ -36,11 +37,11 @@ int main(int argc, char* argv[])
 
     tick(gameEngine);
     repaint(gameEngine);
-    sleep(1000);
     
     if(keyUp(wrap, SDLK_ESCAPE))
       toggleRunning(wrap);
     endFrame(wrap);
+    sleep(1);
   }
   deinitializeWrapper(wrap);
   return 0;
