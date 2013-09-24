@@ -9,7 +9,7 @@ void drawSnake(sSdlWrapper* wrap, snakePart* snake)
 
 void move(int x, int y, snakePart* snake)
 {
-  if(snake->tail == NULL && snake->food == 0)
+  if(snake->tail == NULL && snake->food <= 0)
     return;
   if(snake->tail == NULL)
     {
@@ -37,7 +37,7 @@ snakePart* createSnake(int x, int y, int food)
   snakePart* toReturn = malloc(sizeof(snakePart));
   toReturn->xPos = x;
   toReturn->yPos = y;
-  toReturn->food = food;
+  toReturn->food = food-1;
   toReturn->tail = NULL;
   return toReturn;
 }

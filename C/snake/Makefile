@@ -1,5 +1,4 @@
 CC = gcc
-
 OBJ = LinkedList.o SDLWrapper.o  snakePart.o game.o main.o
 TARGET = snake
 SDL_CFLAGS := $(shell sdl2-config --cflags)
