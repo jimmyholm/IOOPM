@@ -1,1 +1,0 @@
-gcc -c -Wall -std=c99 -ggdb -I/usr/local/include/SDL2 -D_REENTRANT -o main.o main.c
