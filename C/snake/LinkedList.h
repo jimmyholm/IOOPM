@@ -127,7 +127,7 @@ void listClear(sLinkedList* List);
  */
 void listIteratorNext(sListIterator* Iterator);
 
-/*! Check whether or not an iterator is at the end of its list.
+/*! \brief Check whether or not an iterator is at the end of its list.
  *
  * \param Iterator an initialized iterator into an initialized list.
  * \return 1 if Iterator has reached the end of its list, 0 otherwise.
