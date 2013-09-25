@@ -48,12 +48,17 @@ game* initGame(sSdlWrapper* wrapper)
   game* ret = malloc(sizeof(game));
   ret->score = 0;
   ret->wrap = wrapper;
-
-  ret->snake->snakeParts = malloc(sizeof(sLinkedList*));
-
+  ret->snake = malloc(sizeof(snake));
+  ret->snake->food = 0;
+  ret->snake->snakeParts = 0;
+  ret->snake->it = 0;
   listInitialize(&(ret->snake->snakeParts), sizeof(snakePart), NULL);
-  listPushFront(ret->snake->snakeParts, createSnakePart(5,5));
-  listPushFront(ret->snake->snakeParts, createSnakePart(5,6));
+  snakePart* pt = createSnakePart(5,5);
+  listPushFront(ret->snake->snakeParts, (void*)pt);
+  free(pt);
+  pt = createSnakePart(5,6);
+  listPushFront(ret->snake->snakeParts, (void*)pt);
+  free(pt);
   return ret;
 }
 
