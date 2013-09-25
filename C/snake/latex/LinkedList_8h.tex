@@ -1,0 +1,348 @@
+\hypertarget{LinkedList_8h}{\section{Linked\-List.\-h File Reference}
+\label{LinkedList_8h}\index{Linked\-List.\-h@{Linked\-List.\-h}}
+}
+
+
+A Generic Linked List implementation in C.  
+
+
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{LinkedList_8h_a0d43185f5e56c225162709042b7d5fbb}{s\-Linked\-List} \hyperlink{LinkedList_8h_a0d43185f5e56c225162709042b7d5fbb}{s\-Linked\-List}
+\item 
+typedef struct \hyperlink{LinkedList_8h_adb13ef98c9d5c2c002003dc8510e862b}{s\-List\-Iterator} \hyperlink{LinkedList_8h_adb13ef98c9d5c2c002003dc8510e862b}{s\-List\-Iterator}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{LinkedList_8h_a60cfa38a3c6c1b08cc61b3760eba4257}{list\-Initialize} (\hyperlink{LinkedList_8h_a0d43185f5e56c225162709042b7d5fbb}{s\-Linked\-List} $\ast$$\ast$List, size\-\_\-t Element\-Size, void($\ast$Erase\-Fun)(void $\ast$))
+\begin{DoxyCompactList}\small\item\em Initialize a linked list. \end{DoxyCompactList}\item 
+void \hyperlink{LinkedList_8h_adfad82daa71b12c78415d2e82f125093}{list\-Push\-Back} (\hyperlink{LinkedList_8h_a0d43185f5e56c225162709042b7d5fbb}{s\-Linked\-List} $\ast$List, void $\ast$Data)
+\begin{DoxyCompactList}\small\item\em Insert a copy of the given data to the end of the list. \end{DoxyCompactList}\item 
+void \hyperlink{LinkedList_8h_a3e86e16cb6b338c57238ce0e02ecca3f}{list\-Push\-Front} (\hyperlink{LinkedList_8h_a0d43185f5e56c225162709042b7d5fbb}{s\-Linked\-List} $\ast$List, void $\ast$Data)
+\begin{DoxyCompactList}\small\item\em Insert a copy of the given data to the front of the list. \end{DoxyCompactList}\item 
+void \hyperlink{LinkedList_8h_a922d14973f2aa4dd343c3ba90bb725ee}{list\-Insert} (\hyperlink{LinkedList_8h_adb13ef98c9d5c2c002003dc8510e862b}{s\-List\-Iterator} $\ast$Iterator, void $\ast$Data)
+\begin{DoxyCompactList}\small\item\em Insert a copy of the given data into the list at the given iterator position. \end{DoxyCompactList}\item 
+void \hyperlink{LinkedList_8h_ac3023af5dfd5e99cf4038d72f51ba15f}{list\-Pop\-Front} (\hyperlink{LinkedList_8h_a0d43185f5e56c225162709042b7d5fbb}{s\-Linked\-List} $\ast$List)
+\begin{DoxyCompactList}\small\item\em Pop the first element of the list. \end{DoxyCompactList}\item 
+void \hyperlink{LinkedList_8h_a3972ae5a633404280da1a861636d3b25}{list\-Pop\-Back} (\hyperlink{LinkedList_8h_a0d43185f5e56c225162709042b7d5fbb}{s\-Linked\-List} $\ast$List)
+\begin{DoxyCompactList}\small\item\em Pop the last element of the list. \end{DoxyCompactList}\item 
+void \hyperlink{LinkedList_8h_a8746a945dee8f65ba24cefe9c20e5828}{list\-Erase} (\hyperlink{LinkedList_8h_adb13ef98c9d5c2c002003dc8510e862b}{s\-List\-Iterator} $\ast$Iterator)
+\begin{DoxyCompactList}\small\item\em Erase the element pointed to by Iterator. \end{DoxyCompactList}\item 
+void $\ast$ \hyperlink{LinkedList_8h_a1440a52d37f5aea954fbfd5f668d93bd}{list\-Get} (\hyperlink{LinkedList_8h_adb13ef98c9d5c2c002003dc8510e862b}{s\-List\-Iterator} $\ast$Iterator)
+\begin{DoxyCompactList}\small\item\em Return the data held by an iterator. \end{DoxyCompactList}\item 
+void \hyperlink{LinkedList_8h_a9c0dc1f5156553695ffe0a967d7a7495}{list\-Head} (\hyperlink{LinkedList_8h_a0d43185f5e56c225162709042b7d5fbb}{s\-Linked\-List} $\ast$List, \hyperlink{LinkedList_8h_adb13ef98c9d5c2c002003dc8510e862b}{s\-List\-Iterator} $\ast$$\ast$It)
+\begin{DoxyCompactList}\small\item\em Initialize an iterator to the head of the list. \end{DoxyCompactList}\item 
+size\-\_\-t \hyperlink{LinkedList_8h_a340e12e1be5c1a7e06d0022bdd9960f5}{list\-Size} (\hyperlink{LinkedList_8h_a0d43185f5e56c225162709042b7d5fbb}{s\-Linked\-List} $\ast$List)
+\begin{DoxyCompactList}\small\item\em Return the number of elements in a list. \end{DoxyCompactList}\item 
+int \hyperlink{LinkedList_8h_a6b8d033c1babffbc0749d5feacb49829}{list\-Empty} (\hyperlink{LinkedList_8h_a0d43185f5e56c225162709042b7d5fbb}{s\-Linked\-List} $\ast$List)
+\begin{DoxyCompactList}\small\item\em Check whether the list is empty or contains elements. \end{DoxyCompactList}\item 
+void \hyperlink{LinkedList_8h_adb011b5925686c67a1deb9478ca4dcf2}{list\-Clear} (\hyperlink{LinkedList_8h_a0d43185f5e56c225162709042b7d5fbb}{s\-Linked\-List} $\ast$List)
+\begin{DoxyCompactList}\small\item\em Clear the list. \end{DoxyCompactList}\item 
+void \hyperlink{LinkedList_8h_abc46d80bd98af40fac6941bab8399a8b}{list\-Iterator\-Next} (\hyperlink{LinkedList_8h_adb13ef98c9d5c2c002003dc8510e862b}{s\-List\-Iterator} $\ast$Iterator)
+\begin{DoxyCompactList}\small\item\em Advance an iterator to the next element in a list. \end{DoxyCompactList}\item 
+int \hyperlink{LinkedList_8h_a23aad111319396e7657e582146fed1cf}{list\-Iterator\-End} (\hyperlink{LinkedList_8h_adb13ef98c9d5c2c002003dc8510e862b}{s\-List\-Iterator} $\ast$Iterator)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A Generic Linked List implementation in C. Jimmy Holm, Marcus Münger \begin{DoxyDate}{Date}
+September 25, 2013 
+\end{DoxyDate}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{LinkedList_8h_a0d43185f5e56c225162709042b7d5fbb}{\index{Linked\-List.\-h@{Linked\-List.\-h}!s\-Linked\-List@{s\-Linked\-List}}
+\index{s\-Linked\-List@{s\-Linked\-List}!LinkedList.h@{Linked\-List.\-h}}
+\subsubsection[{s\-Linked\-List}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf s\-Linked\-List} {\bf s\-Linked\-List}}}\label{LinkedList_8h_a0d43185f5e56c225162709042b7d5fbb}
+Linked List structure \hypertarget{LinkedList_8h_adb13ef98c9d5c2c002003dc8510e862b}{\index{Linked\-List.\-h@{Linked\-List.\-h}!s\-List\-Iterator@{s\-List\-Iterator}}
+\index{s\-List\-Iterator@{s\-List\-Iterator}!LinkedList.h@{Linked\-List.\-h}}
+\subsubsection[{s\-List\-Iterator}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf s\-List\-Iterator} {\bf s\-List\-Iterator}}}\label{LinkedList_8h_adb13ef98c9d5c2c002003dc8510e862b}
+Generic Iterator for linked lists 
+
+\subsection{Function Documentation}
+\hypertarget{LinkedList_8h_adb011b5925686c67a1deb9478ca4dcf2}{\index{Linked\-List.\-h@{Linked\-List.\-h}!list\-Clear@{list\-Clear}}
+\index{list\-Clear@{list\-Clear}!LinkedList.h@{Linked\-List.\-h}}
+\subsubsection[{list\-Clear}]{\setlength{\rightskip}{0pt plus 5cm}void list\-Clear (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-Linked\-List} $\ast$}]{List}
+\end{DoxyParamCaption}
+)}}\label{LinkedList_8h_adb011b5925686c67a1deb9478ca4dcf2}
+
+
+Clear the list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em List} & a pointer to an initialized list list\-Clear calls list\-Erase on every element in the list, calling upon the erasure function on each element if available. \\
+\hline
+\end{DoxyParams}
+\hypertarget{LinkedList_8h_a6b8d033c1babffbc0749d5feacb49829}{\index{Linked\-List.\-h@{Linked\-List.\-h}!list\-Empty@{list\-Empty}}
+\index{list\-Empty@{list\-Empty}!LinkedList.h@{Linked\-List.\-h}}
+\subsubsection[{list\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}int list\-Empty (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-Linked\-List} $\ast$}]{List}
+\end{DoxyParamCaption}
+)}}\label{LinkedList_8h_a6b8d033c1babffbc0749d5feacb49829}
+
+
+Check whether the list is empty or contains elements. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em List} & a pointer to an initialized list \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if the list contains no elements or 0 otherwise list\-Empty returns a boolean integer based on whether the list is empty or contains elements. 
+\end{DoxyReturn}
+\hypertarget{LinkedList_8h_a8746a945dee8f65ba24cefe9c20e5828}{\index{Linked\-List.\-h@{Linked\-List.\-h}!list\-Erase@{list\-Erase}}
+\index{list\-Erase@{list\-Erase}!LinkedList.h@{Linked\-List.\-h}}
+\subsubsection[{list\-Erase}]{\setlength{\rightskip}{0pt plus 5cm}void list\-Erase (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-List\-Iterator} $\ast$}]{Iterator}
+\end{DoxyParamCaption}
+)}}\label{LinkedList_8h_a8746a945dee8f65ba24cefe9c20e5828}
+
+
+Erase the element pointed to by Iterator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Iterator} & an initialized iterator into a linked list. list\-Erase erases the element pointed to by the iterator, removing it from its list and calling upon the data's erasure function if present. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{LinkedList_8h_ac3023af5dfd5e99cf4038d72f51ba15f}{list\-Pop\-Front()}, \hyperlink{LinkedList_8h_a3972ae5a633404280da1a861636d3b25}{list\-Pop\-Back()}, and \hyperlink{LinkedList_8h_a9c0dc1f5156553695ffe0a967d7a7495}{list\-Head()} 
+\end{DoxySeeAlso}
+\hypertarget{LinkedList_8h_a1440a52d37f5aea954fbfd5f668d93bd}{\index{Linked\-List.\-h@{Linked\-List.\-h}!list\-Get@{list\-Get}}
+\index{list\-Get@{list\-Get}!LinkedList.h@{Linked\-List.\-h}}
+\subsubsection[{list\-Get}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ list\-Get (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-List\-Iterator} $\ast$}]{Iterator}
+\end{DoxyParamCaption}
+)}}\label{LinkedList_8h_a1440a52d37f5aea954fbfd5f668d93bd}
+
+
+Return the data held by an iterator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Iterator} & an initialized iterator into a linked list. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the data held by Iterator list\-Get returns the data stored in the list element pointed to by Iterator. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{LinkedList_8h_a9c0dc1f5156553695ffe0a967d7a7495}{list\-Head()} 
+\end{DoxySeeAlso}
+\hypertarget{LinkedList_8h_a9c0dc1f5156553695ffe0a967d7a7495}{\index{Linked\-List.\-h@{Linked\-List.\-h}!list\-Head@{list\-Head}}
+\index{list\-Head@{list\-Head}!LinkedList.h@{Linked\-List.\-h}}
+\subsubsection[{list\-Head}]{\setlength{\rightskip}{0pt plus 5cm}void list\-Head (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-Linked\-List} $\ast$}]{List, }
+\item[{{\bf s\-List\-Iterator} $\ast$$\ast$}]{It}
+\end{DoxyParamCaption}
+)}}\label{LinkedList_8h_a9c0dc1f5156553695ffe0a967d7a7495}
+
+
+Initialize an iterator to the head of the list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em List} & a pointer to an initialized list. \\
+\hline
+{\em It} & a reference to an uninitialized iterator pointer. list\-Head initialises It to point at the first element of the given list. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyRemark}{Remarks}
+the lifetime of the iterator is not maintained by the library. The user is responsible for freeing an initialized iterator. 
+\end{DoxyRemark}
+\hypertarget{LinkedList_8h_a60cfa38a3c6c1b08cc61b3760eba4257}{\index{Linked\-List.\-h@{Linked\-List.\-h}!list\-Initialize@{list\-Initialize}}
+\index{list\-Initialize@{list\-Initialize}!LinkedList.h@{Linked\-List.\-h}}
+\subsubsection[{list\-Initialize}]{\setlength{\rightskip}{0pt plus 5cm}void list\-Initialize (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-Linked\-List} $\ast$$\ast$}]{List, }
+\item[{size\-\_\-t}]{Element\-Size, }
+\item[{void($\ast$)(void $\ast$)}]{Erase\-Fun}
+\end{DoxyParamCaption}
+)}}\label{LinkedList_8h_a60cfa38a3c6c1b08cc61b3760eba4257}
+
+
+Initialize a linked list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em List} & a referehce to an uninitialized list pointer. \\
+\hline
+{\em Element\-Size} & the size of a list's stored data. \\
+\hline
+{\em Erase\-Fun} & a pointer to a function run on any element before its erasure \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void list\-Initialize is in charge of creating instances of a linked list and initializing its properties. The List parameter should point to null when passed, and will point to a valid, initialized list at the return of the function. The parameter Element\-Size contains the size of a given data element, and all data passed to this list is assumed to be of this size. Erase\-Fun allows for a special deconstructor function to be called on the list's elements upon erasure. 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+The lifetime of the list is not maintained by the library; the user is responsible for freeing the List pointer when finished with it. 
+\end{DoxyRemark}
+\hypertarget{LinkedList_8h_a922d14973f2aa4dd343c3ba90bb725ee}{\index{Linked\-List.\-h@{Linked\-List.\-h}!list\-Insert@{list\-Insert}}
+\index{list\-Insert@{list\-Insert}!LinkedList.h@{Linked\-List.\-h}}
+\subsubsection[{list\-Insert}]{\setlength{\rightskip}{0pt plus 5cm}void list\-Insert (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-List\-Iterator} $\ast$}]{Iterator, }
+\item[{void $\ast$}]{Data}
+\end{DoxyParamCaption}
+)}}\label{LinkedList_8h_a922d14973f2aa4dd343c3ba90bb725ee}
+
+
+Insert a copy of the given data into the list at the given iterator position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Iterator} & pointer to an initialized iterator into a list, where the new element is to be inserted. \\
+\hline
+{\em Data} & a pointer to the data to be copied into the list. This functions inserts a copy of the provided data into the list in front of the current iterator position. Note that it's a {\itshape copy} of the Data parameter that is stored; the linked list does not maintain the lifetime of the original data passed. \\
+\hline
+\end{DoxyParams}
+\hypertarget{LinkedList_8h_a23aad111319396e7657e582146fed1cf}{\index{Linked\-List.\-h@{Linked\-List.\-h}!list\-Iterator\-End@{list\-Iterator\-End}}
+\index{list\-Iterator\-End@{list\-Iterator\-End}!LinkedList.h@{Linked\-List.\-h}}
+\subsubsection[{list\-Iterator\-End}]{\setlength{\rightskip}{0pt plus 5cm}int list\-Iterator\-End (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-List\-Iterator} $\ast$}]{Iterator}
+\end{DoxyParamCaption}
+)}}\label{LinkedList_8h_a23aad111319396e7657e582146fed1cf}
+Check whether or not an iterator is at the end of its list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Iterator} & an initialized iterator into an initialized list. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if Iterator has reached the end of its list, 0 otherwise. list\-Iterator\-End returns a boolean integer based on whether the given iterator has reached the end of its associated list. 
+\end{DoxyReturn}
+\hypertarget{LinkedList_8h_abc46d80bd98af40fac6941bab8399a8b}{\index{Linked\-List.\-h@{Linked\-List.\-h}!list\-Iterator\-Next@{list\-Iterator\-Next}}
+\index{list\-Iterator\-Next@{list\-Iterator\-Next}!LinkedList.h@{Linked\-List.\-h}}
+\subsubsection[{list\-Iterator\-Next}]{\setlength{\rightskip}{0pt plus 5cm}void list\-Iterator\-Next (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-List\-Iterator} $\ast$}]{Iterator}
+\end{DoxyParamCaption}
+)}}\label{LinkedList_8h_abc46d80bd98af40fac6941bab8399a8b}
+
+
+Advance an iterator to the next element in a list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Iterator} & an initialized iterator into an initialized list. After a call to list\-Iterator\-Next, Iterator will point to the next element in its associated list. \\
+\hline
+\end{DoxyParams}
+\hypertarget{LinkedList_8h_a3972ae5a633404280da1a861636d3b25}{\index{Linked\-List.\-h@{Linked\-List.\-h}!list\-Pop\-Back@{list\-Pop\-Back}}
+\index{list\-Pop\-Back@{list\-Pop\-Back}!LinkedList.h@{Linked\-List.\-h}}
+\subsubsection[{list\-Pop\-Back}]{\setlength{\rightskip}{0pt plus 5cm}void list\-Pop\-Back (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-Linked\-List} $\ast$}]{List}
+\end{DoxyParamCaption}
+)}}\label{LinkedList_8h_a3972ae5a633404280da1a861636d3b25}
+
+
+Pop the last element of the list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em List} & a pointer to a list previously initialized by list\-Initialized, from which the final element is to be removed. list\-Pop\-Back removes the final element of the list, calling upon the list's erasure function if present. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{LinkedList_8h_ac3023af5dfd5e99cf4038d72f51ba15f}{list\-Pop\-Front()}, \hyperlink{LinkedList_8h_a8746a945dee8f65ba24cefe9c20e5828}{list\-Erase()} and \hyperlink{LinkedList_8h_a60cfa38a3c6c1b08cc61b3760eba4257}{list\-Initialize()} 
+\end{DoxySeeAlso}
+\hypertarget{LinkedList_8h_ac3023af5dfd5e99cf4038d72f51ba15f}{\index{Linked\-List.\-h@{Linked\-List.\-h}!list\-Pop\-Front@{list\-Pop\-Front}}
+\index{list\-Pop\-Front@{list\-Pop\-Front}!LinkedList.h@{Linked\-List.\-h}}
+\subsubsection[{list\-Pop\-Front}]{\setlength{\rightskip}{0pt plus 5cm}void list\-Pop\-Front (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-Linked\-List} $\ast$}]{List}
+\end{DoxyParamCaption}
+)}}\label{LinkedList_8h_ac3023af5dfd5e99cf4038d72f51ba15f}
+
+
+Pop the first element of the list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em List} & a pointer to a list previously initialized by list\-Initialized, from which the first element is to be removed. list\-Pop\-Front removes the first element of the list, calling upon the list's erasure function if present. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{LinkedList_8h_a3972ae5a633404280da1a861636d3b25}{list\-Pop\-Back()}, \hyperlink{LinkedList_8h_a8746a945dee8f65ba24cefe9c20e5828}{list\-Erase()} and \hyperlink{LinkedList_8h_a60cfa38a3c6c1b08cc61b3760eba4257}{list\-Initialize()} 
+\end{DoxySeeAlso}
+\hypertarget{LinkedList_8h_adfad82daa71b12c78415d2e82f125093}{\index{Linked\-List.\-h@{Linked\-List.\-h}!list\-Push\-Back@{list\-Push\-Back}}
+\index{list\-Push\-Back@{list\-Push\-Back}!LinkedList.h@{Linked\-List.\-h}}
+\subsubsection[{list\-Push\-Back}]{\setlength{\rightskip}{0pt plus 5cm}void list\-Push\-Back (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-Linked\-List} $\ast$}]{List, }
+\item[{void $\ast$}]{Data}
+\end{DoxyParamCaption}
+)}}\label{LinkedList_8h_adfad82daa71b12c78415d2e82f125093}
+
+
+Insert a copy of the given data to the end of the list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em List} & a pointer to a list previously initialized with list\-Initialized, into which Data is to be added. \\
+\hline
+{\em Data} & a pointer to the data to be copied into the list. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void list\-Push\-Back inserts a copy of the provided data into the list at the very end. Note that it's a {\itshape copy} of the Data parameter that is stored; the linked list does not maintain the lifetime of the original data passed. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{LinkedList_8h_a3e86e16cb6b338c57238ce0e02ecca3f}{list\-Push\-Front()}, \hyperlink{LinkedList_8h_a922d14973f2aa4dd343c3ba90bb725ee}{list\-Insert()} and \hyperlink{LinkedList_8h_a60cfa38a3c6c1b08cc61b3760eba4257}{list\-Initialize()} 
+\end{DoxySeeAlso}
+\hypertarget{LinkedList_8h_a3e86e16cb6b338c57238ce0e02ecca3f}{\index{Linked\-List.\-h@{Linked\-List.\-h}!list\-Push\-Front@{list\-Push\-Front}}
+\index{list\-Push\-Front@{list\-Push\-Front}!LinkedList.h@{Linked\-List.\-h}}
+\subsubsection[{list\-Push\-Front}]{\setlength{\rightskip}{0pt plus 5cm}void list\-Push\-Front (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-Linked\-List} $\ast$}]{List, }
+\item[{void $\ast$}]{Data}
+\end{DoxyParamCaption}
+)}}\label{LinkedList_8h_a3e86e16cb6b338c57238ce0e02ecca3f}
+
+
+Insert a copy of the given data to the front of the list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em List} & a pointer to a list previously initialized with list\-Initialized, into which Data is to be added. \\
+\hline
+{\em Data} & a pointer to the data to be copied into the list. list\-Push\-Front inserts a copy of the provided data into the list at the very front. Note that it's a {\itshape copy} of the Data parameter that is stored; the linked list does not maintain the lifetime of the original data passed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{LinkedList_8h_adfad82daa71b12c78415d2e82f125093}{list\-Push\-Back()}, \hyperlink{LinkedList_8h_a922d14973f2aa4dd343c3ba90bb725ee}{list\-Insert()} and \hyperlink{LinkedList_8h_a60cfa38a3c6c1b08cc61b3760eba4257}{list\-Initialize()} 
+\end{DoxySeeAlso}
+\hypertarget{LinkedList_8h_a340e12e1be5c1a7e06d0022bdd9960f5}{\index{Linked\-List.\-h@{Linked\-List.\-h}!list\-Size@{list\-Size}}
+\index{list\-Size@{list\-Size}!LinkedList.h@{Linked\-List.\-h}}
+\subsubsection[{list\-Size}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t list\-Size (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-Linked\-List} $\ast$}]{List}
+\end{DoxyParamCaption}
+)}}\label{LinkedList_8h_a340e12e1be5c1a7e06d0022bdd9960f5}
+
+
+Return the number of elements in a list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em List} & a pointer to an initialized list \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the number of elements in the given list list\-Size returns the number of elements in the given list. 
+\end{DoxyReturn}
