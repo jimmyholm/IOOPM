@@ -14,6 +14,12 @@ void listPushBack(sLinkedList* List, void* Data);
 // Add a copy of the given data to the front of the list.
 void listPushFront(sLinkedList* List, void* Data);
 
+// Pop the first element of the list
+void listPopFront(sLinkedList* List);
+
+// Pop the last element of the list
+void listPopBack(sLinkedList* List);
+
 // Add a copy of the given data into the list at the given iterator position.
 void listInsert(sListIterator* Iterator, void* Data);
 

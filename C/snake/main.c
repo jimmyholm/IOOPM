@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "SDLWrapper.h"
-//#include "LinkedList.h"
+#include "LinkedList.h"
 #include "game.h"
 #include <unistd.h>
 
@@ -24,6 +24,6 @@ int main(int argc, char* argv[])
     endFrame(wrap);
     sleep(1);
   }
-  deinitializeWrapper(wrap);*/
+  deinitializeWrapper(wrap);
   return 0;
 }
