@@ -46,4 +46,7 @@ int getWindowDims(int* X, int* Y);
 // Tell the window to shut down.
 void toggleRunning(sSdlWrapper* Wrapper);
 
+// Get the elapsed number of milliseconds between frames.
+Uint32 elapsedTime(sSdlWrapper* Wrapper);
+
 #endif

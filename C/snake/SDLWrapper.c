@@ -14,6 +14,7 @@ typedef struct sSdlWrapper
   Uint8 PrevKeys[101]; // Keys pressed down during the last frame
   const Uint8* Keys; // Keys pressed down this frame.
   Uint32 LastTick; // The last recorded SDL Tick
+  Uint32 ElapsedTime; // Elapsed SLD ticks between frames.
   int KeyDelay; // Delay between updating keys.
 } sSdlWrapper;
 
@@ -109,6 +110,9 @@ void beginFrame(sSdlWrapper* Wrapper)
     return;
   if(Wrapper == NULL)
     return;
+  Uint32 Tick = SDL_GetTicks();
+  Uint32 Elapsed = Tick - Wrapper->LastTick;
+  Wrapper->ElapsedTime = Elapsed;
   SDL_Event event;
   while(SDL_PollEvent(&event))
   {
@@ -118,8 +122,6 @@ void beginFrame(sSdlWrapper* Wrapper)
       return;
     }
   }
-  Uint32 Tick = SDL_GetTicks();
-  Uint32 Elapsed = Tick - Wrapper->LastTick;
   Wrapper->LastTick = Tick;
   Wrapper->KeyDelay -= Elapsed;
   if(Wrapper->KeyDelay <= 0)
@@ -276,4 +278,11 @@ void toggleRunning(sSdlWrapper* Wrapper)
   if(Wrapper == NULL)
     return;
   Wrapper->Running = (Wrapper->Running) ? 0 : 1;
+}
+
+Uint32 elapsedTime(sSdlWrapper* Wrapper)
+{
+  if(Wrapper == NULL)
+    return 0;
+  return Wrapper->ElapsedTime;
 }
