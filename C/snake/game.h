@@ -1,6 +1,6 @@
 #ifndef SNAKE_GAME_H
 #define SNAKE_GAME_H
-#include "snakePart.h"
+//#include "snakePart.h"
 
 typedef struct game game;
 

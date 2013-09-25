@@ -1,17 +1,46 @@
 #include "SDLWrapper.h"
 #include "game.h"
+#include "LinkedList.h"
+
+typedef struct snakePart
+{
+  int xPos;
+  int yPos;
+} snakePart;
+
+snakePart* createSnakePart(int x, int y)
+{
+  snakePart* snake = malloc(sizeof(snakePart));
+  snake->xPos = x;
+  snake->yPos = y;
+  return snake;
+}
+
+typedef struct snake
+{
+  int food;
+  sLinkedList* snakeParts;
+  sListIterator* it;
+} snake;
 
 typedef struct game
 {
   int score;
-  snakePart* snake;
+  snake* snake;
   sSdlWrapper* wrap;
 } game;
 
 void repaint(game* game)
 {
-  //drawBevel(game->wrap, 210, 210, 10, 10, makeColor(255,0,200, 255), makeColor(255,200,200,200));
-  drawSnake(game->wrap, game->snake);
+  if(listEmpty(game->snake->snakeParts))
+    return;
+  listHead(game->snake->snakeParts, &(game->snake->it));
+  while(!listIteratorEnd(game->snake->it))
+    {
+      snakePart* snake = listGet(game->snake->it);
+      drawBevel(game->wrap, snake->xPos*10, snake->yPos*10, 10, 10, makeColor(255, 50, 175, 100), makeColor(255, 75, 200, 125));
+      listIteratorNext(game->snake->it);
+    }
 }
 
 game* initGame(sSdlWrapper* wrapper)
@@ -19,41 +48,34 @@ game* initGame(sSdlWrapper* wrapper)
   game* ret = malloc(sizeof(game));
   ret->score = 0;
   ret->wrap = wrapper;
-  ret->snake = createSnake(2, 2, 0);
-  ret->snake->tail = createSnake(2,1,3);
+
+  ret->snake->snakeParts = malloc(sizeof(sLinkedList*));
+
+  listInitialize(&(ret->snake->snakeParts), sizeof(snakePart), NULL);
+  listPushFront(ret->snake->snakeParts, createSnakePart(5,5));
+  listPushFront(ret->snake->snakeParts, createSnakePart(5,6));
   return ret;
 }
 
 void tick(game* game)
 {
-  int x = 0;
-  int y = 0;
-  snakePart* snake = game->snake;
-  snakePart* tail = (snakePart*)snake->tail;
-  //check for user input and edit snake movement accordingly
+  int dX = 0;
+  int dY = 0;
+
+  int dirX = 0;
+  int dirY = 0;
   if(keyDown(game->wrap, SDLK_a))
-    x = -1;
+    dirX = -1;
   else if(keyDown(game->wrap, SDLK_d))
-    x = 1;
+    dirX = 1;
   else if(keyDown(game->wrap, SDLK_w))
-    y = -1;
+    dirY = -1;
   else if(keyDown(game->wrap, SDLK_s))
-    y = 1;
-//if no input was detected either move down or move the way the snake is facing
-  if(x == 0 && y == 0)
+    dirY = 1;
+  if(dirX != 0 || dirY != 0)
   {
-     if(tail == NULL)
-       y = 1;
-     else
-     {
-       x = tail->xPos - snake->xPos;
-       y = tail->yPos - snake->yPos;
-     }
+    dX = dirX;
+    dY = dirY;
   }
-//calculate the new position
-  x += snake->xPos;
-  y += snake->yPos;
-//check if the new position is a snake
-  // if(colliding(x, y, snake) == 0)
-  move(x, y, snake);
+  printf("%d:%d", dX, dY);
 }
