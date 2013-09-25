@@ -8,7 +8,5 @@ typedef struct game game;
 void tick(game* game);
 
 //Initializes the map and parses the wrapper to the game
-game* initGame(sSdlWrapper* wrapper);
-
-void repaint(game* game);
+game* initGame(sSdlWrapper* wrapper, int width, int height);
 #endif
