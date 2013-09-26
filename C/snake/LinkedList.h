@@ -19,7 +19,7 @@ typedef struct sLinkedList sLinkedList;
 typedef struct sListIterator sListIterator;
 /*! \brief Initialize a linked list
  * 
- * \param List a referehce to an uninitialized list pointer.
+ * \param List a reference to an uninitialized list pointer.
  * \param ElementSize the size of a list's stored data.
  * \param EraseFun a pointer to a function run on any element before its erasure
  * \return void
@@ -51,7 +51,7 @@ void listPushFront(sLinkedList* List, void* Data);
  *
  * \param Iterator pointer to an initialized iterator into a list, where the new element is to be inserted.
  * \param Data a pointer to the data to be copied into the list.
-  * This functions inserts a copy of the provided data into the list in front of the current iterator position. Note that it's a \em copy of the Data parameter that is stored; the linked list does not maintain the lifetime of the original data passed.
+  * This function inserts a copy of the provided data into the list in front of the current iterator position. Note that it's a \em copy of the Data parameter that is stored; the linked list does not maintain the lifetime of the original data passed.
  */
 void listInsert(sListIterator* Iterator, void* Data);
 
@@ -82,7 +82,7 @@ void listErase(sListIterator* Iterator);
 /*! \brief Return the data held by an iterator.
  *
  * \param Iterator an initialized iterator into a linked list.
- * \return the data held by Iterator
+ * \return the data held by Iterator.
  * listGet returns the data stored in the list element pointed to by Iterator.
  * \sa listHead()
  */
@@ -108,15 +108,15 @@ size_t listSize(sLinkedList* List);
 /*! \brief Check whether the list is empty or contains elements.
  *
  * \param List a pointer to an initialized list
- * \returns 1 if the list contains no elements or 0 otherwise
+ * \returns 1 if the list contains no elements or 0 otherwise.
  * listEmpty returns a boolean integer based on whether the list is empty or contains elements.
  */
 int listEmpty(sLinkedList* List);
 
 /*! \brief Clear the list
  *
- * \param List a pointer to an initialized list
- * listClear calls listErase on every element in the list, calling upon the erasure function on each element if available.
+ * \param List a pointer to an initialized list.
+ * listClear calls listErase on every element in the list, resulting in an empty list
  */
 void listClear(sLinkedList* List);
 
