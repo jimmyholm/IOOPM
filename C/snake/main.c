@@ -9,7 +9,7 @@
 
 int main(int argc, char* argv[])
 {
-  Uint32 framerate = 333;
+  Uint32 framerate = 40;
   Uint32 elapsed = 0;
   sSdlWrapper* wrap = initializeSDLWrapper("Test", 800, 600, 32, 1, 1);
   game* gameEngine = initGame(wrap, 20, 20);
@@ -23,10 +23,10 @@ int main(int argc, char* argv[])
       toggleRunning(wrap);
     endFrame(wrap);
     elapsed = elapsedTime(wrap);
-    if(elapsed < framerate)
+    /* if(elapsed < framerate)
     {
       SDL_Delay(framerate - elapsed);
-    }
+      }*/
   }
   deinitializeWrapper(wrap);
   return 0;

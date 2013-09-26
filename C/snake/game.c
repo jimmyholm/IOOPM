@@ -19,6 +19,8 @@ point* createPoint(int x, int y)
 typedef struct snake
 {
   int food;
+  Uint32 velocity;
+  Uint32 move;
   sLinkedList* snakeParts;
   sListIterator* it;
 } snake;
@@ -104,6 +106,8 @@ game* initGame(sSdlWrapper* wrapper, int width, int height)
   ret->snake->food = 0;
   ret->snake->it = 0;
   ret->snake->snakeParts = 0;
+  ret->snake->velocity = 333;
+  ret->snake->move = 0;
 
   ret->foodList = malloc(sizeof(foodList));
   ret->foodList->foodCount = 1;
@@ -181,13 +185,22 @@ void tick(game* game)
     dX = dirX;
     dY = dirY;
   }
+  Uint32 elapsed = elapsedTime(game->wrap);
+  game->snake->move += elapsed;
+  while(game->snake->move >= game->snake->velocity)
+  {
 //Move snake
-  moveSnake(game->snake, head->xPos + dX, head->yPos + dY);
+    moveSnake(game->snake, head->xPos + dX, head->yPos + dY);
+    game->snake->move -= game->snake->velocity;
+  }
 
 //Check collision with walls, and stop running if collision detected
   listHead(game->snake->snakeParts, &(game->snake->it));
   head = listGet(game->snake->it);
   if(colliding(game->wallList->list, game->wallList->it, head))
+     game->running = 0;
+  //listIteratorNext(game->
+  if(colliding(game->snake->snakeParts, game->snake->it, head)
      game->running = 0;
 
 //Check collision with food, and let the snake grow if collision detected
