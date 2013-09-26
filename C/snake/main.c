@@ -10,14 +10,13 @@
 int main(int argc, char* argv[])
 {
   sSdlWrapper* wrap = initializeSDLWrapper("Test", 800, 600, 32, 1, 1);
-  game* gameEngine = initGame(wrap);
+  game* gameEngine = initGame(wrap, 20, 20);
   while(isRunning(wrap))
   {
     beginFrame(wrap);
     //drawBevel(wrap, 396,296, 10, 10, makeColor(255, 0, 200,200), makeColor(255,200,200,200));
 
     tick(gameEngine);
-    repaint(gameEngine);
     
     if(keyUp(wrap, SDLK_ESCAPE))
       toggleRunning(wrap);
