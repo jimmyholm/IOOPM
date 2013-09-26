@@ -54,14 +54,13 @@ void repaint(sSdlWrapper* wrap, sLinkedList* list, sListIterator* it, Uint32 col
   if(listEmpty(list))
     return;
   listHead(list, &it);
-  point* toDraw = malloc(sizeof(point));
+  point* toDraw = 0;
   while(!listIteratorEnd(it))
   {
-    toDraw = listGet(it);
+    toDraw = (point*)listGet(it);
     drawBevel(wrap, toDraw->xPos*25, toDraw->yPos*25, 25, 25, color, borderColor);
     listIteratorNext(it);
   }
-  free(toDraw);
 }
 
 int colliding(sLinkedList* list, sListIterator* it, point* p)
@@ -69,18 +68,14 @@ int colliding(sLinkedList* list, sListIterator* it, point* p)
   if(listEmpty(list))
     return 0;
   listHead(list, &it);
-  point* comp = malloc(sizeof(point));
+  point* comp = 0;
   while(!listIteratorEnd(it))
   {
     comp = listGet(it);
     if(comp->xPos == p->xPos && comp->yPos == p->yPos)
-    {
-      free(comp);
       return 1;
-    }
     listIteratorNext(it);
   }
-  free(comp);
   return 0;
 }
 
@@ -111,11 +106,14 @@ game* initGame(sSdlWrapper* wrapper, int width, int height)
   ret->snake->snakeParts = 0;
 
   ret->foodList = malloc(sizeof(foodList));
+  ret->foodList->foodCount = 1;
+  ret->foodList->scoreCount = 100;
   ret->foodList->list = 0;
+  ret->foodList->it = 0;
   listInitialize(&(ret->foodList->list), sizeof(point), NULL);
-
   ret->wallList = malloc(sizeof(wallList));
   ret->wallList->list = 0;
+  ret->wallList->it = 0;
   listInitialize(&(ret->wallList->list), sizeof(point), NULL);
   for(int x = 0; x < width; x++)
     for(int y = 0; y < height; y++)
@@ -146,8 +144,8 @@ void tick(game* game)
   
   if(listEmpty(game->foodList->list))
   {
-    int x = 1+rand()%(game->width-1);
-    int y = 1+rand()%(game->height-1);
+    int x = 1+rand()%(game->width-2);
+    int y = 1+rand()%(game->height-2);
     point* toAdd = createPoint(x, y);
     listPushFront(game->foodList->list, toAdd);
     free(toAdd);
@@ -185,8 +183,6 @@ void tick(game* game)
   }
 //Move snake
   moveSnake(game->snake, head->xPos + dX, head->yPos + dY);
-  
-  free(tail);
 
 //Check collision with walls, and stop running if collision detected
   listHead(game->snake->snakeParts, &(game->snake->it));
@@ -201,7 +197,6 @@ void tick(game* game)
     game->score += game->foodList->scoreCount;
     listClear(game->foodList->list);
   }
-  free(head);
 
 //Paint the snake
   repaint(game->wrap, game->snake->snakeParts, game->snake->it, makeColor(255, 75, 175, 100), makeColor(255, 100, 200, 125));

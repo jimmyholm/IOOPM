@@ -192,7 +192,7 @@ Functions</h2></td></tr>
 <p>Clear the list. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">List</td><td>a pointer to an initialized list listClear calls listErase on every element in the list, calling upon the erasure function on each element if available. </td></tr>
+    <tr><td class="paramname">List</td><td>a pointer to an initialized list. listClear calls listErase on every element in the list, resulting in an empty list </td></tr>
   </table>
   </dd>
 </dl>
@@ -220,7 +220,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>1 if the list contains no elements or 0 otherwise listEmpty returns a boolean integer based on whether the list is empty or contains elements. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>1 if the list contains no elements or 0 otherwise. listEmpty returns a boolean integer based on whether the list is empty or contains elements. </dd></dl>
 
 </div>
 </div>
@@ -270,7 +270,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the data held by Iterator listGet returns the data stored in the list element pointed to by Iterator. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>the data held by Iterator. listGet returns the data stored in the list element pointed to by Iterator. </dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="LinkedList_8h.html#a9c0dc1f5156553695ffe0a967d7a7495" title="Initialize an iterator to the head of the list.">listHead()</a> </dd></dl>
 
 </div>
@@ -344,7 +344,7 @@ Functions</h2></td></tr>
 <p>Initialize a linked list. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">List</td><td>a referehce to an uninitialized list pointer. </td></tr>
+    <tr><td class="paramname">List</td><td>a reference to an uninitialized list pointer. </td></tr>
     <tr><td class="paramname">ElementSize</td><td>the size of a list's stored data. </td></tr>
     <tr><td class="paramname">EraseFun</td><td>a pointer to a function run on any element before its erasure </td></tr>
   </table>
@@ -383,7 +383,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">Iterator</td><td>pointer to an initialized iterator into a list, where the new element is to be inserted. </td></tr>
-    <tr><td class="paramname">Data</td><td>a pointer to the data to be copied into the list. This functions inserts a copy of the provided data into the list in front of the current iterator position. Note that it's a <em>copy</em> of the Data parameter that is stored; the linked list does not maintain the lifetime of the original data passed. </td></tr>
+    <tr><td class="paramname">Data</td><td>a pointer to the data to be copied into the list. This function inserts a copy of the provided data into the list in front of the current iterator position. Note that it's a <em>copy</em> of the Data parameter that is stored; the linked list does not maintain the lifetime of the original data passed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -590,7 +590,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Sep 25 2013 15:46:10 for C Linked List by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 26 2013 13:32:44 for C Linked List by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

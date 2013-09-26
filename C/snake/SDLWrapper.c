@@ -91,6 +91,7 @@ sSdlWrapper* initializeSDLWrapper(const char* Title, int Width, int Height, int 
   //memset(ret->Keys, 0, sizeof(Uint8)*101);
   ret->Keys = SDL_GetKeyboardState(NULL);
   ret->Running = 1;
+  ret->KeyDelay = KEYDELAY;
   SDLWrapperInitialized = 1;
   return ret;
 }
