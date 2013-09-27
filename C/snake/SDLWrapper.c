@@ -1,6 +1,15 @@
 #include "SDLWrapper.h"
 #define KEYDELAY 100
+#include "LinkedList.h"
 static int SDLWrapperInitialized = 0;
+typedef struct sTextGFX
+{
+  SDL_Texture* Texture;
+  unsigned int Width;
+  unsigned int Height;
+  unsigned int X;
+  unsigned int Y;
+} sTextGFX;
 typedef struct sSdlWrapper
 {
   int Width;  // | 
@@ -16,7 +25,15 @@ typedef struct sSdlWrapper
   Uint32 LastTick; // The last recorded SDL Tick
   Uint32 ElapsedTime; // Elapsed SLD ticks between frames.
   int KeyDelay; // Delay between updating keys.
+  TTF_Font* Font; // Holds a font for all text
+  sLinkedList* TextList; // A list of all the 
 } sSdlWrapper;
+
+/*void eraseText(void* data)
+{
+   if(data != NULL)
+    destroyText((sTextGFX*)data);
+}*/
 
 sSdlWrapper* initializeSDLWrapper(const char* Title, int Width, int Height, int Depth, int Accelerated, int SoftwareFallback)
 {
@@ -31,6 +48,13 @@ sSdlWrapper* initializeSDLWrapper(const char* Title, int Width, int Height, int 
     printf("Unable to initialize SDL: %s\n", SDL_GetError());
     return NULL;
   }
+  TTF_Init();
+  if(!TTF_WasInit())
+  {
+    printf("Failed to initialize SDL2_TTTF library: %s\n", TTF_GetError());
+    SDL_Quit();
+    return NULL;
+  }
   ret = malloc(sizeof(sSdlWrapper));
   ret->Width = Width;
   ret->Height = Height;
@@ -38,6 +62,7 @@ sSdlWrapper* initializeSDLWrapper(const char* Title, int Width, int Height, int 
   if(!ret->Window)
   {
     printf("Failed to create window!\n%s\n", SDL_GetError());
+    TTF_Quit();
     SDL_Quit();
     free(ret);
     return NULL;
@@ -56,6 +81,7 @@ sSdlWrapper* initializeSDLWrapper(const char* Title, int Width, int Height, int 
 	  puts("Failed to create software renderer; shutting down!");
 	  SDL_DestroyWindow(ret->Window);
 	  SDL_Quit();
+	  TTF_Quit();
 	  free(ret);
 	  return NULL;
 	}
@@ -65,6 +91,7 @@ sSdlWrapper* initializeSDLWrapper(const char* Title, int Width, int Height, int 
 	puts("Failed to create accelerated renderer and software fallback renderer is not allowed. Shutting down.");
 	SDL_DestroyWindow(ret->Window);
 	SDL_Quit();
+	TTF_Quit();
 	free(ret);
 	return NULL;
       }
@@ -78,6 +105,7 @@ sSdlWrapper* initializeSDLWrapper(const char* Title, int Width, int Height, int 
       puts("Failed to create software renderer; shutting down!");
       SDL_DestroyWindow(ret->Window);
       SDL_Quit();
+      TTF_Quit();
       free(ret);
       return NULL;
     }
@@ -92,6 +120,9 @@ sSdlWrapper* initializeSDLWrapper(const char* Title, int Width, int Height, int 
   ret->Keys = SDL_GetKeyboardState(NULL);
   ret->Running = 1;
   ret->KeyDelay = KEYDELAY;
+  ret->TextList = 0;
+  listInitialize(&ret->TextList, sizeof(sTextGFX), NULL);//&eraseText);
+  ret->Font = TTF_OpenFont("deja.ttf", 16);
   SDLWrapperInitialized = 1;
   return ret;
 }
@@ -143,7 +174,22 @@ void endFrame(sSdlWrapper* Wrapper)
   SDL_UpdateTexture(Wrapper->Texture, NULL, Wrapper->Pixels, Wrapper->Width * sizeof(Uint32));
   SDL_SetRenderDrawColor(Wrapper->Renderer, 0, 0, 0, 255);
   SDL_RenderClear(Wrapper->Renderer);
+  sListIterator* it = 0;
+  listHead(Wrapper->TextList, &it);
+  sTextGFX* t = 0;
   SDL_RenderCopy(Wrapper->Renderer, Wrapper->Texture, NULL, NULL);
+  while(!listIteratorEnd(it))
+  {
+    t = listGet(it);
+    SDL_Rect r = {0, 0, 0, 0};
+    r.x = t->X - (t->Width/2);
+    r.y = t->Y - (t->Height/2);
+    r.w = t->Width; 
+    r.h = t->Height;
+    SDL_RenderCopy(Wrapper->Renderer, t->Texture, NULL, &r);
+    listErase(it);
+  }
+  free(it);
   SDL_RenderPresent(Wrapper->Renderer);
   return;
 }
@@ -155,9 +201,13 @@ void deinitializeWrapper(sSdlWrapper* Wrapper)
   if(Wrapper == NULL)
     return;
   free(Wrapper->Pixels);
+  listClear(Wrapper->TextList);
+  free(Wrapper->TextList);
   SDL_DestroyTexture(Wrapper->Texture);
   SDL_DestroyRenderer(Wrapper->Renderer);
   SDL_DestroyWindow(Wrapper->Window);
+  TTF_CloseFont(Wrapper->Font);
+  TTF_Quit();
   SDL_Quit();
   SDLWrapperInitialized = 0;
 }
@@ -240,6 +290,64 @@ void drawBevel(sSdlWrapper* Wrapper, int X, int Y, int W, int H, Uint32 Color, U
   drawRect(Wrapper, X, Y, W, H, Color);
   drawRect(Wrapper, X+VScale, Y+HScale, W-2*HScale, H-2*HScale, BorderColor);
   drawRect(Wrapper, X+2*VScale, Y+2*HScale, W-4*HScale, H-2*HScale, Color);
+}
+
+sTextGFX* createText(sSdlWrapper* Wrapper, const char* text, Uint32 Color)
+{
+  if(!SDLWrapperInitialized)
+    return NULL;
+  sTextGFX* ret = malloc(sizeof(sTextGFX));
+  SDL_Color c = {0,0,0};
+  c.a = (Uint8)((Color & 0xFF000000UL) >> 24);
+  c.r = (Uint8)((Color & 0x00FF0000UL) >> 16);
+  c.g = (Uint8)((Color & 0x0000FF00UL) >> 8);
+  c.b = (Uint8)((Color & 0x000000FFUL));
+  SDL_Surface* srf = TTF_RenderText_Blended(Wrapper->Font, text, c);
+  if(srf == NULL)
+  {
+    puts("Function createText failed to create an SDL_Surface.\n");
+    free(ret);
+    return NULL;
+  }
+  ret->Width = srf->w;
+  ret->Height = srf->h;
+  ret->X = 0;
+  ret->Y = 0;
+  ret->Texture = SDL_CreateTextureFromSurface(Wrapper->Renderer, srf);
+  SDL_FreeSurface(srf);
+  if(ret->Texture == NULL)
+  {
+    puts("Function createText failed to create an SDL Textrue.\n");
+    free(ret);
+    return NULL;
+  }
+  return ret;
+}
+
+sTextGFX* createScore(sSdlWrapper* Wrapper, unsigned int Score, int Digits, Uint32 Color)
+{
+  if(!SDLWrapperInitialized)
+    return NULL;
+  if(Digits > 9)
+    Digits = 9;
+  char txt[10];
+  sprintf(txt, "%*u", Digits, Score);
+  return createText(Wrapper, txt, Color);
+}
+
+void renderText(sSdlWrapper* Wrapper, sTextGFX* Text, unsigned int X, unsigned int Y)
+{
+  Text->X = X;
+  Text->Y = Y;
+  listPushBack(Wrapper->TextList, (void*)Text);
+}
+
+void destroyText(sTextGFX* Text)
+{
+  if(Text == NULL)
+    return;
+  SDL_DestroyTexture(Text->Texture);
+  free(Text);
 }
 
 int keyPressed(sSdlWrapper* Wrapper, SDL_Keycode Key)

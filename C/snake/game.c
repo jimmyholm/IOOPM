@@ -200,7 +200,7 @@ void tick(game* game)
   if(colliding(game->wallList->list, game->wallList->it, head))
      game->running = 0;
   //listIteratorNext(game->
-  if(colliding(game->snake->snakeParts, game->snake->it, head)
+  if(colliding(game->snake->snakeParts, game->snake->it, head))
      game->running = 0;
 
 //Check collision with food, and let the snake grow if collision detected

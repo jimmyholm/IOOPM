@@ -9,25 +9,20 @@
 
 int main(int argc, char* argv[])
 {
-  Uint32 framerate = 40;
-  Uint32 elapsed = 0;
   sSdlWrapper* wrap = initializeSDLWrapper("Test", 800, 600, 32, 1, 1);
   game* gameEngine = initGame(wrap, 20, 20);
+  //sTextGFX* text = createScore(wrap, 10, 6, makeColor(255, 255, 255, 255));
   while(isRunning(wrap))
   {
     beginFrame(wrap);
 
     tick(gameEngine);
-    
+    //renderText(wrap, text, 400, 300);
     if(keyUp(wrap, SDLK_ESCAPE))
       toggleRunning(wrap);
     endFrame(wrap);
-    elapsed = elapsedTime(wrap);
-    /* if(elapsed < framerate)
-    {
-      SDL_Delay(framerate - elapsed);
-      }*/
   }
+  //destroyText(text);
   deinitializeWrapper(wrap);
   return 0;
 }

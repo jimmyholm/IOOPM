@@ -1,10 +1,13 @@
 #ifndef SDLWRAPPER_H
 #define SDLWRAPPER_H
 #include <SDL.h>
+#include <SDL_ttf.h>
 #include <stdio.h>
 
 // Wrapper around SDL data and functions necessary for the operation an SDL accelerated window.
 typedef struct sSdlWrapper sSdlWrapper;
+
+typedef struct sTextGFX sTextGFX;
 
 // Create a wrapper object for the SDL system and create a window with the requested attributes. Returns NULL on error.
 sSdlWrapper* initializeSDLWrapper(const char* Title, int Width, int Height, int Depth, int Accelerated, int SoftwareFallback);
@@ -30,6 +33,18 @@ void drawRect(sSdlWrapper* Wrapper, int X, int Y, int W, int H, Uint32 Color);
 
 // Draw a bevelled rectangle to the screen
 void drawBevel(sSdlWrapper* Wrapper, int X, int Y, int W, int H, Uint32 Color, Uint32 BorderColor);
+
+// Create a text object given a string
+sTextGFX* createText(sSdlWrapper* Wrapper, const char* text, Uint32 Color);
+
+// Creates a text object given an integer, 0-padded to fill Digits-length (maximum 9 digits)
+sTextGFX* createScore(sSdlWrapper* Wrapper, unsigned int Score, int Digits, Uint32 Color);
+
+// Render a text object, with the text centered around X & Y
+void renderText(sSdlWrapper* Wrapper, sTextGFX* Text, unsigned int X, unsigned int Y);
+
+// Destroy a text object
+void destroyText(sTextGFX* Text);
 
 // Return 1 if the given key was pressed, but is not being held, 0 otherwise.
 int keyPressed(sSdlWrapper* Wrapper, SDL_Keycode Key);
