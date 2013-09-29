@@ -1,7 +1,7 @@
 #include "SDLWrapper.h"
 #include "game.h"
 #include "LinkedList.h"
-
+#include "global.h"
 typedef struct point
 {
   int xPos;
@@ -74,8 +74,9 @@ int colliding(sLinkedList* list, sListIterator* it, point* p)
   while(!listIteratorEnd(it))
   {
     comp = listGet(it);
-    if(comp->xPos == p->xPos && comp->yPos == p->yPos)
-      return 1;
+    if(p != comp)
+      if(comp->xPos == p->xPos && comp->yPos == p->yPos)
+	return 1;
     listIteratorNext(it);
   }
   return 0;
@@ -94,30 +95,40 @@ void moveSnake(snake* snake, int x, int y)
   snake->food--;
 }
 
+void setupGame(game* Game)
+{
+  Game->running = 1;
+  Game->score = 0;
+  Game->snake->food = 0;
+  Game->snake->velocity = 333;
+  Game->snake->move = 0;
+  Game->foodList->foodCount = 1;
+  Game->foodList->scoreCount = 100;
+  listClear(Game->foodList->list);
+  listClear(Game->snake->snakeParts);
+  point* tail = createPoint(16,11);
+  listPushFront(Game->snake->snakeParts, tail);
+  free(tail);
+  point* head = createPoint(16,10);
+  listPushFront(Game->snake->snakeParts, head);
+  free(head);
+}
 game* initGame(sSdlWrapper* wrapper, int width, int height)
 {
   game* ret = malloc(sizeof(game));
+  ret->wrap = wrapper;
   ret->width = width;
   ret->height = height;
-  ret->running = 1;
-  ret->score = 0;
-  ret->wrap = wrapper;
   ret->snake = malloc(sizeof(snake));
-  ret->snake->food = 0;
+  ret->foodList = malloc(sizeof(foodList));
+  ret->wallList = malloc(sizeof(wallList));
   ret->snake->it = 0;
   ret->snake->snakeParts = 0;
-  ret->snake->velocity = 333;
-  ret->snake->move = 0;
-
-  ret->foodList = malloc(sizeof(foodList));
-  ret->foodList->foodCount = 1;
-  ret->foodList->scoreCount = 100;
   ret->foodList->list = 0;
   ret->foodList->it = 0;
-  listInitialize(&(ret->foodList->list), sizeof(point), NULL);
-  ret->wallList = malloc(sizeof(wallList));
   ret->wallList->list = 0;
   ret->wallList->it = 0;
+  listInitialize(&(ret->foodList->list), sizeof(point), NULL);
   listInitialize(&(ret->wallList->list), sizeof(point), NULL);
   for(int x = 0; x < width; x++)
     for(int y = 0; y < height; y++)
@@ -127,14 +138,8 @@ game* initGame(sSdlWrapper* wrapper, int width, int height)
 	listPushFront(ret->wallList->list, toAdd);
 	free(toAdd);
       }
-
   listInitialize(&(ret->snake->snakeParts), sizeof(point), NULL);
-  point* tail = createPoint(5,5);
-  listPushFront(ret->snake->snakeParts, tail);
-  free(tail);
-  point* head = createPoint(5,6);
-  listPushFront(ret->snake->snakeParts, head);
-  free(head);
+  setupGame(ret);
   return ret;
 }
 
@@ -198,10 +203,18 @@ void tick(game* game)
   listHead(game->snake->snakeParts, &(game->snake->it));
   head = listGet(game->snake->it);
   if(colliding(game->wallList->list, game->wallList->it, head))
-     game->running = 0;
+  {
+    // Destroy game
+    game->running = 0;
+    State = 0;
+  }
   //listIteratorNext(game->
   if(colliding(game->snake->snakeParts, game->snake->it, head))
-     game->running = 0;
+  {
+    // Destroy game
+    game->running = 0;
+    State = 0;
+  }
 
 //Check collision with food, and let the snake grow if collision detected
   if(colliding(game->foodList->list, game->foodList->it, head))

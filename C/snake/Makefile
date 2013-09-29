@@ -1,5 +1,5 @@
 CC = gcc
-OBJ = LinkedList.o SDLWrapper.o game.o main.o
+OBJ = global.o LinkedList.o SDLWrapper.o game.o main.o
 TARGET = snake
 SDL_CFLAGS := $(shell sdl2-config --cflags)
 SDL_LIBS := $(shell sdl2-config --libs) -lSDL2_ttf
@@ -10,9 +10,9 @@ profile: PROFILE = yes
 .PHONY : all
 all: $(OBJ)
 ifneq ($(PROFILE),)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ) $(SDL_LIBS)
-else
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ) $(SDL_LIBS) -pg
+else
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ) $(SDL_LIBS)
 endif
 
 .PHONY : profile

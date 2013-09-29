@@ -9,4 +9,6 @@ void tick(game* game);
 
 //Initializes the map and parses the wrapper to the game
 game* initGame(sSdlWrapper* wrapper, int width, int height);
+// Do setup and (re-)initialize the game.
+void setupGame(game* game);
 #endif

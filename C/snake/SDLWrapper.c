@@ -331,7 +331,7 @@ sTextGFX* createScore(sSdlWrapper* Wrapper, unsigned int Score, int Digits, Uint
   if(Digits > 9)
     Digits = 9;
   char txt[10];
-  sprintf(txt, "%*u", Digits, Score);
+  sprintf(txt, "%0*u", Digits, Score);
   return createText(Wrapper, txt, Color);
 }
 
