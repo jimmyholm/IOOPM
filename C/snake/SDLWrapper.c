@@ -267,29 +267,11 @@ void drawBevel(sSdlWrapper* Wrapper, int X, int Y, int W, int H, Uint32 Color, U
     return;
   if(Y >= Wrapper->Height)
     return;
-  while(X < 0)
-  {
-    X++;
-    W--;
-  }
-  while(X+W >= Wrapper->Width)
-  {
-    W--;
-  }
-  while(Y < 0)
-  {
-    Y++;
-    H--;
-  }
-  while(Y+H >= Wrapper->Height)
-  {
-    H--;
-  }
   int VScale = W/5;
   int HScale = H/5;
   drawRect(Wrapper, X, Y, W, H, Color);
   drawRect(Wrapper, X+VScale, Y+HScale, W-2*HScale, H-2*HScale, BorderColor);
-  drawRect(Wrapper, X+2*VScale, Y+2*HScale, W-4*HScale, H-2*HScale, Color);
+  drawRect(Wrapper, X+2*VScale, Y+2*HScale, W-4*HScale, H-4*HScale, Color);
 }
 
 sTextGFX* createText(sSdlWrapper* Wrapper, const char* text, Uint32 Color)

@@ -16,6 +16,19 @@ point* createPoint(int x, int y)
   return point;
 }
 
+size_t sizeofPoint()
+{
+  return sizeof(point);
+}
+
+void pointGetPos(point* p, int* x, int* y)
+{
+  if(x != NULL)
+    *x = p->xPos;
+  if(y != NULL)
+    *y = p->yPos;
+}
+
 typedef struct snake
 {
   int food;

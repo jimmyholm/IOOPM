@@ -1,3 +1,3 @@
 #include "global.h"
 
-int State = 0;
+int State = -1;
