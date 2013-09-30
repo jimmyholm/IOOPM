@@ -249,7 +249,7 @@ void drawRect(sSdlWrapper* Wrapper, int X, int Y, int W, int H, Uint32 Color)
   int index = 0;
   for(int x = X; x < X+W; x++)
   {
-    for(int y = Y; y < Y+W; y++)
+    for(int y = Y; y < Y+H; y++)
     {
       index = x + y*Wrapper->Width;
       Wrapper->Pixels[index] = Color;

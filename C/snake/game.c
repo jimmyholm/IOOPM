@@ -54,7 +54,9 @@ typedef struct wallList
 typedef struct game
 {
   sTextGFX* scoreText;
-  int score;
+  sTextGFX* highScoreText;
+  unsigned int score;
+  unsigned int highScore;
   int running;
   int width;
   int height;
@@ -63,6 +65,29 @@ typedef struct game
   wallList* wallList;
   sSdlWrapper* wrap;
 } game;
+
+void loadHighscore(game* Game)
+{
+  FILE* f = fopen("highscore.dat", "rb");
+  if(f == NULL)
+  {
+    Game->highScore = 0;
+    return;
+  }
+  fread(&Game->highScore, sizeof(unsigned int), 1, f);
+  fclose(f);  
+}
+
+void saveHighscore(game* Game)
+{
+  FILE* f = fopen("highscore.dat", "wb");
+  if(f == NULL)
+  {
+    return;
+  }
+  fwrite(&Game->highScore, sizeof(unsigned int), 1, f);
+  fclose(f);
+}
 
 void repaint(sSdlWrapper* wrap, sLinkedList* list, sListIterator* it, Uint32 color, Uint32 borderColor)
 {
@@ -115,7 +140,7 @@ void setupGame(game* Game)
   Game->snake->food = 0;
   Game->snake->velocity = 333;
   Game->snake->move = 0;
-  Game->foodList->scoreCount = 1;
+  Game->foodList->scoreCount = 100;
   listClear(Game->foodList->list);
   listClear(Game->snake->snakeParts);
   point* tail = createPoint(16,11);
@@ -124,27 +149,33 @@ void setupGame(game* Game)
   point* head = createPoint(16,10);
   listPushFront(Game->snake->snakeParts, head);
   free(head);
+  char score[20];
+  sprintf(score, "Score: %06d", Game->score);
+  Game->scoreText = createText(Game->wrap, score, 0xFF00FF00);
+  loadHighscore(Game);
+  sprintf(score, "High Score: %06d", Game->highScore);
+  Game->highScoreText = createText(Game->wrap, score, 0xFFFF0000);
 }
 
-void destroyGame(game* game)
+void destroyGame(game* Game)
 {
-  listClear(game->wallList->list);
-  free(game->wallList->list);
-  free(game->wallList->it);
-  free(game->wallList);
+  listClear(Game->wallList->list);
+  free(Game->wallList->list);
+  free(Game->wallList->it);
+  free(Game->wallList);
 
-  listClear(game->foodList->list);
-  free(game->foodList->list);
-  free(game->foodList->it);
-  free(game->foodList);
+  listClear(Game->foodList->list);
+  free(Game->foodList->list);
+  free(Game->foodList->it);
+  free(Game->foodList);
 
-  listClear(game->snake->snakeParts);
-  free(game->snake->snakeParts);
-  free(game->snake->it);
-  free(game->snake);
+  listClear(Game->snake->snakeParts);
+  free(Game->snake->snakeParts);
+  free(Game->snake->it);
+  free(Game->snake);
 
-  destroyText(game->scoreText);
-  free(game);
+  destroyText(Game->scoreText);
+  free(Game);
 }
 
 game* initGame(sSdlWrapper* wrapper, int width, int height)
@@ -173,38 +204,43 @@ game* initGame(sSdlWrapper* wrapper, int width, int height)
 	free(toAdd);
       }
   listInitialize(&(ret->snake->snakeParts), sizeof(point), NULL);
-
-  ret->scoreText = createText(ret->wrap, "NaN", 0xFFFFFFFF);
   setupGame(ret);
   return ret;
 }
 
-void tick(game* game)
+void tick(game* Game)
 {
-  if(!game->running)
+  if(!Game->running)
     return;
 
-  if(listEmpty(game->snake->snakeParts))
+  if(listEmpty(Game->snake->snakeParts))
     return;
   
-  if(listEmpty(game->foodList->list))
+  if(listEmpty(Game->foodList->list))
   {
-    int x = 1+rand()%(game->width-2);
-    int y = 1+rand()%(game->height-2);
+    int x = 1+rand()%(Game->width-2);
+    int y = 1+rand()%(Game->height-2);
     point* toAdd = createPoint(x, y);
-    listPushFront(game->foodList->list, toAdd);
+    while(colliding(Game->snake->snakeParts, Game->snake->it, toAdd))
+    {
+      free(toAdd);
+      x = 1+rand()%(Game->width-2);
+      y = 1+rand()%(Game->height-2);
+      toAdd = createPoint(x,y);
+    }
+    listPushFront(Game->foodList->list, toAdd);
     free(toAdd);
   }
 
   int dX = 0;
   int dY = 0;
 //Get the first and second part of the snake
-  listHead(game->snake->snakeParts, &(game->snake->it));
-  point* head = listGet(game->snake->it);
-  listIteratorNext(game->snake->it);
-  if(listIteratorEnd(game->snake->it))
+  listHead(Game->snake->snakeParts, &(Game->snake->it));
+  point* head = listGet(Game->snake->it);
+  listIteratorNext(Game->snake->it);
+  if(listIteratorEnd(Game->snake->it))
     return;
-  point* tail = listGet(game->snake->it);
+  point* tail = listGet(Game->snake->it);
 
 //Calculate the next snake position based on previous position
   dX = head->xPos - tail->xPos;
@@ -213,64 +249,80 @@ void tick(game* game)
 //Check keyboard input
   int dirX = 0;
   int dirY = 0;
-  if(keyDown(game->wrap, SDLK_a))
+  if(keyDown(Game->wrap, SDLK_a) && dX != 1 )
     dirX = -1;
-  else if(keyDown(game->wrap, SDLK_d))
+  else if(keyDown(Game->wrap, SDLK_d) && dX != -1)
     dirX = 1;
-  else if(keyDown(game->wrap, SDLK_w))
+  else if(keyDown(Game->wrap, SDLK_w) && dY != 1)
     dirY = -1;
-  else if(keyDown(game->wrap, SDLK_s))
+  else if(keyDown(Game->wrap, SDLK_s) && dY != -1)
     dirY = 1;
   if(dirX != 0 || dirY != 0)
   {
     dX = dirX;
     dY = dirY;
   }
-  Uint32 elapsed = elapsedTime(game->wrap);
-  game->snake->move += elapsed;
-  while(game->snake->move >= game->snake->velocity)
+  Uint32 elapsed = elapsedTime(Game->wrap);
+  Game->snake->move += elapsed;
+  while(Game->snake->move >= Game->snake->velocity)
   {
 //Move snake
-    moveSnake(game->snake, head->xPos + dX, head->yPos + dY);
-    game->snake->move -= game->snake->velocity;
+    moveSnake(Game->snake, head->xPos + dX, head->yPos + dY);
+    Game->snake->move -= Game->snake->velocity;
   }
 
 //Check collision with walls, and stop running if collision detected
-  listHead(game->snake->snakeParts, &(game->snake->it));
-  head = listGet(game->snake->it);
-  if(colliding(game->wallList->list, game->wallList->it, head))
+  listHead(Game->snake->snakeParts, &(Game->snake->it));
+  head = listGet(Game->snake->it);
+  if(colliding(Game->wallList->list, Game->wallList->it, head))
   {
-    // Destroy game
-    game->running = 0;
+    // Destroy Game
+    saveHighscore(Game);
+    Game->running = 0;
     State = 0;
   }
-  //listIteratorNext(game->
-  if(colliding(game->snake->snakeParts, game->snake->it, head))
+  //listIteratorNext(Game->
+  if(colliding(Game->snake->snakeParts, Game->snake->it, head))
   {
-    // Destroy game
-    game->running = 0;
+    // Destroy Game
+    saveHighscore(Game);
+    Game->running = 0;
     State = 0;
   }
 
 //Check collision with food, and let the snake grow if collision detected
-  if(colliding(game->foodList->list, game->foodList->it, head))
+  if(colliding(Game->foodList->list, Game->foodList->it, head))
   {
-    game->snake->food += (game->foodList->scoreCount/10)+1;
-    game->score += game->foodList->scoreCount;
-    destroyText(game->scoreText);
-    game->scoreText = createScore(game->wrap, game->score, 4, 0xFFFFFFF);
-    listClear(game->foodList->list);
+    int fc = (int)((float)(listSize(Game->snake->snakeParts))/10.0f);
+    Game->snake->food += (int)fc+1;
+    if(fc > 0)
+      Game->snake->velocity = 333 / (1.5*fc);
+    Game->score += Game->foodList->scoreCount * ((1.5*fc)+1);
+    destroyText(Game->scoreText);
+    char score[20];
+    sprintf(score, "Score: %06d", Game->score);
+    Game->scoreText = createText(Game->wrap, score, 0xFF00FF00);
+    if(Game->score > Game->highScore)
+    {
+      Game->highScore = Game->score;
+      sprintf(score, "High Score: %06d", Game->highScore);
+      Game->highScoreText = createText(Game->wrap, score, 0xFFFF0000);
+    }
+    listClear(Game->foodList->list);
   }
 
 //Paint the snake
-  repaint(game->wrap, game->snake->snakeParts, game->snake->it, makeColor(255, 75, 175, 100), makeColor(255, 100, 200, 125));
+  repaint(Game->wrap, Game->snake->snakeParts, Game->snake->it, makeColor(255, 75, 175, 100), makeColor(255, 100, 200, 125));
 
 //Paint the food
-  repaint(game->wrap, game->foodList->list, game->foodList->it, makeColor(255, 175, 100, 75), makeColor(255, 200, 125, 100));
+  repaint(Game->wrap, Game->foodList->list, Game->foodList->it, makeColor(255, 175, 100, 75), makeColor(255, 200, 125, 100));
 
 //Paint the walls
-  repaint(game->wrap, game->wallList->list, game->wallList->it, makeColor(255, 50, 25, 175), makeColor(255, 75, 50, 200));
+  repaint(Game->wrap, Game->wallList->list, Game->wallList->it, makeColor(255, 50, 25, 175), makeColor(255, 75, 50, 200));
 
 //Paint the score counter
-  renderText(game->wrap, game->scoreText, 50, 50);
+  renderText(Game->wrap, Game->scoreText, 700, 12);
+//Paint the high score counter
+  renderText(Game->wrap, Game->highScoreText, 120, 12);
+
 }

@@ -11,7 +11,10 @@ void readTitleFile(sLinkedList* list, FILE* file)
 {
   char str[10];
   if(feof(file))
+  {
     State = 0;
+    return;
+  }
   fscanf(file, "%s\n", str);
   if(strcmp(str, "#end") == 0)
   {
