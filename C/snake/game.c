@@ -40,7 +40,6 @@ typedef struct snake
 
 typedef struct foodList
 {
-  int foodCount;
   int scoreCount;
   sLinkedList* list;
   sListIterator* it;
@@ -54,6 +53,7 @@ typedef struct wallList
 
 typedef struct game
 {
+  sTextGFX* scoreText;
   int score;
   int running;
   int width;
@@ -115,8 +115,7 @@ void setupGame(game* Game)
   Game->snake->food = 0;
   Game->snake->velocity = 333;
   Game->snake->move = 0;
-  Game->foodList->foodCount = 1;
-  Game->foodList->scoreCount = 100;
+  Game->foodList->scoreCount = 1;
   listClear(Game->foodList->list);
   listClear(Game->snake->snakeParts);
   point* tail = createPoint(16,11);
@@ -126,6 +125,28 @@ void setupGame(game* Game)
   listPushFront(Game->snake->snakeParts, head);
   free(head);
 }
+
+void destroyGame(game* game)
+{
+  listClear(game->wallList->list);
+  free(game->wallList->list);
+  free(game->wallList->it);
+  free(game->wallList);
+
+  listClear(game->foodList->list);
+  free(game->foodList->list);
+  free(game->foodList->it);
+  free(game->foodList);
+
+  listClear(game->snake->snakeParts);
+  free(game->snake->snakeParts);
+  free(game->snake->it);
+  free(game->snake);
+
+  destroyText(game->scoreText);
+  free(game);
+}
+
 game* initGame(sSdlWrapper* wrapper, int width, int height)
 {
   game* ret = malloc(sizeof(game));
@@ -152,6 +173,8 @@ game* initGame(sSdlWrapper* wrapper, int width, int height)
 	free(toAdd);
       }
   listInitialize(&(ret->snake->snakeParts), sizeof(point), NULL);
+
+  ret->scoreText = createText(ret->wrap, "NaN", 0xFFFFFFFF);
   setupGame(ret);
   return ret;
 }
@@ -232,8 +255,10 @@ void tick(game* game)
 //Check collision with food, and let the snake grow if collision detected
   if(colliding(game->foodList->list, game->foodList->it, head))
   {
-    game->snake->food += game->foodList->foodCount;
+    game->snake->food += (game->foodList->scoreCount/10)+1;
     game->score += game->foodList->scoreCount;
+    destroyText(game->scoreText);
+    game->scoreText = createScore(game->wrap, game->score, 4, 0xFFFFFFF);
     listClear(game->foodList->list);
   }
 
@@ -245,4 +270,7 @@ void tick(game* game)
 
 //Paint the walls
   repaint(game->wrap, game->wallList->list, game->wallList->it, makeColor(255, 50, 25, 175), makeColor(255, 75, 50, 200));
+
+//Paint the score counter
+  renderText(game->wrap, game->scoreText, 50, 50);
 }

@@ -13,4 +13,6 @@ void pointGetPos(point* p, int* x, int* y);
 game* initGame(sSdlWrapper* wrapper, int width, int height);
 // Do setup and (re-)initialize the game.
 void setupGame(game* game);
+//Destroy game and free all allocated memory
+void destroyGame(game* game);
 #endif

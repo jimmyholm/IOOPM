@@ -119,7 +119,7 @@ int main(int argc, char* argv[])
   destroyText(exitUnsel);
   destroyText(exitSel);
   deinitializeWrapper(wrap);
-  free(gameEngine);
+  destroyGame(gameEngine);
   free(wrap);
   return 0;
 }
