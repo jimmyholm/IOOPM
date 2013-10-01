@@ -1,6 +1,12 @@
 #include "globals.h"
 #include "star.h"
 
+int collision(sStar* s1, sStar* s2)
+{
+  float d = calcDistance(s1, s2);
+  return (d < 1.0f) ? 1 : 0;
+}
+
 sStar* createStar(float x, float y, float vx, float vy, float mass)
 {
   sStar* ret = malloc(sizeof(sStar));
@@ -14,9 +20,9 @@ sStar* createStar(float x, float y, float vx, float vy, float mass)
   ret->fX = .0f;
   ret->fY = .0f;
   // Set the colour of the star relative to it's mass - heavier stars are red, lighter stars are green.
-  Uint8 red   = (Uint32)(174.0f*(mass/MAXMASS) + 80.0f);
-  Uint8 green = red;
-  Uint8 blue = green;
+  Uint8 red   = (Uint8)(174.0f*(mass/(MAXMASS*3.0f)) + 80.0f);
+  Uint8 green = 255-red;//(Uint32)(255 - 174.0*(mass/(MAXMASS)));
+  Uint8 blue = 0;
   Uint8 alpha = 255;
   // Pack the colors into an unsigned, 32 bit integer (a Uint32)
   // in this order: msb : AAAAAAAA RRRRRRRRR GGGGGGGG BBBBBBBB : lsb
@@ -43,7 +49,7 @@ void drawStar(sStar* star, Uint32* Pixels)
     return;
   // Draw out a star  based on its mass to max-mass ratio
   Uint32 color = star->Color;
-  float radius = (star->Mass / MAXMASS) * 2.5f;
+  float radius = ((star->Mass / (MAXMASS*10.0f)) * 2.0f)+1;
   drawCircle(x, y, color, (int)radius, Pixels);
 }
 

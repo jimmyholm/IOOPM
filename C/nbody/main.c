@@ -83,6 +83,8 @@ int main(int argc, char* argv[])
 	Running = false;
       continue;
     }
+    // Check for star collisions
+    checkCollisions(sim);
     // Do the necessary calculation to determine the velocity of this frame
     calculateNextFrame(sim);
     // Set new star-coordinates, based on speed and time to elapse since last frame.
@@ -102,7 +104,7 @@ int main(int argc, char* argv[])
     else
     {
       char str[100];
-      sprintf(str, "N-Body Simulator (%d FPS)", fps);
+      sprintf(str, "N-Body Simulator (%d FPS) (%u stars)", fps, (unsigned int)numStars(sim));
       fps = 0;
       fpsTicks = 0;
       SDL_SetWindowTitle(screen, str);

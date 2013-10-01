@@ -9,11 +9,15 @@ typedef struct sSimulation sSimulation;
 sSimulation* createSimulation(unsigned int stars);
 // Free up the memory used by every star as well as the memory used by the simulation itself.
 void destroySimulation(sSimulation* sim);
+// Check for star collisions
+void checkCollisions(sSimulation* sim);
 // Calculate forces, acceleration and velocities for the next frame of simulation.
 void calculateNextFrame(sSimulation* sim);
 // Update the positional values of all stars depending on velocity and elapsed time
 void updateSimulation(sSimulation* sim, float timeElapsed);
 // Draw the simulation to the window.
 void drawSimulation(sSimulation* sim, Uint32* Pixels);
+// Retreive the number of stars in the galaxy
+size_t numStars(sSimulation* sim);
 
 #endif

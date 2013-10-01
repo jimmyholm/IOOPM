@@ -1,27 +1,23 @@
 CC = gcc
-
-OBJ = main.o star.o simulation.o globals.o
+OBJ = globals.o LinkedList.o star.o simulation.o main.o
 TARGET = nbody
 SDL_CFLAGS := $(shell sdl2-config --cflags)
-SDL_LIBS := $(shell sdl2-config --libs)
+SDL_LIBS := $(shell sdl2-config --libs) -lSDL2_ttf /lib/x86_64-linux-gnu/libm.so.6
 CFLAGS = -Wall -std=c99 -ggdb $(SDL_CFLAGS)
-.PHONY : debug
-debug: $(OBJ)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ) $(SDL_LIBS) /lib/x86_64-linux-gnu/libm.so.6
+PROFILE = 
+release: CFLAGS = -O3 -std=c99 $(SDL_CFLAGS)
+profile: PROFILE = -pg
+.PHONY : all
+all: $(OBJ)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ) $(SDL_LIBS) $(PROFILE)
 
+.PHONY : profile
+profile: all
 .PHONY : release
-release: $(OBJ)
-	$(CC) -O3 $(CFLAGS) -o $(TARGET) $(OBJ) $(SDL_LIBS) /lib/x86_64-linux-gnu/libm.so.6
+release: all
+%.o : %.c
+	$(CC) -c $(CFLAGS) $< $(PROFILE)
 
-main.o: star.h simulation.h
-	$(CC) -c $(CFLAGS) -o main.o main.c
-
-star.o: star.h
-	$(CC) -c $(CFLAGS) -o star.o star.c
-simulation.o: star.h simulation.h
-	$(CC) -c $(CFLAGS) -o simulation.o simulation.c
-globals.o: globals.h
-	$(CC) -c $(CFLAGS) -o globals.o globals.c
 .PHONY : clean
 clean:
-	 -rm $(TARGET) *.o
+	-rm $(TARGET) *.o

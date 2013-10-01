@@ -29,12 +29,6 @@ typedef struct sSdlWrapper
   sLinkedList* TextList; // A list of all the 
 } sSdlWrapper;
 
-/*void eraseText(void* data)
-{
-   if(data != NULL)
-    destroyText((sTextGFX*)data);
-}*/
-
 sSdlWrapper* initializeSDLWrapper(const char* Title, int Width, int Height, int Depth, int Accelerated, int SoftwareFallback)
 {
   if(SDLWrapperInitialized)

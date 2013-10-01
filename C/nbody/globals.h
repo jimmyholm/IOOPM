@@ -10,7 +10,7 @@
 // Interpretation of the Gravitational constant (6.673 * 10 ^ -11)
 #define G_CONST 66.73f
 // Maximum mass of a star 2 * the scaled mass of our sun
-#define MAXMASS 39780000.2f
+extern float MAXMASS;
 
 // Functions for creating pseudo-randomized integers and floating point values.
 int RandInt(int min, int max);

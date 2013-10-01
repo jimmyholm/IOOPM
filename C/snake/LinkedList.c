@@ -151,9 +151,17 @@ void listErase(sListIterator* Iterator)
 void* listGet(sListIterator* Iterator)
 {
   if(*(Iterator->It) == NULL)
-    return 0;
+    return NULL;
   void* Data = (*(Iterator->It))->Data;
   return Data;
+}
+void* listPeek(sLinkedList* List)
+{
+  if(List == NULL)
+    return NULL;
+  if(List->Head == NULL)
+    return NULL;
+  return List->Head->Data;
 }
 
 void listHead(sLinkedList* List, sListIterator** It)
@@ -192,6 +200,15 @@ void listClear(sLinkedList* List)
   free(it);
 }
 
+void listDestroy(sLinkedList** List)
+{
+  if(*List == NULL)
+    return;
+  listClear(*List);
+  free(*List);
+  *List = NULL;
+}
+
 void listIteratorNext(sListIterator* Iterator)
 {
   if(Iterator == NULL)
@@ -206,4 +223,22 @@ int listIteratorEnd(sListIterator* Iterator)
   if(Iterator == NULL)
     return 1;
   return(*(Iterator->It) == NULL) ? 1 : 0;
+}
+
+void listIteratorCopy(sListIterator* Src, sListIterator** Dst)
+{
+  if(Dst == NULL)
+    return;
+  if(*Dst == NULL)
+    *Dst = malloc(sizeof(sListIterator));  
+  (*Dst)->It = Src->It;
+  (*Dst)->List = Src->List;
+}
+
+void listIteratorDestroy(sListIterator** Iterator)
+{
+  if(Iterator == NULL || *Iterator == NULL)
+    return;
+  free(*Iterator);
+  *Iterator = NULL;
 }

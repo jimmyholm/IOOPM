@@ -19,6 +19,10 @@ typedef struct sStar
   Uint32 Color;
 } sStar;
 
+
+// Determine if two stars are colliding.
+int collision(sStar* s1, sStar* s2);
+
 // Create a star with a given location, velocity and mass - initializing the other member values to their defaults.
 sStar* createStar(float x, float y, float vx, float vy, float mass);
 
@@ -29,7 +33,7 @@ void destroyStar(sStar* st);
 void drawStar(sStar* st, Uint32* Pixels);
 
 // Calculate distance between two stars
-float calculateDistance(sStar* s1, sStar* s2);
+float calcDistance(sStar* s1, sStar* s2);
 
 // Calculate forces acted on s1 by s2
 void calculateForce(sStar* s1, sStar* s2);

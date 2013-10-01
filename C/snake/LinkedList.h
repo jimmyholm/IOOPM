@@ -88,6 +88,13 @@ void listErase(sListIterator* Iterator);
  */
 void* listGet(sListIterator* Iterator);
 
+/*! \brief Return the data of the first element of the list.
+ *
+ * \param List pointer to an initialized list
+ * \return the data held by the list's head or NULL for an empty list
+ * listPeek returns the data stored in the list's head element.
+ */
+void* listPeek(sLinkedList* List);
 /*! \brief Initialize an iterator to the head of the list
  *
  * \param List a pointer to an initialized list.
@@ -120,6 +127,13 @@ int listEmpty(sLinkedList* List);
  */
 void listClear(sLinkedList* List);
 
+/*! \brief Destroy the list
+ *
+ * \param List a reference to an initialized list pointer
+ * listDestroy destroyes and performs cleanup on a list, empty or otherwise.
+ */
+void listDestroy(sLinkedList** List);
+
 /*! \brief Advance an iterator to the next element in a list.
  *
  * \param Iterator an initialized iterator into an initialized list.
@@ -134,4 +148,22 @@ void listIteratorNext(sListIterator* Iterator);
  * listIteratorEnd returns a boolean integer based on whether the given iterator has reached the end of its associated list.
  */
 int listIteratorEnd(sListIterator* Iterator);
+
+/*! \brief Creates a copy of a given iterator.
+ *
+ * \param Src an initialized iterator into an initialized list.
+ * \param Dst an initialized or NULL-pointing iterator to be set.
+ * listIteratorCopy sets a destination iterator to point to the same list element as the given source iterator.
+ */
+void listIteratorCopy(sListIterator* Src, sListIterator** Dst);
+
+/*! \brief Destroy an iterator
+ *
+ * \param Iterator reference to an initialized iterator to be destroyed
+ * listIteratorDestroy destroyes the given iterator reference.
+ */
+void listIteratorDestroy(sListIterator** Iterator);
+
+
+
 #endif

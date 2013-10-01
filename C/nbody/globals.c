@@ -1,7 +1,7 @@
 #include "globals.h"
 #include <stdlib.h>
 
-
+float MAXMASS =  39780000.2f;
 int RandInt(int min, int max)
 {
   float rnd = (float)rand() / (float)RAND_MAX;
