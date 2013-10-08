@@ -9,6 +9,7 @@ public class Die {
   }
 
   public Die(int _numberOfSides) { 
+      if (_numberOfSides > 0)
       numberOfSides = _numberOfSides; 
   }
 
