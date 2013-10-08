@@ -1,3 +1,9 @@
+/**
+ * @file BinaryTree.h
+ * @Author Jimmy Holm
+ * @date October 7, 2013
+ * @brief A Generic binary tree implementation.
+ */
 #ifndef BINARYTREE_H
 #define BINARYTREE_H
 #include <stdlib.h>
@@ -8,7 +14,7 @@
 
 typedef struct sBSTree sBSTree;
 
-/*! Initialize a Binary Search Tree instance
+/*! \brief Initialize a Binary Search Tree instance
  *  \param Tree a reference to the tree instance to be initialized.
  *  \param ElementSize size in bytes of the data stored by the tree.
  *  \param EraseFun pointer to a function used to deinitialize stored elements prior to deletion.
@@ -17,14 +23,14 @@ typedef struct sBSTree sBSTree;
  */
 int sBSTInit(sBSTree** Tree, size_t ElementSize, void(*EraseFun)(void*));
 
-/*! Insert a copy of data into the tree.
+/*! \brief Insert a copy of data into the tree.
  *  \param Tree a pointer to the tree instance to insert into.
  *  \param Data the data to be copied into the tree.
  *  Inserts a copy of the given data into the tree. If the key exists and Replace is non-null, the data of the existing node will be replaced with a copy of the data given.
  */
 void sBSTInsert(sBSTree* Tree, long int Key, void* Data, int Replace);
 
-/*! Search for a given key in the tree
+/*! \brief Search for a given key in the tree
  *  \param Tree a pointer to the tree instance to search in
  *  \param Key the key to be searched for.
  *  \return Returns a pointer to the stored data if found, or NULL if not found.
@@ -32,21 +38,21 @@ void sBSTInsert(sBSTree* Tree, long int Key, void* Data, int Replace);
  */
 void* sBSTSearch(sBSTree* Tree, long int Key);
 
-/*! Checks if the tree contains a given key.
+/*! \brief Checks if the tree contains a given key.
  *  \param Tree a pointer to the tree instance to search in
  *  \param Key the key to be searched for
  *  \return 1 if the key exists in the tree, 0 if it does not.
  *  Examines the tree, returning a boolean value regarding the existence of a given key. */
 int sBSTContains(sBSTree* Tree, long int Key);
 
-/*! Delete a node from the tree, given its key
- * \param Tree a pointer to the tree instance to delete from
- * \param Key the key of the node to be deleted
+/*! \brief Delete a node from the tree, given its key
+ *  \param Tree a pointer to the tree instance to delete from
+ *  \param Key the key of the node to be deleted
  * Deletes a node from the tree
  */
 void sBSTDelete(sBSTree* Tree, long int Key);
 
-/*! Traverses the tree based on a given order.
+/*! \brief Traverses the tree based on a given order.
  *  \param Tree a pointer to the tree instance to traverse
  *  \param Order the traversing order to use
  *  \remark Order can be one of BSTTRAVERSE_INORDER, BSTTRAVERSE_PREORDER or BSTTRAVERSE_POSTORDER.
@@ -56,13 +62,13 @@ void sBSTDelete(sBSTree* Tree, long int Key);
  */
 void** sBSTTraverse(sBSTree* Tree, char Order, size_t* Size);
 
-/*! Delete every node in the given tree as well as the tree itself. Deinitializes all initialized data.
- * \param Tree reference to the tree instance to be destroyed.
- * Will delete the entire tree and release all used resources. Upon exiting, the provided Tree pointer will point to NULL.
+/*! \brief Delete every node in the given tree as well as the tree itself. Deinitializes all initialized data.
+ *  \param Tree reference to the tree instance to be destroyed.
+ *  Will delete the entire tree and release all used resources. Upon exiting, the provided Tree pointer will point to NULL.
  */
 void sBSTDestroy(sBSTree** Tree);
 
-/*! Returns the number of nodes in a given tree.
+/*! \brief Returns the number of nodes in a given tree.
  *  \param Tree pointer to an initialized tree instance
  *  \return The number of nodes in the given tree
  *  Returns the number of nodes in a given tree

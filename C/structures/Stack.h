@@ -1,3 +1,9 @@
+/**
+ * @file Stack.h
+ * @Author Jimmy Holm
+ * @date October 7, 2013
+ * @brief A Generic Stack implementation.
+ */
 #ifndef STACK_H
 #define STACK_H
 #include <stdlib.h>

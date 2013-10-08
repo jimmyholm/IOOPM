@@ -1,3 +1,9 @@
+/**
+ * @file DynamicArray.h
+ * @Author Jimmy Holm
+ * @date October 7, 2013
+ * @brief A Generic Dynamic Array implementation.
+ */
 #ifndef DYNAMICARRAY_H
 #define DYNAMICARRAY_H
 

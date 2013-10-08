@@ -2,7 +2,7 @@
  * @file LinkedList.h
  * @Author Jimmy Holm, Marcus Münger
  * @date September 25, 2013
- * @brief A Generic Linked List implementation in C
+ * @brief A Generic Linked List
  */
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
