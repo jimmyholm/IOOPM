@@ -1,15 +1,15 @@
 public class Lane {
 
     public static class OverflowException extends RuntimeException {
-        // Undantag som kastas när det inte gick att lägga 
-        // in en ny bil på vägen
+        // Undantag som kastas nar det inte gick att lagga 
+        // in en ny bil pa vagen
     }
 
     protected CarPosition[] theLane;
 
     public Lane(int n) {
-	// Konstruerar ett Lane-objekt med plats för n fordon
-    // Samt länker ihop varje CarPosition med forward för den framför
+	// Konstruerar ett Lane-objekt med plats for n fordon
+    // Samt lanker ihop varje CarPosition med forward for den framfor
     }
     
     public boolean matchEnd(CarPosition target)
@@ -36,19 +36,19 @@ public class Lane {
     }
 
     public void step() {
-	// Stega fram alla fordon (utom det på plats 0) ett steg 
-        // (om det går). (Fordonet på plats 0 tas bort utifrån 
+	// Stega fram alla fordon (utom det pa plats 0) ett steg 
+        // (om det gar). (Fordonet pa plats 0 tas bort utifran 
 	// mm h a metoden nedan.)
     }
 
     public Car getFirst() {
     	return null;
-	// Returnera och tag bort bilen som står först
+	// Returnera och tag bort bilen som star forst
     }
 
     public Car firstCar() {
     	return null;
-	// Returnera bilen som står först utan att ta bort den
+	// Returnera bilen som star forst utan att ta bort den
     }
 
 
@@ -58,8 +58,8 @@ public class Lane {
     }
 
     public void putLast(Car c) throws OverflowException {
-	// Ställ en bil på sista platsen på vägen
-	// (om det går).
+	// Stall en bil pa sista platsen pa vagen
+	// (om det gar).
     }
 
     public String toString() {

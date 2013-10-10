@@ -1,5 +1,3 @@
-
-
 public class Car {
 
     private int bornTime;
@@ -17,7 +15,7 @@ public class Car {
     // konstruktor och get- oct set-metoder
     //...
 
-    public void setcurrentPosition (Car currentPosition) { this.currentPosition = currentPosition; }
+    public void setcurrentPosition (CarPosition currentPosition) { this.currentPosition = currentPosition; }
 
     public int getbornTime () { return this.bornTime; }
     public CarPosition getdestination () { return this.destination; }
@@ -34,8 +32,8 @@ public class Car {
             + this.bornTime 
             + ", destination = " 
             + this.destination 
-            +", currentpossition = " 
-            +this.currentPossition;
+            + ", currentPosition = " 
+            + this.currentPosition;
     }
     
 }
