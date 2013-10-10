@@ -75,9 +75,17 @@ void listPopBack(sLinkedList* List);
  *
  *\param Iterator an initialized iterator into a linked list.
  * listErase erases the element pointed to by the iterator, removing it from its list and calling upon the data's erasure function if present.
- *\sa listPopFront(), listPopBack(), and listHead()
+ *\sa listPopFront(), listPopBack(), listEraseData() and listHead()
  */
 void listErase(sListIterator* Iterator);
+
+/*! \brief Erase the element containing Data
+ *
+ *\param Iterator an initialized iterator into a linked list.
+ * listErase erases the element pointed to by the iterator, removing it from its list and calling upon the data's erasure function if present.
+ *\sa listPopFront(), listPopBack(), listErase() and listHead()
+ */
+void listEraseData(sLinkedList* List, void* Data, int (*cmp)(void*, void*));
 
 /*! \brief Return the data held by an iterator.
  *
@@ -91,10 +99,19 @@ void* listGet(sListIterator* Iterator);
 /*! \brief Return the data of the first element of the list.
  *
  * \param List pointer to an initialized list
- * \return the data held by the list's head or NULL for an empty list
+ * \return The data held by the list's head or NULL for an empty list.
  * listPeek returns the data stored in the list's head element.
  */
 void* listPeek(sLinkedList* List);
+
+/*! \brief Find a given element in the list, using a comparator function.
+ *  \param List pointer to an initialized list
+ *  \param Data data to look for
+ *  \param Cmp pointer to a comparison function. Should return 1 if the two data samples are equal, 0 otherwise.
+ *  \return The data stored in the element if it exists in the list, NULL otherwise.
+ */
+void* listFind(sLinkedList* List, void* Data, int (*cmp)(void*, void*));
+
 /*! \brief Initialize an iterator to the head of the list
  *
  * \param List a pointer to an initialized list.

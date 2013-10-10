@@ -66,9 +66,57 @@ void sBinHeapDeleteExtreme(sBinomHeap* Heap);
  */
 void sBinHeapDelete(sBinomHeap* Heap, long Key);
 
+/*! \brief Delete the node with the maximum/minimum key value depending on the heap type.
+ *  \param Heap a binomial heap instance pointer to the heap that will have its extreme node deleted.
+ *  Deletes the node with the extreme key value depending on the heap type. Calls upon the heap's EraseFun if available.
+ */ 
+void sBinHeapDeleteExtreme(sBinomHeap* Heap);
+
+/*! \brief Delete a node containing the given data
+ *  \param Heap a binomial heap instance pointer to the heap that will have a given node deleted.
+ *  \param Data the data held by the node to be deleted.
+ *  \param cmp a function to determine equality between two elements. Should return 1 if the elements are equal, 0 otherwise.
+ *
+ *  Deletes a node holding the given data from the heap. Calls upon the heap's EraseFun if available.
+ */
+void sBinHeapDeleteData(sBinomHeap* Heap, void* Data, int (*cmp)(void*, void*));
+
 /*! \brief Destroy a given heap.
  *  \param Heap reference to a binomial heap instance pointer to the heap to be destroyed.
  *  Deletes every node in the tree, releasing all kept resources and calling the EraseFun, if available, on each element in turn. Upon finishing, the given Heap pointer will point to NULL.
  */
 void sBinHeapDestroy(sBinomHeap** Heap);
+
+/*! \brief Determine if a given heap is empty.
+ *  \param Heap the heap to examine
+ *  \return Returns 1 if the heap is empty, 0 otherwise.
+ *  Return a boolean integer depending on whether Heap contains any elements or not.
+ */
+int sBinHeapEmpty(sBinomHeap* Heap);
+
+/*! \brief Determine the size of a given heap.
+ *  \param Heap the heap to examine
+ *  \return Returns the number of nodes in a given heap.
+ *  Return the number of elements in a given heap.
+ */
+size_t sBinHeapSize(sBinomHeap* Heap);
+
+/*!  \brief Determine if the heap has an element containing the given data.
+ *   \param Heap the heap to examine
+ *   \param Data the data to look for.
+ *   \param cmp a function to determine equality between two elements. Should return 1 if the elements are equal, 0 otherwise.
+ *   \return 1 if the given data is stored in the heap, 0 otherwise.
+ *   
+ *   Returns a boolean value based on whether a given data exists in the heap.
+ */
+int sBinHeapContains(sBinomHeap* Heap, void* Data, int (*cmp)(void*, void*));
+
+/*!  \brief Find and return a node based on its data.
+ *   \param Heap the heap to examine
+ *   \param Data the data to look for.
+ *   \param cmp a function to determine equality between two elements. Should return 1 if the elements are equal, 0 otherwise.
+ *   \return Pointer to the data stored in the heap, if that data exists. Otherwise NULL.
+ *   Return pointer to the data stored in the heap, if that data exists. Otherwise NULL.
+ */
+void* sBinHeapFind(sBinomHeap* Heap, void* Data, int (*cmp)(void*, void*));
 #endif // BINOMIALHEAP_H
