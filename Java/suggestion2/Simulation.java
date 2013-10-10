@@ -62,12 +62,28 @@
 
 
 public class Simulation {
-
-    public static void main(String [] args) {
-	// Skapar ett TrafficSystem
-	// Utfor stegningen, anropar utskriftsmetoder
-
-	//...
-
-    }
+	
+	public static void main(String [] args) {
+		long    lastTick    = System.currentTimeMillis();
+		long    timeElapsed = 0;
+		long    TimePerStep = 100;
+		long    stepCntr    = TimePerStep;
+		boolean running     = true;
+		boolean tick        = true;
+		TrafficSystem TS    = new TrafficSystem();
+		while(running)
+		{
+			timeElapsed = System.currentTimeMillis() - lastTick;
+			lastTick = System.currentTimeMillis();
+			stepCntr += timeElapsed;
+			while(stepCntr >= TimePerStep)
+			{
+				System.out.print("\033[H\033[2J"); // Clear the terminal.
+				System.out.flush();
+				TS.step();
+				TS.print();
+				stepCntr -= TimePerStep;
+			}
+		}
+	}
 }

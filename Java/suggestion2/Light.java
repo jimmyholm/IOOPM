@@ -20,7 +20,8 @@ public class Light {
     }
 
     public String  toString()  {
-    	return "Light(Period: " + period + ", time: " + time + ", isGreen: " + isGreen() + ")";
+			return "(" + ((isGreen()) ? "G" : "R") +")";
+    	//return "Light(Period: " + period + ", time: " + time + ", isGreen: " + isGreen() + ")";
     	}
 	
 }

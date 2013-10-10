@@ -1,0 +1,7 @@
+ArrivalIntensity = 0.5
+TurnIntensity = 0.5
+LightPeriod = 15
+ForwardGreenPeriod = 5
+TurnGreenPeriod = 5
+TotalLength = 30
+SideLaneLength = 10
