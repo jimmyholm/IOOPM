@@ -8,6 +8,9 @@ public class Lane {
     protected CarPosition[] theLane;
 
     public Lane(int n) {
+        theLane = new CarPosition[n];
+        for (int i = 1; i < n; i++)
+            theLane[i].setForward(theLane[i-1]);
 	// Konstruerar ett Lane-objekt med plats for n fordon
     // Samt lanker ihop varje CarPosition med forward for den framfor
     }
@@ -36,28 +39,44 @@ public class Lane {
     }
 
     public void step() {
+        for (int i = 0; i < theLane.length; i++){
+            if(theLane[i].getCurrentCar() != null){
+                theLane[i].getCurrentCar().step();
+            }
+        }
+
+
+
 	// Stega fram alla fordon (utom det pa plats 0) ett steg 
         // (om det gar). (Fordonet pa plats 0 tas bort utifran 
 	// mm h a metoden nedan.)
     }
 
     public Car getFirst() {
-    	return null;
+        Car returnCar = theLane[0].getCurrentCar();
+        theLane[0].setCurrentCar(null);
+    	return returnCar;
 	// Returnera och tag bort bilen som star forst
     }
 
     public Car firstCar() {
-    	return null;
+        Car returnCar = theLane[0].getCurrentCar();
+        return returnCar;
 	// Returnera bilen som star forst utan att ta bort den
     }
 
 
     public boolean lastFree() {
-    	return false;
+        Car returnBool = theLane[theLane.length -1].getCurrentCar();
+        return (returnBool == null);
 	// Returnera true om sista platsen ledig, annars false
     }
 
     public void putLast(Car c) throws OverflowException {
+        if (lastFree())
+            theLane[theLane.length -1].setCurrentCar(c);
+        else
+            throw new OverflowException();
 	// Stall en bil pa sista platsen pa vagen
 	// (om det gar).
     }
