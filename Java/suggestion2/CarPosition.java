@@ -4,18 +4,16 @@
 // Haller i en bil och kanner till sina "grannar". 
 public class CarPosition{
 	
-	private Car currentCar = null; // null om ingen bil finns pa positionen
+	private Car currentCar       = null; // null om ingen bil finns pa positionen
 	
 	private Lane owner;
 	
-	private CarPosition forward;
-	private CarPosition turn;
+	private CarPosition forward  = null;
+	private CarPosition turn     = null;
 	
 	public CarPosition(Lane a_Owner)
 	{
 		owner = a_Owner;
-		forward = null;
-		turn = null;
 	}
 	
 	public boolean isEnd(CarPosition target)
@@ -55,12 +53,20 @@ public class CarPosition{
 		return turn;
 	}
 	
-	public void setForward(carPosition forward) {
+	public void setForward(CarPosition forward) {
 		this.forward = forward;
 	}
 	
 	public CarPosition getForward() {
 		return forward;
+	}
+
+	public void setCurrentCar(Car currentCar) {
+		this.currentCar = currentCar;
+	}
+	
+	public Car getCurrentCar() {
+		return currentCar;
 	}
 	
 }
