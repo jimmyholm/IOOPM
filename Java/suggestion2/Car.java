@@ -6,9 +6,11 @@ public class Car {
     private CarPosition destination; 
 
     private CarPosition currentPosition;
+
+
     
     public void step()
-    { if (currentPosition != destination) 
+    {  
     	// Uppdatera bilen ett tidssteg
     }
 
@@ -33,7 +35,7 @@ public class Car {
             + ", destination = " 
             + this.destination 
             +", currentpossition = " 
-            +this.currentpossition;
+            +this.currentPossition;
     }
     
 }
