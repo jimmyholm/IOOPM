@@ -9,6 +9,7 @@ public class Car {
     
     public void step()
     {  
+        currentPosition.moveForward();
     	// Uppdatera bilen ett tidssteg
     }
 
