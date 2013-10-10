@@ -14,6 +14,8 @@ public class CarPosition{
 	public CarPosition(Lane a_Owner)
 	{
 		owner = a_Owner;
+		forward = null;
+		turn = null;
 	}
 	
 	public boolean isEnd(CarPosition target)
@@ -23,12 +25,24 @@ public class CarPosition{
 	
 	public boolean moveForward()
 	{
+		if(forward != null && forward.currentCar == null)
+		{
+			forward.currentCar = currentCar;
+			currentCar = null;
+			return true;
+		}
 		return false;
 		// Flytta bilen fram till forward
 	}
 	
 	public boolean turn()
 	{
+		if(turn != null && turn.currentCar == null)
+		{
+			turn.currentCar = currentCar;
+			currentCar = null;
+			return true;
+		}
 		return false;
 		// Flytta bilen till turn
 	}
@@ -41,5 +55,12 @@ public class CarPosition{
 		return turn;
 	}
 	
+	public void setForward(carPosition forward) {
+		this.forward = forward;
+	}
+	
+	public CarPosition getForward() {
+		return forward;
+	}
 	
 }
