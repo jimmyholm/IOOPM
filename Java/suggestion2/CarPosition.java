@@ -25,6 +25,7 @@ public class CarPosition{
 	{
 		if(forward != null && forward.currentCar == null)
 		{
+			currentCar.currentPosition = forward;
 			forward.currentCar = currentCar;
 			currentCar = null;
 			return true;
@@ -37,6 +38,7 @@ public class CarPosition{
 	{
 		if(turn != null && turn.currentCar == null)
 		{
+			currentCar.currentPosition = turn;
 			turn.currentCar = currentCar;
 			currentCar = null;
 			return true;

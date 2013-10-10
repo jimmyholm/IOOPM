@@ -1,48 +1,49 @@
 public class TrafficSystem {
-    // Definierar de vagar och signaler som ingar i det 
-    // system som skall studeras.
-    // Samlar statistik
+	// Definierar de vagar och signaler som ingar i det 
+	// system som skall studeras.
+	// Samlar statistik
+	
+	// Attribut som beskriver bestandsdelarna i systemet
+	private Lane  r0;
+	private Lane  r1;
+	private Lane  r2;
+	private Light s1;
+	private Light s2;
+	
+	// Diverse attribut for simuleringsparametrar (ankomstintensiteter,
+	// destinationer...)
+	private float ArrivalIntensity; // Ankomstintensitet (% chans per step)
+	private CarPosition D1;         // Forward
+	private CarPosition D2;         // Turn
+	// Diverse attribut for statistiksamling
+	//....    
     
-    // Attribut som beskriver bestandsdelarna i systemet
-    private Lane  r0;
-    private Lane  r1;
-    private Lane  r2;
-    private Light s1;
-    private Light s2;
+	private int time = 0;
 
-    // Diverse attribut for simuleringsparametrar (ankomstintensiteter,
-    // destinationer...)
+	public TrafficSystem() {
+	}
 
-    // Diverse attribut for statistiksamling
-    //....    
-    
-    private int time = 0;
+	public void readParameters() {
+		// Laser in parametrar for simuleringen
+		// Metoden kan lasa fran terminalfonster, dialogrutor
+		// eller fran en parameterfil. Det sista alternativet
+		// ar att foredra vid uttestning av programmet eftersom
+		// man inte da behover mata in vardena vid varje korning.
+		// Standardklassen Properties ar anvandbar for detta. 
+	}
 
-    public TrafficSystem() {
-    	//...
-    	}
+	public void step() {
+		// Stega systemet ett tidssteg m h a komponenternas step-metoder
+		// Skapa bilar, lagg in och ta ur pa de olika Lane-kompenenterna
+	}
 
-    public void readParameters() {
-	// Laser in parametrar for simuleringen
-	// Metoden kan lasa fran terminalfonster, dialogrutor
-	// eller fran en parameterfil. Det sista alternativet
-	// ar att foredra vid uttestning av programmet eftersom
-	// man inte da behover mata in vardena vid varje korning.
-        // Standardklassen Properties ar anvandbar for detta. 
-    }
+	public void printStatistics() {
+		// Skriv statistiken samlad sa har langt
+	}
 
-    public void step() {
-	// Stega systemet ett tidssteg m h a komponenternas step-metoder
-	// Skapa bilar, lagg in och ta ur pa de olika Lane-kompenenterna
-    }
-
-    public void printStatistics() {
-	// Skriv statistiken samlad sa har langt
-    }
-
-    public void print() {
-	// Skriv ut en grafisk representation av kosituationen
-	// med hjalp av klassernas toString-metoder
-    }
+	public void print() {
+		// Skriv ut en grafisk representation av kosituationen
+		// med hjalp av klassernas toString-metoder
+	}
 
 }
