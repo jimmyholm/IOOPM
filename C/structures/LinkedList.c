@@ -148,6 +148,23 @@ void listErase(sListIterator* Iterator)
   Iterator->List->Size--;
 }
 
+void listEraseData(sLinkedList* List, void* Data, int (*cmp)(void*, void*))
+{
+	sListIterator* It = 0;
+	listHead(List, &It);
+	while(It != NULL)
+	{
+		if((*cmp)((*It->It)->Data, Data))
+		{
+			listErase(It);
+			listIteratorDestroy(&It);
+			return;
+		}
+		listIteratorNext(It);
+	}
+	listIteratorDestroy(&It);
+}
+
 void* listGet(sListIterator* Iterator)
 {
   if(*(Iterator->It) == NULL)
@@ -162,6 +179,22 @@ void* listPeek(sLinkedList* List)
   if(List->Head == NULL)
     return NULL;
   return List->Head->Data;
+}
+
+void* listFind(sLinkedList* List, void* Data, int (*cmp)(void*, void*))
+{
+	if(List == NULL || Data == NULL || cmp == NULL)
+		return NULL;
+	if(List->Head == NULL)
+		return NULL;
+	sListNode* Node = List->Head;
+	while(Node != NULL)
+	{
+		if((*cmp)(Data, Node->Data))
+			return Node->Data;
+		Node = Node->Next;
+	}
+	return NULL;
 }
 
 void listHead(sLinkedList* List, sListIterator** It)
