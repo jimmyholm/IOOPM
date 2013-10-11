@@ -22,10 +22,9 @@ public class TrafficSystem {
 	private int greenFPeriod;
 	private int greenTPeriod;
 	// Diverse attribut for statistiksamling
-	private int totalThroughput = 0;
-	private int currentNumCars = 0;
-
-	public TrafficSystem() {
+	private Statistics Stats;
+	private static TrafficSystem Instance = null;
+  private TrafficSystem() {
 		readParameters();
 		r0 = new Lane(totalLaneLength - sideLaneLength);
 		r1 = new Lane(sideLaneLength);
@@ -34,6 +33,13 @@ public class TrafficSystem {
 		s2 = new Light(lightPeriod, greenTPeriod);
 		D1 = new CarPosition(r1);
 		D2 = new CarPosition(r2);
+		Stats = new Statistics();
+	}
+	
+	public static TrafficSystem getInstance() {
+		if(TrafficSystem.Instance == null)
+			TrafficSystem.Instance = new TrafficSystem();
+		return TrafficSystem.Instance;
 	}
 
 	public void readParameters() {
@@ -61,17 +67,35 @@ public class TrafficSystem {
 		greenTPeriod = Integer.parseInt(P.getProperty("TurnGreenPeriod"));
 	}
 
-	public void step() {
+	public void step(int stepCnt) {
 		// Stega systemet ett tidssteg m h a komponenternas step-metoder
 		// Skapa bilar, lagg in och ta ur pa de olika Lane-kompenenterna
 		s1.step();
 		s2.step();
 		if(s1.isGreen())
-			if(r1.getFirst() != null)
-				currentNumCars--;
+			if(r1.firstCar() != null)
+			{
+				Car c = r1.getFirst();
+				Stats.currentCarCount--;
+				Stats.currentCarCountForward--;
+				int time = (stepCnt - c.getbornTime());
+				if(time > Stats.longestTimeForward)
+					Stats.longestTimeForward = time;
+				Stats.totalTimeForward += time;
+				Stats.averageTimeForward = (float)Stats.totalTimeForward / (float)Stats.totalCarCountForward;
+			}
 		if(s2.isGreen())
-			if(r2.getFirst() != null)
-				currentNumCars--;		
+			if(r2.firstCar() != null)
+			{
+				Car c = r2.getFirst();
+				Stats.currentCarCount--;		
+				Stats.currentCarCountTurn--;
+				int time = stepCnt- c.getbornTime();
+				if(time > Stats.longestTimeTurn)
+					Stats.longestTimeTurn = time;
+				Stats.totalTimeTurn += time;
+				Stats.averageTimeTurn = (float)Stats.totalTimeTurn / (float)Stats.totalCarCountTurn;
+			}
 		
 		r2.step();
 		r1.step();
@@ -90,9 +114,21 @@ public class TrafficSystem {
 			if(r0.lastFree())
 			{
 				CarPosition D = (Math.random() <= turnIntensity) ? D2 : D1;
-				r0.putLast(new Car((int)System.currentTimeMillis(), D, null));
-				currentNumCars++;
-				totalThroughput++;
+				r0.putLast(new Car(stepCnt, D, null));
+				Stats.currentCarCount++;
+				if(Stats.currentCarCount > Stats.mostSimultaneousCars)
+					Stats.mostSimultaneousCars = Stats.currentCarCount;
+				Stats.totalCarCount++;
+				if(D == D1)
+				{
+					Stats.currentCarCountForward++;
+					Stats.totalCarCountForward++;
+				}
+				else
+				{
+					Stats.currentCarCountTurn++;
+					Stats.totalCarCountTurn++;
+				}
 			}
 		}
 		
@@ -100,11 +136,22 @@ public class TrafficSystem {
 
 	public void printStatistics() {
 		// Skriv statistiken samlad sa har langt
+		System.out.println("\t\t\t\tStatistics\n--------------------------------------------------------------------------------");
+		System.out.println("\t\t\t\tTraffic\n--------------------------------------------------------------------------------");
+		System.out.println("Current cars:\t\t\t\t" + Stats.currentCarCount + "\nTotal Throughput:\t\t\t" + Stats.totalCarCount);
+		System.out.println("\u001b[37;1mCurrent Cars Heading Forward:\t\t" + Stats.currentCarCountForward + "\nTotal Number of Cars Headed Forward:\t" + Stats.totalCarCountForward+"\u001b[0m");
+		System.out.println("\u001b[31;1mCurrent Cars Turning:\t\t\t" + Stats.currentCarCountTurn + "\nTotal Number of Cars Turning:\t\t" + Stats.totalCarCountTurn+"\u001b[0m");
+		System.out.println("Most Simultaneous Cars in simulation:\t" + Stats.mostSimultaneousCars);
+		System.out.println("\t\t\t\tTiming\n--------------------------------------------------------------------------------\nMinimum number of timesteps from A to Destination: " + totalLaneLength + " timesteps.");
+		System.out.println("\u001b[37;1mLongest Time Going Forward:\t" + Stats.longestTimeForward + " timesteps.\nAverage Time Going Forward:\t" + Stats.averageTimeForward + " timesteps\u001b[0m");
+		System.out.println("\u001b[31;1mLongest Time Turning:\t\t" + Stats.longestTimeForward + " timesteps.\nAverage Time Turning:\t\t" + Stats.averageTimeTurn + " timesteps\u001b[0m");
 	}
 
 	public void print() {
 		// Skriv ut en grafisk representation av kosituationen
 		// med hjalp av klassernas toString-metoder
+		System.out.println("\t\t\t\tSimulation\n--------------------------------------------------------------------------------");
+		System.out.println("Legend: \u001b[37;1m" + (char)(171) + "\u001b[0m = going forward. \u001b[31;1m" +(char)(171) + "\u001b[0m = turning.");
 		System.out.print(" C  ");
 		for(int i = 0; i < sideLaneLength; i++) 
 			System.out.print(" ");
@@ -112,9 +159,19 @@ public class TrafficSystem {
 		for(int i = 0; i < totalLaneLength-sideLaneLength; i++)
 			System.out.print(" ");
 		System.out.println("A");
-		System.out.println(s1 + "<" + r1 + "<" + r0 + "<");
-		System.out.println(s2 + "<" + r2 + "<");
+		System.out.println(s1 + "\u001b[37;1m<\u001b[0m" + r1 + "\u001b[37;1m<\u001b[0m" + r0 + "\u001b[37;1m<\u001b[0m");
+		System.out.println(s2 + "\u001b[37;1m<\u001b[0m" + r2 + "\u001b[37;1m<\u001b[0m");
 		// Print some statistics:
-		System.out.println("Current cars: " + currentNumCars + "\tTotal Throughput: " + totalThroughput);
+		
+		printStatistics();
+		//
+	}
+
+	public CarPosition getForwardDestination() {
+		return D1;
+	}
+
+	public CarPosition getTurnDestination() {
+		return D2;
 	}
 }

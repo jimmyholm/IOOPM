@@ -20,7 +20,7 @@ public class Light {
     }
 
     public String  toString()  {
-			return "(" + ((isGreen()) ? "G" : "R") +")";
+			return "\u001b[37;1m(" + ((isGreen()) ? "\u001b[32mG" : "\u001b[31;1mR") +"\u001b[37m)\u001b[0m";
     	//return "Light(Period: " + period + ", time: " + time + ", isGreen: " + isGreen() + ")";
     	}
 	

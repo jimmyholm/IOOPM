@@ -57,32 +57,31 @@
     
 */
 
-
-
-
-
 public class Simulation {
+
+	public static long TimePerStep = 100;
 	
 	public static void main(String [] args) {
 		long    lastTick    = System.currentTimeMillis();
 		long    timeElapsed = 0;
-		long    TimePerStep = 100;
-		long    stepCntr    = TimePerStep;
+		long    stepCntr    = Simulation.TimePerStep;
 		boolean running     = true;
 		boolean tick        = true;
-		TrafficSystem TS    = new TrafficSystem();
+		TrafficSystem TS    = TrafficSystem.getInstance();
+		int stepCnt         = 0;
 		while(running)
 		{
 			timeElapsed = System.currentTimeMillis() - lastTick;
 			lastTick = System.currentTimeMillis();
 			stepCntr += timeElapsed;
-			while(stepCntr >= TimePerStep)
+			while(stepCntr >= Simulation.TimePerStep)
 			{
+				stepCnt++;
 				System.out.print("\033[H\033[2J"); // Clear the terminal.
 				System.out.flush();
-				TS.step();
+				TS.step(stepCnt);
 				TS.print();
-				stepCntr -= TimePerStep;
+				stepCntr -= Simulation.TimePerStep;
 			}
 		}
 	}

@@ -91,11 +91,12 @@ public class Lane {
 		{
 			if(theLane[i].getCurrentCar() == null)
 			{
-				ret += "-";
+				ret += "\u001b[37;1m-\u001b[0m";
 			}
 			else
 			{
-				ret += (char)(171);//"C";
+				//ret += (char)(171);//"C";
+				ret += ((theLane[i].getCurrentCar().getdestination() == TrafficSystem.getInstance().getTurnDestination()) ? "\u001B[31;1m" : "\u001B[37;1m") + (char)(171) + "\u001B[0m";
 			}
 		}
 		return ret;
