@@ -58,4 +58,23 @@ public class Rectangle {
 		x = XCenter();
 		y = YCenter();
 	}
+	
+	public boolean Contains(int x, int y) {
+		return (x > Left && x <= Right) && (y > Top && y <= Bottom);
+	}
+	
+	public boolean Contains(Rectangle R) {
+		return (R.Left > Left && R.Right <= Right) && (R.Top > Top && R.Bottom <= Bottom);
+	}
+	
+	public boolean FacingHorizontal(Rectangle R) {
+		return (R.Left >= Left && R.Right <= Right) || (Left >= R.Left() && Right <= R.Right());
+	}
+	public boolean FacingVertical(Rectangle R) {
+		return (R.Top >= Top && R.Bottom <= Bottom) || (Top >= R.Top() && Bottom <= R.Bottom());
+	}
+	public String toString()
+	{
+		return "Rect(L = " + Left + ", T = " + Top + ", R = " + Right + ", B = " + Bottom + ")";
+	}
 }
