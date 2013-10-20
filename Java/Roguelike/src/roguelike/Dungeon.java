@@ -8,18 +8,16 @@ public class Dungeon {
 	private int		MINDIM 	 = 4;
 	private java.util.Stack<Rectangle> Rects;
 	private void DivideMap(Rectangle R, int Depth, boolean Vertical) {
-		/*if(Depth >= MAXDEPTH || R.Width() < MINDIM || R.Height() < MINDIM)
-			return;*/
 		Rectangle R1, R2;
 		int Cut = 0;
 		if(Vertical) {
-			Cut = (int)(Math.random() * (R.Height() - 2*MINDIM) + MINDIM);
-			R1 = new Rectangle(R.Left(), R.Top(), R.Width(), Cut-1);
-			R2 = new Rectangle(R.Left(), R.Top()+Cut, R.Width(), R.Height() - Cut);
+			Cut = (int)(Math.random() * (R.YCenter() - 2*MINDIM) + MINDIM) - 1;
+			R1 = new Rectangle(R.Left(), R.Top(), R.Right(), R.Top() + Cut-2);
+			R2 = new Rectangle(R.Left(), Cut+1, R.Right(), R.Bottom());
 		} else {
-			Cut = (int)(Math.random() * (R.Width() - 2*MINDIM) + MINDIM);
-			R1 = new Rectangle(R.Left(), R.Top(), Cut-1, R.Height());
-			R2 = new Rectangle(R.Left() + Cut, R.Top(), R.Width() - Cut, R.Height());
+			Cut = (int)(Math.random() * (R.XCenter() - 2*MINDIM) + MINDIM) - 1;
+			R1 = new Rectangle(R.Left(), R.Top(), R.Left() + Cut-2, R.Bottom());
+			R2 = new Rectangle(Cut+1, R.Top(), R.Right(), R.Bottom());
 		}
 		if(Depth >= MAXDEPTH || (R1.Width() <= MINDIM || R1.Height() <= MINDIM) || (R2.Width() <= MINDIM || R2.Height() <= MINDIM)) {
 			Rects.push(R1);
@@ -54,7 +52,6 @@ public class Dungeon {
 			for(int x = R.Left(); x < R.Right(); x++)
 				for(int y = R.Top(); y < R.Bottom(); y++)
 				{
-					
 					Map[x+y*this.Width] = ' ';
 				}
 		}

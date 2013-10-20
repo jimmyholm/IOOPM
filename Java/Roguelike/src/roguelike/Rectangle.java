@@ -1,57 +1,57 @@
 package roguelike;
 
 public class Rectangle {
-	private int x;
-	private int y;
-	private int Width;
-	private int Height;
+	private int Left;
+	private int Top;
+	private int Right;
+	private int Bottom;
 	
-	public Rectangle(int x,int y, int Width, int Height) {
-		this.x = x;
-		this.y = y;
-		this.Width = Width;
-		this.Height = Height;
+	public Rectangle(int Left, int Top, int Right, int Bottom) {
+		this.Left = Left;
+		this.Top = Top;
+		this.Right = Right;
+		this.Bottom = Bottom;
 	}
 	
 	public int Left() {
-		return x;
+		return Left;
 	}
 	
 	public int Top() {
-		return y;
+		return Top;
 	}
 	public int Right() {
-		return x + Width;
+		return Right;
 	}
 	
 	public int Bottom() {
-		return y + Height;
+		return Bottom;
 	}
 	
 	public int Width() {
-		return Width;
+		return Right-Left;
 	}
 	
 	public int Height() {
-		return Height;
+		return Bottom-Top;
 	}
 	
 	public int XCenter() {
-		return x + (Width/2);
+		return Left + (Width()/2);
 	}
 	
 	public int YCenter() {
-		return y + (Height/2);
+		return Top + (Height()/2);
 	}
 	
 	public void TL(Integer x, Integer y)	{
-		x = this.x;
-		y = this.y;
+		x = this.Left;
+		y = this.Top;
 	}
 	
 	public void BR(Integer x, Integer y) {
-		x = this.x + Width;
-		y = this.y + Height;
+		x = this.Right;
+		y = this.Bottom;
 	}
 	
 	public void Center(Integer x, Integer y) {
