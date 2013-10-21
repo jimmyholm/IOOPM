@@ -15,8 +15,9 @@ public class Dungeon {
 	private String 	Map[];
 	private int		Width;
 	private int 	Height;
-	/*private int		MAXDEPTH = 8;
-	private int		MINDIM 	 = 4;
+	/*private int		MINDIM 	 = 8;
+	 *private int		MINROOMS = 10;
+	 *private int		MAXROOMS = 20;
 	private java.util.Random Random;*/
 	public String ColorizeString(String s, int FG, boolean FGBright, int BG, boolean BGBright)
 	{
@@ -40,6 +41,10 @@ public class Dungeon {
 	public void MakeCorridors() {
 	}
 	
+	public void MakeRooms() {
+		
+	}
+	
 	public Dungeon(int Width, int Height, long Seed) {
 		this.Width 	= Width; 
 		this.Height = Height;
@@ -47,7 +52,7 @@ public class Dungeon {
 		Map = new String[this.Width*this.Height];
 		for(int x = 0; x < this.Width; x++)
 			for(int y = 0; y < this.Height; y++)
-				Map[x+y*this.Width] = ColorizeString(" ", 7, true, 7, true);
+				Map[x+y*this.Width] = ColorizeString("#", Color.White, true, Color.White, false);
 	}
 	
 	public String toString()
