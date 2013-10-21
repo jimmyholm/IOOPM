@@ -79,6 +79,11 @@ void listPopFront(sLinkedList* List)
   free(List->Head);
   List->Head = Node;
   List->Size--;
+  if(List->Head == NULL)
+  {
+	  List->Tail = NULL;
+	  List->Size = 0;
+  }
 }
 void listPopBack(sLinkedList* List)
 {
@@ -111,6 +116,11 @@ void listPopBack(sLinkedList* List)
   }
   free(it);
   List->Size--;
+  if(List->Tail == NULL)
+  {
+	  List->Head = NULL;
+	  List->Size = 0;
+  }
 }
 
 void listInsert(sListIterator* Iterator, void* Data)
@@ -127,6 +137,17 @@ void listInsert(sListIterator* Iterator, void* Data)
     Node->Next = (*(Iterator->It))->Next;
     (*Iterator->It)->Next = Node;
     Iterator->List->Size++;
+    if(Iterator->List->Head == Iterator->List->Tail)
+    {
+	    sListNode* N1 = Node;
+	    sListNode* N2 = Node->Next;
+	    while(N2 != NULL)
+	    {
+		    N1 = N2;
+		    N2 = N2->Next;
+	    }
+	    Iterator->List->Tail = N1;
+    }
   }
 }
 
@@ -146,6 +167,16 @@ void listErase(sListIterator* Iterator)
   free(Data);
   Data = NULL;
   Iterator->List->Size--;
+  if(Iterator->List->Head == NULL)
+  {
+	  Iterator->List->Tail = NULL;
+	  Iterator->List->Size = 0;
+  }
+  if(Iterator->List->Tail == NULL)
+  {
+	  Iterator->List->Head = NULL;
+	  Iterator->List->Size = 0;
+  }
 }
 
 void listEraseData(sLinkedList* List, void* Data, int (*cmp)(void*, void*))
@@ -190,7 +221,7 @@ void* listFind(sLinkedList* List, void* Data, int (*cmp)(void*, void*))
 	sListNode* Node = List->Head;
 	while(Node != NULL)
 	{
-		if((*cmp)(Data, Node->Data))
+		if((*cmp)(Data, Node->Data) == 1)
 			return Node->Data;
 		Node = Node->Next;
 	}
