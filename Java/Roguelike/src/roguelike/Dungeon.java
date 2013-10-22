@@ -28,17 +28,17 @@ public class Dungeon {
 	
 	public void AddHorizontalCorridor(int x1, int x2, int y) {
 		for(int i = Math.min(x1,  x2); i < Math.max(x1, x2) + 1; i++) {
-			if(Map[i+y*Width] == ColorizeString("h", Color.White, false, Color.Black, false))
+			if(Map[i+y*Width] == ColorizeString(" ", Color.White, false, Color.Black, false))
 				return;
-			Map[i+y*Width] = ColorizeString("h", Color.White, false, Color.Black, false);
+			Map[i+y*Width] = ColorizeString(" ", Color.White, false, Color.Black, false);
 		}
 	}
 	
 	public void AddVerticalCorridor(int y1, int y2, int x) {
 		for(int i = Math.min(y1,  y2); i < Math.max(y1, y2) + 1; i++) {
-			if(Map[x+i*Width] == ColorizeString("v", Color.White, false, Color.Black, false))
+			if(Map[x+i*Width] == ColorizeString(" ", Color.White, false, Color.Black, false))
 				return;
-			Map[x+i*Width] = ColorizeString("v", Color.White, false, Color.Black, false);
+			Map[x+i*Width] = ColorizeString(" ", Color.White, false, Color.Black, false);
 		}
 	}
 	
@@ -60,9 +60,6 @@ public class Dungeon {
 		}
 		ret += s + "\u001b[0m"; 
 		return ret;
-	}
-	
-	public void MakeCorridors() {
 	}
 	
 	public void MakeRooms() {
@@ -126,7 +123,6 @@ public class Dungeon {
 			for(int y = 0; y < this.Height; y++)
 				Map[x+y*this.Width] = ColorizeString(" ", Color.White, true, Color.White, false);
 		MakeRooms();
-		MakeCorridors();
 	}
 	
 	public String toString()
