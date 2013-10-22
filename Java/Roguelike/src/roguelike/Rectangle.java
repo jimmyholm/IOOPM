@@ -60,21 +60,27 @@ public class Rectangle {
 	}
 	
 	public boolean Contains(int x, int y) {
-		return (x > Left && x <= Right) && (y > Top && y <= Bottom);
+		return (x >= Left && x < Right) && (y >= Top && y < Bottom);
 	}
 	
-	public boolean Contains(Rectangle R) {
-		return (R.Left > Left && R.Right <= Right) && (R.Top > Top && R.Bottom <= Bottom);
+	public boolean Intersects(Rectangle R) {
+		return 	(
+				 (R.Left <= Right  && R.Right  > Left) && 
+				 (R.Top  <= Bottom && R.Bottom > Top )
+				);
+	}
+	public boolean Touching(Rectangle R) {
+		return 	(
+				 (R.Left-1 <= Right  && R.Right   + 1 > Left) && 
+				 (R.Top-1  <= Bottom && R.Bottom + 1 > Top )
+				);
 	}
 	
-	public boolean FacingHorizontal(Rectangle R) {
-		return (R.Left >= Left && R.Right <= Right) || (Left >= R.Left() && Right <= R.Right());
-	}
-	public boolean FacingVertical(Rectangle R) {
-		return (R.Top >= Top && R.Bottom <= Bottom) || (Top >= R.Top() && Bottom <= R.Bottom());
-	}
-	public String toString()
-	{
+	public String toString() {
 		return "Rect(L = " + Left + ", T = " + Top + ", R = " + Right + ", B = " + Bottom + ")";
+	}
+	
+	public boolean equals(Rectangle R) {
+		return (Left == R.Left && Right == R.Right && Top == R.Top && Bottom == R.Bottom);
 	}
 }
