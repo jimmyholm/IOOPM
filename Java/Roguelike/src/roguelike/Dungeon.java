@@ -1,16 +1,12 @@
 package roguelike;
 import java.util.*;
-public class Dungeon {
-	public static class Color{
-		public static int Black = 0;
-		public static int Red = 1;
-		public static int Green = 2;
-		public static int Yellow = 3;
-		public static int Blue = 4;
-		public static int Magenta = 5;
-		public static int Cyan = 6;
-		public static int White = 7;
-	}
+import javax.swing.JPanel;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+public class Dungeon extends JPanel{
+	private static final long serialVersionUID = 5158570127101695897L;
 	
 	private Tile	Map[];
 	private int		Width;
@@ -22,15 +18,40 @@ public class Dungeon {
 	private int		MAXTRIES = 1000;
 	private int		CurrentRooms = 0;
 	private int		GoalRooms = 0;
+	private Rectangle Camera = new Rectangle(0, 0, 26, 26);
 	private Random  Rnd;
 	private List<Room> Rooms;
+	private Tile PlayerTile = new Tile((char)2, false, false, new Color(255, 0, 0, 255));
+	public int playerX, playerY;
+	public void Step(long ElapsedTime) {
+		
+	}
 	
 	public void AddHorizontalCorridor(int x1, int x2, int y) {
 		for(int i = Math.min(x1,  x2); i < Math.max(x1, x2) + 1; i++) {
 			Map[i+y*Width].SetTile(' ');
 			Map[i+y*Width].SetBlocksMovement(false);
 			Map[i+y*Width].SetBlocksSight(false);
+			Map[i+y*Width].SetColor(Color.black);
 		}
+	}
+	
+	public void CenterCamera(int x, int y) {
+		if((x - Camera.Width()/2) < 0)
+			x = Camera.Width()/2;
+		if((x + Camera.Width() / 2) >= Width)
+			x = Width-1 - Camera.Width() / 2;
+		if((y - Camera.Height() / 2) < 0)
+			y = Camera.Height() / 2;
+		if((y + Camera.Height() / 2) >= Height)
+			y = Height-1 - Camera.Height() / 2;
+		int CW = Camera.Width()/2;
+		int CH = Camera.Height()/2;
+		int l = x - CW;
+		int r = x + CW;
+		int t = y - CH;
+		int b  =y + CH;
+		Camera = new Rectangle(l, t, r, b);
 	}
 	
 	public void AddVerticalCorridor(int y1, int y2, int x) {
@@ -38,27 +59,8 @@ public class Dungeon {
 			Map[x+i*Width].SetTile(' ');
 			Map[x+i*Width].SetBlocksMovement(false);
 			Map[x+i*Width].SetBlocksSight(false);
+			Map[x+i*Width].SetColor(Color.black);
 		}
-	}
-	
-	
-	public String ColorizeString(String s, int FG, boolean FGBright, int BG, boolean BGBright)
-	{
-		String ret = "";
-		if(FG != -1) {
-			ret +="\u001b[3" + FG + "";
-			if(FGBright)
-				ret += ";1";
-			ret +="m";
-		}
-		if(BG != -1){
-			ret += "\u001b[4" + BG + "";
-			if(BGBright)
-				ret += ";1";
-			ret += "m";
-		}
-		ret += s + "\u001b[0m"; 
-		return ret;
 	}
 	
 	public void MakeRooms() {
@@ -104,6 +106,7 @@ public class Dungeon {
 					Map[x+y*Width].SetTile(' ');
 					Map[x+y*Width].SetBlocksMovement(false);
 					Map[x+y*Width].SetBlocksSight(false);
+					Map[x+y*Width].SetColor(Color.black);
 				}
 		}
 	}
@@ -121,8 +124,13 @@ public class Dungeon {
 		Rooms = new ArrayList<Room>();
 		for(int x = 0; x < this.Width; x++)
 			for(int y = 0; y < this.Height; y++)
-				Map[x+y*this.Width] = new Tile('#', true, true);
+				Map[x+y*this.Width] = new Tile((char)219, true, true, new Color(255, 255, 255, 255));
 		MakeRooms();
+		Room R = Rooms.get(0);
+		Rectangle R1  = R.GetArea();
+		playerX = Rnd.nextInt((R1.Right()-R1.Left())) + R1.Left();
+		playerY = Rnd.nextInt((R1.Bottom()-R1.Top())) + R1.Top();
+		CenterCamera(playerX, playerY);
 	}
 	
 	public String toString()
@@ -134,7 +142,44 @@ public class Dungeon {
 				S += Map[x+y*this.Width].GetTile();
 			S += "\n";
 		}
-		S += CurrentRooms + "/" + GoalRooms;
 		return S;
 	}
+	
+	public void KeyDown(int Key)
+	{
+		switch(Key) {
+			case 0:
+				if(playerX < Width-1)
+					playerX++;
+				break;
+			case 1:
+				if(playerY < Height-1)
+					playerY++;
+				break;
+			case 2:
+				if(playerX > 0)
+					playerX++;
+				break;
+			default:
+				if(playerY > 0)
+					playerY--;
+				break;
+		}
+	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+		int w = TileSet.GetInstance().GetTileWidth();
+		int h = TileSet.GetInstance().GetTileHeight();
+		for(int y = Camera.Top(); y < Camera.Bottom(); y++)
+			for(int x = Camera.Left(); x < Camera.Right(); x++)
+			{
+				if(x == playerX && y == playerY)
+					PlayerTile.Draw(g2, (x - Camera.Left())*w, (y - Camera.Top())*h);
+				else
+					Map[x+y*this.Width].Draw(g2, (x - Camera.Left())*w, (y - Camera.Top())*h);
+			}
+		}
 }
