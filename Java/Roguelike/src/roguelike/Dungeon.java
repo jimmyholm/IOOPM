@@ -111,10 +111,10 @@ public class Dungeon extends JPanel{
 		}
 	}
 	
-	public Dungeon(int Width, int Height, long Seed, int MinRooms, int MaxRooms, int MinDim, int MaxDim) {
+	public Dungeon(int Width, int Height, int MinRooms, int MaxRooms, int MinDim, int MaxDim) {
 		this.Width 	= Width; 
 		this.Height = Height;
-		Rnd = new Random(Seed);
+		Rnd = Game.GetRandomizer();
 		MAXROOMS = MaxRooms;
 		MINROOMS = MinRooms;
 		MINDIM   = MinDim;
