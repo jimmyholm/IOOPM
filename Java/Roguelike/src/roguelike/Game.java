@@ -12,6 +12,7 @@ public class Game extends JFrame implements ActionListener{
 	private static final long serialVersionUID = -3442912778777128627L;
 	private static Random Randomizer = null;
 	private Dungeon D;
+	private MessageList ML;
 	public void actionPerformed(ActionEvent e)
 	{
 		
@@ -44,6 +45,12 @@ public class Game extends JFrame implements ActionListener{
 		D.setBorder(BorderFactory.createLineBorder(Color.gray));
 		D.setBackground(java.awt.Color.black);
 		D.setVisible(true);
+		ML = MessageList.GetInstance();
+		add(ML);
+		ML.setBounds(0, 26*TileSet.GetInstance().GetTileHeight()+1, 797, 800 - 26*TileSet.GetInstance().GetTileHeight()+1);
+		ML.setBorder(BorderFactory.createLineBorder(Color.gray));
+		ML.setBackground(java.awt.Color.black);
+		ML.setVisible(true);
 		pack();
 	}
 	
@@ -57,10 +64,6 @@ public class Game extends JFrame implements ActionListener{
 				Game.SetRandomizer(Seed);
 				TileSet.GetInstance().Load("Tileset.png", 20, 20, 16, 16);
 				EntryRepo.GetInstance().Load("Entries.txt");
-				for(int i = 0; i < 10; i++) {
-					ItemEntry e = EntryRepo.GetInstance().GetRandomOfType("Weapon");
-					System.out.println(e.GetStats().GetString("Name"));
-				}
 				Game G = new Game();
 				G.DoNothing();
 			}
