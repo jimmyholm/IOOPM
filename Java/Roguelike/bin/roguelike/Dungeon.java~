@@ -111,11 +111,12 @@ public class Dungeon extends JPanel{
 		}
 	}
 	
-
-
-
+<<<<<<< HEAD
+	public Dungeon(int Width, int Height, long Seed, int MinRooms, int MaxRooms, int MinDim, int MaxDim) {
+		this.player = new Player(0, 0, new Stats());
+=======
 	public Dungeon(int Width, int Height, int MinRooms, int MaxRooms, int MinDim, int MaxDim) {
-
+>>>>>>> 95669e4d4dbead18b450e5ce85e340ecc980259d
 		this.Width 	= Width; 
 		this.Height = Height;
 		Rnd = Game.GetRandomizer();
@@ -125,18 +126,16 @@ public class Dungeon extends JPanel{
 		MAXDIM   = MaxDim;
 		GoalRooms = Rnd.nextInt(MAXROOMS-MINROOMS) + MINROOMS; 
 		Map = new Tile[this.Width*this.Height];
-		
+		Rooms = new ArrayList<Room>();
 		for(int x = 0; x < this.Width; x++)
 			for(int y = 0; y < this.Height; y++)
 				Map[x+y*this.Width] = new Tile((char)219, true, true, new Color(255, 255, 255, 255));
-		Rooms = new ArrayList<Room>();
 		MakeRooms();
 		Room R = Rooms.get(0);
 		Rectangle R1  = R.GetArea();
-		this.player = new Player((Rnd.nextInt((R1.Right()-R1.Left())) + R1.Left()), (Rnd.nextInt((R1.Bottom()-R1.Top())) + R1.Top()), new Stats());
-
-		
-		CenterCamera(this.player.GetPlayerX(), this.player.GetPlayerY());
+		playerX = Rnd.nextInt((R1.Right()-R1.Left())) + R1.Left();
+		playerY = Rnd.nextInt((R1.Bottom()-R1.Top())) + R1.Top();
+		CenterCamera(playerX, playerY);
 	}
 	public Player GetPlayer () {return this.player;}
 	public String toString()
@@ -155,20 +154,20 @@ public class Dungeon extends JPanel{
 	{
 		switch(Key) {
 			case 0:
-				if(player.GetPlayerX() < Width-1)
-					this.player.SetPlayerX(player.GetPlayerX() + 1);
+				if(playerX < Width-1)
+					playerX++;
 				break;
 			case 1:
-				if(player.GetPlayerY() < Height-1)
-					this.player.SetPlayerY(player.GetPlayerY() + 1);
+				if(playerY < Height-1)
+					playerY++;
 				break;
 			case 2:
-				if(player.GetPlayerX() > 0)
-					this.player.SetPlayerX(player.GetPlayerX() + 1);
+				if(playerX > 0)
+					playerX++;
 				break;
 			default:
-				if(player.GetPlayerY() > 0)
-				this.player.SetPlayerY(player.GetPlayerY() - 1);
+				if(playerY > 0)
+					playerY--;
 				break;
 		}
 	}
@@ -182,7 +181,7 @@ public class Dungeon extends JPanel{
 		for(int y = Camera.Top(); y < Camera.Bottom(); y++)
 			for(int x = Camera.Left(); x < Camera.Right(); x++)
 			{
-				if(x == player.GetPlayerX() && y == player.GetPlayerY())
+				if(x == playerX && y == playerY)
 					PlayerTile.Draw(g2, (x - Camera.Left())*w, (y - Camera.Top())*h);
 				else
 					Map[x+y*this.Width].Draw(g2, (x - Camera.Left())*w, (y - Camera.Top())*h);

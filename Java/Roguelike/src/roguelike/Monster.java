@@ -74,15 +74,15 @@ public class Monster extends Creature {
 
 	public void Step() {
 		
-		if (PlayerDetect(dungeon.GetPlayer())){
-			if (PlayerDistance(dungeon.GetPlayer()) < 2){
-				AttackPlayer();}
-			else
-			MoveToPlayer();
-			}
-		}
-				
-		}
+//		if (PlayerDetect(dungeon.GetPlayer())){
+//			if (PlayerDistance(dungeon.GetPlayer()) < 2){
+//				AttackPlayer();}
+//			else
+//			MoveToPlayer();
+//			}
+//		}
+//				
+//		}
 
 
 	}
