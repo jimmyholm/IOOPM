@@ -61,6 +61,13 @@ public class Monster extends Creature {
 		int yDiff = (this.y - player.GetPlayerY());	
 		return (java.lang.Math.sqrt((xDiff * xDiff) + (yDiff * yDiff)));
 	}
+	
+	public double PlayerDistance(int x, int y, Player player) {
+		int xDiff = (x - player.GetPlayerX());
+		int yDiff = (y - player.GetPlayerY());	
+		return (java.lang.Math.sqrt((xDiff * xDiff) + (yDiff * yDiff)));
+	}
+	
 
 	public boolean PlayerDetect(Player player) {
 		if (PlayerDistance(dungeon.GetPlayer()) < 4){
@@ -73,18 +80,69 @@ public class Monster extends Creature {
 
 
 	public void Step() {
-		
-//		if (PlayerDetect(dungeon.GetPlayer())){
-//			if (PlayerDistance(dungeon.GetPlayer()) < 2){
-//				AttackPlayer();}
-//			else
-//			MoveToPlayer();
-//			}
-//		}
-//				
-//		}
-
-
+		if (PlayerDetect(dungeon.GetPlayer())){
+			if (PlayerDistance(dungeon.GetPlayer()) < 2){
+//				AttackPlayer();
+				}
+			else
+				MoveToPlayer();
+		}
+		else
+			MoveRoam();
 	}
 
+private void MoveToPlayer () {
+	double northDistance = PlayerDistance(this.x, this.y + 1, dungeon.GetPlayer());
+	double southDistance = PlayerDistance(this.x, this.y - 1, dungeon.GetPlayer());
+	double westDistance = PlayerDistance(this.x -1, this.y, dungeon.GetPlayer());
+	double eastDistance = PlayerDistance(this.x +1, this.y, dungeon.GetPlayer());
+	if (northDistance < PlayerDistance(dungeon.GetPlayer()) || dungeon.CanMove(this.x, this.y +1)) {this.y = this.y + 1;}
+	else
+	if (southDistance < PlayerDistance(dungeon.GetPlayer()) || dungeon.CanMove(this.x, this.y -1)) {this.y = this.y - 1;}
+	else
+	if (westDistance < PlayerDistance(dungeon.GetPlayer()) || dungeon.CanMove(this.x -1, this.y)) {this.x = this.x - 1;}
+	else
+	if (eastDistance < PlayerDistance(dungeon.GetPlayer()) || dungeon.CanMove(this.x +1, this.y)) {this.x = this.x + 1;};
+	}
+
+private void MoveRoam () {
+
+	boolean foundMove = false;
+while (!foundMove){
+int randomDirection = DiceRoller.Roll("d4");
+switch (randomDirection){
+case 1:
+	if (dungeon.CanMove(this.x, this.y + 1)) {this.y = this.y + 1; foundMove = true;} 
+	break;
+case 2:
+	if (dungeon.CanMove(this.x, this.y - 1)) {this.y = this.y - 1; foundMove = true;}
+	break;
+case 3:
+	if (dungeon.CanMove(this.x + 1, this.y)) {this.y = this.x + 1; foundMove = true;}
+	break;
+case 4:
+	if (dungeon.CanMove(this.x - 1, this.y)) {this.y = this.x - 1; foundMove = true;}
+	break;
 }
+
+}
+
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

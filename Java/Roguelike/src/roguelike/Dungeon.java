@@ -138,6 +138,17 @@ public class Dungeon extends JPanel{
 		
 		CenterCamera(this.player.GetPlayerX(), this.player.GetPlayerY());
 	}
+	
+public boolean CanMove (int x, int y) {
+if ((x < 0) || x >= this.Width) {return false;}
+if ((y < 0) || y >= this.Height) {return false;}
+if (Map[(x + y * this.Width) ].CanMove())
+	return true;
+return false;
+
+}	
+	
+	
 	public Player GetPlayer () {return this.player;}
 	public String toString()
 	{
@@ -153,23 +164,30 @@ public class Dungeon extends JPanel{
 	
 	public void KeyDown(int Key)
 	{
+		int playerX = player.GetPlayerX();
+		int playerY = player.GetPlayerY();
+		
 		switch(Key) {
 			case 0:
-				if(player.GetPlayerX() < Width-1)
-					this.player.SetPlayerX(player.GetPlayerX() + 1);
+				if(playerX < Width-1)
+					++playerX;
 				break;
 			case 1:
-				if(player.GetPlayerY() < Height-1)
-					this.player.SetPlayerY(player.GetPlayerY() + 1);
+				if(playerY < Height-1)
+					++playerY;
 				break;
 			case 2:
-				if(player.GetPlayerX() > 0)
-					this.player.SetPlayerX(player.GetPlayerX() + 1);
+				if(playerX > 0)
+					--playerX;
 				break;
 			default:
-				if(player.GetPlayerY() > 0)
-				this.player.SetPlayerY(player.GetPlayerY() - 1);
+				if(playerY > 0)
+				--playerY;
 				break;
+		}
+		if (CanMove(playerX, playerY)) {
+			this.player.SetPlayerX(playerX);
+			this.player.SetPlayerY(playerY);
 		}
 	}
 	
