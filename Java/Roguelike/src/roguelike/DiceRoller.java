@@ -8,9 +8,10 @@ public class DiceRoller {
 		this.Dice = Dice;
 	}
 	
-	public int Roll(String roll) {
+	public static int Roll(String roll) {
 		if((!roll.contains("d") && !roll.contains("D")) && !(roll.contains("d") && roll.contains("D")))
 			return 0;
+		Random Dice = new Random ();
 		Integer numDice = null;
 		Integer diceMax = null;
 		Integer modifier = null;

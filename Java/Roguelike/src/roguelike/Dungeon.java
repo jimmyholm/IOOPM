@@ -22,7 +22,7 @@ public class Dungeon extends JPanel{
 	private Random  Rnd;
 	private List<Room> Rooms;
 	private Tile PlayerTile = new Tile((char)2, false, false, new Color(255, 0, 0, 255));
-	public int playerX, playerY;
+	private Player player;
 	public void Step(long ElapsedTime) {
 		
 	}
@@ -112,6 +112,7 @@ public class Dungeon extends JPanel{
 	}
 	
 	public Dungeon(int Width, int Height, long Seed, int MinRooms, int MaxRooms, int MinDim, int MaxDim) {
+		this.player = new Player(0, 0, new Stats());
 		this.Width 	= Width; 
 		this.Height = Height;
 		Rnd = new Random(Seed);
@@ -132,7 +133,7 @@ public class Dungeon extends JPanel{
 		playerY = Rnd.nextInt((R1.Bottom()-R1.Top())) + R1.Top();
 		CenterCamera(playerX, playerY);
 	}
-	
+	public Player GetPlayer () {return this.player;}
 	public String toString()
 	{
 		String S = "";
