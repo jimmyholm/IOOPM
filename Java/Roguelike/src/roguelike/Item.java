@@ -1,26 +1,16 @@
 package roguelike;
 
 public class Item {
-	public static string 
+	//public static string 
+	
+	private Stats stat;
 	
 	
+	public Item (Stats stat, int value){
+		this.stat = stat;	
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-private Stats stat;
-
-
-public Item (Stats stat, int value){
-this.stat = stat;	
-}
-
-public void addItem (Stats stats){	
-	
-}
+	public void Create (Stats Entry){	
+		
+	}
 }

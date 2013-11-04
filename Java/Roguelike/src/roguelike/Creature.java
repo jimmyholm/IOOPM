@@ -1,5 +1,4 @@
 package roguelike;
-import java.util.HashMap;
 
 public abstract class Creature {
 	//position
