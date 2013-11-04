@@ -6,17 +6,11 @@ h23, k34, w64,
 
 
 a2, objekorienterad abstraktion
+b4, arv, superanrop
+b5, överlagring
 e14, parametrisk polymorfism, statisk typsäkerhet
-
+g20, åtkomsmodifierare
+h23, jämförelsemetoder equal eller ==
 i27, defensiv
 i28, exeptions
 q50, testning
-
-
-
-
-b5, överlagring
-b4, arv, superanrop
-g20, åtkomsmodifierare private, public, protected.
-h23, jämförelsemetoder equal eller ==
-

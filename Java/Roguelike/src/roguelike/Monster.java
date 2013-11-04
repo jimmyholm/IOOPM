@@ -93,7 +93,7 @@ public class Monster extends Creature {
 
 	public void Death () {}
 
-
+//
 
 	public void Step() {
 		if (PlayerDetect(Player.GetInstance())){
