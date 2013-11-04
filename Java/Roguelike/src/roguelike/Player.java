@@ -1,5 +1,5 @@
 package roguelike;
-
+import java.awt.Color;
 import java.util.ArrayList;
 
 public class Player extends Creature{
@@ -8,6 +8,7 @@ private char character;
 	
 	public Player (int x, int y, Stats stats)
 	{
+		this.color = new Color(255, 0, 0, 255);
 		this.character = '@';
 		this.x = x;
 		this.y = y;
