@@ -7,21 +7,21 @@ public class Weapon {
 	private int dexterity;
 
 	public Weapon (){
-		switch(DiceRoller.Roll("d3")){
+		switch(DiceRoller.GetInstance().Roll("1d3")){
 		case 1: 
 			this.weaponType = WeaponType.SWORD;
-			this.offense = DiceRoller.Roll("d6");
-			this.dexterity = DiceRoller.Roll("d6");
+			this.offense = DiceRoller.GetInstance().Roll("1d6");
+			this.dexterity = DiceRoller.GetInstance().Roll("1d6");
 			break;
 		case 2:
 			this.weaponType = WeaponType.AXE;
-			this.offense = DiceRoller.Roll("d10");
-			this.dexterity = DiceRoller.Roll("d3");
+			this.offense = DiceRoller.GetInstance().Roll("1d10");
+			this.dexterity = DiceRoller.GetInstance().Roll("1d3");
 			break;
 		case 3:
 			this.weaponType = WeaponType.FORK;
-			this.offense = DiceRoller.Roll("d2");
-			this.dexterity = DiceRoller.Roll("d2");
+			this.offense = DiceRoller.GetInstance().Roll("1d2");
+			this.dexterity = DiceRoller.GetInstance().Roll("1d2");
 			break;
 	}
 	}

@@ -3,15 +3,26 @@ import java.util.Random;
 
 public class DiceRoller {
 	private Random Dice;
+	private static DiceRoller Instance = null;
 	
-	DiceRoller(Random Dice) {
-		this.Dice = Dice;
+	private DiceRoller() {
+		this.Dice = new Random();
 	}
 	
-	public static int Roll(String roll) {
+	public static DiceRoller GetInstance() {
+		if(Instance == null)
+			Instance = new DiceRoller();
+		return Instance;
+	}
+	
+	public void SeedDice(long Seed) {
+		Dice.setSeed(Seed);
+	}
+	public int Roll(String roll) {
+		if(Dice == null)
+			return 0;
 		if((!roll.contains("d") && !roll.contains("D")) && !(roll.contains("d") && roll.contains("D")))
 			return 0;
-		Random Dice = new Random ();
 		Integer numDice = null;
 		Integer diceMax = null;
 		Integer modifier = null;
