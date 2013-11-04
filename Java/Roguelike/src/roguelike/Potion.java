@@ -1,6 +1,8 @@
 package roguelike;
 
+<<<<<<< HEAD
 public class Potion extends Item{
+
 	public enum Size {SMALL, MEDIUM, LARGE};
 	private Size size;
 

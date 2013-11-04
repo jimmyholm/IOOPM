@@ -6,7 +6,8 @@ public class Monster extends Creature {
 	public enum MonsterType {GOBLIN, ZOMBIE, TROLL};
 	private MonsterType monsterType;
 	private Dungeon dungeon;
-	private String description;
+
+	
 
 	
 
@@ -91,6 +92,7 @@ public class Monster extends Creature {
 		return false;
 	}
 
+	public void Death () {}
 
 
 
@@ -139,6 +141,10 @@ case 4:
 	if (dungeon.CanMove(this.x - 1, this.y)) {this.y = this.x - 1; foundMove = true;}
 	break;
 }
+
+
+
+
 
 }
 

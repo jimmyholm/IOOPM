@@ -6,7 +6,7 @@ public abstract class Creature {
 	//position
 	protected int x;
 	protected int y;
-
+	protected String description;
 	protected Stats stats;
 	protected Weapon weapon;
 	protected Shield shield;
@@ -23,13 +23,22 @@ public abstract class Creature {
 		int defenderDexterity = (defender.stats.GetInt("dexterity")) + (defender.weapon.GetWeaponDexterity());
 		
 		if (DiceRoller.GetInstance().Roll("1d" + attackerDexterity) > DiceRoller.GetInstance().Roll("1d" + defenderDexterity)) {
+			defender.stats.Set("health", defender.stats.GetInt("health") - Math.max(0,(DiceRoller.GetInstance().Roll("1d" + attackerOffense) 
+					- DiceRoller.GetInstance().Roll("1d" + defenderDefense))));
+			if (defender.stats.GetInt("health") <= 0) {defender.Death();}
 			
+			if (DiceRoller.GetInstance().Roll("1d" + attackerDexterity) > DiceRoller.GetInstance().Roll("1d" + defenderDexterity)) {
+				
+			}
 		}
 	}
 
 
+public abstract void Death ();
 
-	public void step() {
+public String GetMonsterDescription () {return this.description;}
+
+	public void Step() {
 		if (stats.GetString("healthRegen") != "")
 
 			stats.Set("health", (Math.min(stats.GetInt("maxHealth"), (stats.GetInt("health")) + (stats.GetInt("healthRegen")))));
