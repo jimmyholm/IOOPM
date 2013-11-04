@@ -12,7 +12,7 @@ public class Rectangle {
 		this.Right = Right;
 		this.Bottom = Bottom;
 	}
-	
+
 	public int Left() {
 		return Left;
 	}

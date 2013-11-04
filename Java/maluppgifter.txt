@@ -1,0 +1,16 @@
+;; This buffer is for notes you don't want to save, and for Lisp evaluation.
+;; If you want to create a file, visit that file with C-x C-f,
+;; then enter the text in that file's own buffer.
+
+h23, k34, w64, 
+
+
+a2, objekorienterad abstraktion
+b4, arv, superanrop
+b5, överlagring
+e14, parametrisk polymorfism, statisk typsäkerhet
+g20, åtkomsmodifierare
+h23, jämförelsemetoder equal eller ==
+i27, defensiv
+i28, exeptions
+q50, testning

@@ -1,21 +1,34 @@
 package roguelike;
 
+import java.util.ArrayList;
+
 public class Player extends Creature{
+	private String playerName;
 
 	
-	public Player (int x, int y, boolean key, Stats stat, Item[] items, Item[] potions)
+	public Player (int x, int y, Stats stats)
 	{
 		this.x = x;
 		this.y = y;
-		this.key = key;
 		this.stats = stats;
-		this.items = items;
-		this.potions = potions;
+		this.key = false;
+		this.weapon = null;
+		this.armor = null;
+		this.shield = null;
+		this.potions = new ArrayList<Potion>();
 	}
 	
-	public void step(){}
-	
-	public void addItem (Item item){
-		
+	public void step(){
+
 	}
+	
+	public String GetPlayerName () {return this.playerName;};
+	public void SetPlayerName (String newName) {this.playerName = newName;}; 
+	public int GetPlayerX () {return this.x;};
+	public int GetPlayerY () {return this.y;};
+	public void SetPlayerX (int x) {this.x = x;}
+	public void SetPlayerY (int y) {this.y = y;}
+	
+	
+	
 }

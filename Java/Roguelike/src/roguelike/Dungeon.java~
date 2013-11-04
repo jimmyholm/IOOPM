@@ -111,11 +111,12 @@ public class Dungeon extends JPanel{
 		}
 	}
 	
-
-
-
+<<<<<<< HEAD
+	public Dungeon(int Width, int Height, long Seed, int MinRooms, int MaxRooms, int MinDim, int MaxDim) {
+		this.player = new Player(0, 0, new Stats());
+=======
 	public Dungeon(int Width, int Height, int MinRooms, int MaxRooms, int MinDim, int MaxDim) {
-
+>>>>>>> 95669e4d4dbead18b450e5ce85e340ecc980259d
 		this.Width 	= Width; 
 		this.Height = Height;
 		Rnd = Game.GetRandomizer();
@@ -125,30 +126,17 @@ public class Dungeon extends JPanel{
 		MAXDIM   = MaxDim;
 		GoalRooms = Rnd.nextInt(MAXROOMS-MINROOMS) + MINROOMS; 
 		Map = new Tile[this.Width*this.Height];
-		
+		Rooms = new ArrayList<Room>();
 		for(int x = 0; x < this.Width; x++)
 			for(int y = 0; y < this.Height; y++)
 				Map[x+y*this.Width] = new Tile((char)219, true, true, new Color(255, 255, 255, 255));
-		Rooms = new ArrayList<Room>();
 		MakeRooms();
 		Room R = Rooms.get(0);
 		Rectangle R1  = R.GetArea();
-		this.player = new Player((Rnd.nextInt((R1.Right()-R1.Left())) + R1.Left()), (Rnd.nextInt((R1.Bottom()-R1.Top())) + R1.Top()), new Stats());
-
-		
-		CenterCamera(this.player.GetPlayerX(), this.player.GetPlayerY());
+		playerX = Rnd.nextInt((R1.Right()-R1.Left())) + R1.Left();
+		playerY = Rnd.nextInt((R1.Bottom()-R1.Top())) + R1.Top();
+		CenterCamera(playerX, playerY);
 	}
-	
-public boolean CanMove (int x, int y) {
-if ((x < 0) || x >= this.Width) {return false;}
-if ((y < 0) || y >= this.Height) {return false;}
-if (Map[(x + y * this.Width) ].CanMove())
-	return true;
-return false;
-
-}	
-	
-	
 	public Player GetPlayer () {return this.player;}
 	public String toString()
 	{
@@ -164,30 +152,23 @@ return false;
 	
 	public void KeyDown(int Key)
 	{
-		int playerX = player.GetPlayerX();
-		int playerY = player.GetPlayerY();
-		
 		switch(Key) {
 			case 0:
 				if(playerX < Width-1)
-					++playerX;
+					playerX++;
 				break;
 			case 1:
 				if(playerY < Height-1)
-					++playerY;
+					playerY++;
 				break;
 			case 2:
 				if(playerX > 0)
-					--playerX;
+					playerX++;
 				break;
 			default:
 				if(playerY > 0)
-				--playerY;
+					playerY--;
 				break;
-		}
-		if (CanMove(playerX, playerY)) {
-			this.player.SetPlayerX(playerX);
-			this.player.SetPlayerY(playerY);
 		}
 	}
 	
@@ -200,7 +181,7 @@ return false;
 		for(int y = Camera.Top(); y < Camera.Bottom(); y++)
 			for(int x = Camera.Left(); x < Camera.Right(); x++)
 			{
-				if(x == player.GetPlayerX() && y == player.GetPlayerY())
+				if(x == playerX && y == playerY)
 					PlayerTile.Draw(g2, (x - Camera.Left())*w, (y - Camera.Top())*h);
 				else
 					Map[x+y*this.Width].Draw(g2, (x - Camera.Left())*w, (y - Camera.Top())*h);
