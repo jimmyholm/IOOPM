@@ -8,6 +8,7 @@ private char character;
 	
 	public Player (int x, int y, Stats stats)
 	{
+		this.description = "You are holy worrior";
 		this.color = new Color(255, 0, 0, 255);
 		this.character = '@';
 		this.x = x;
@@ -23,6 +24,8 @@ private char character;
 	public void step(){
 
 	}
+	
+	public void Death() {}
 	
 	public String GetPlayerName () {return this.playerName;}
 	public void SetPlayerName (String newName) {this.playerName = newName;} 
