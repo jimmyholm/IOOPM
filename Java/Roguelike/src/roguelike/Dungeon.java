@@ -24,8 +24,17 @@ public class Dungeon extends JPanel{
 	private List<Room> Rooms;
 	private Tile PlayerTile = new Tile((char)2, false, false, new Color(255, 0, 0, 255));
 	private Player player;
+	private enum KeyMode { MOVE, LOOK};
+	private KeyMode Mode;
+	private int lookX;
+	private int lookY;
 	public void Step(long ElapsedTime) {
 		
+	}
+	
+	public void CameraToMap(Integer x, Integer y) {
+		x = Camera.Left() + x;
+		y = Camera.Top() + y;
 	}
 	
 	public void AddHorizontalCorridor(int x1, int x2, int y) {
@@ -206,9 +215,6 @@ return false;
 		for(int y = Camera.Top(); y < Camera.Bottom(); y++)
 			for(int x = Camera.Left(); x < Camera.Right(); x++)
 			{
-				if(x == player.GetPlayerX() && y == player.GetPlayerY())
-					PlayerTile.Draw(g2, (x - Camera.Left())*w, (y - Camera.Top())*h);
-				else
 					Map[x+y*Width].Draw(g2, (x - Camera.Left())*w, (y - Camera.Top())*h);
 			}
 		}

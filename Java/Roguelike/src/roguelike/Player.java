@@ -29,6 +29,9 @@ public class Player extends Creature{
 	public void SetPlayerX (int x) {this.x = x;}
 	public void SetPlayerY (int y) {this.y = y;}
 	
-	
+	@Override
+	public boolean IsPlayer() {
+		return true;
+	}
 	
 }

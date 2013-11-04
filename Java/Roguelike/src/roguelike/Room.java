@@ -7,7 +7,7 @@ public class Room {
 	private int MaxItemCount;
 	private int MaxCreatureCount;
 	private boolean HasChest = false;
-
+	
 	public Room(Rectangle Area) {
 		this.Area = Area;
 		ItemCount = 0;

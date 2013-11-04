@@ -7,8 +7,8 @@ public class Tile {
 	private boolean BlockMovement;
 	private boolean BlockSight;
 	private boolean Discovered;
-	// private Creature Creature;
-	// private Item Item; 
+	private Creature Creature;
+	private Item Item; 
 	private Color	Color;
 	
 	public Tile(char Tile, boolean BlockMovement, boolean BlockSight, Color Color) {
@@ -16,6 +16,8 @@ public class Tile {
 		this.BlockMovement = BlockMovement;
 		this.BlockSight = BlockSight;
 		this.Color = Color;
+		Creature = null;
+		Item = null;
 	}
 	
 	public char GetTile() {
@@ -31,28 +33,25 @@ public class Tile {
 	}
 	
 	public boolean CanMove() {
-		// return (!BlockMovement && !Creature);
-		return !BlockMovement;
+		return (!BlockMovement && Creature != null);
 	}
 	public boolean CanAttack(boolean isPlayer) {
-		//return (!BlockMovement && ((isPlayer && !Creature) || (!isPlayer && Creature.IsPlayer() == true)));
-		return !BlockMovement;
+		return (!BlockMovement && ((isPlayer && Creature != null) || (!isPlayer && Creature.IsPlayer() == true)));
 	}
 	
-	/*public Item GetItem() {
+	public Item GetItem() {
 	 	return Item;
-	}*/
+	}
 	
-	/*public Creature GetCreature() {
+	public Creature GetCreature() {
 	    return Creature;
-	}*/
+	}
 	
-	public void Move(Tile nextTile) {
+	public Tile Move(Tile nextTile) {
 		if(nextTile.CanMove())
-			/* nextTile.Creature = Creature;
-			 * Creature = null;
-			 */
-			return;
+			nextTile.Creature = Creature;
+			Creature = null;
+			return nextTile;
 	}
 	
 	public boolean BlocksMovement() {
@@ -80,18 +79,18 @@ public class Tile {
 	}
 	
 	public void Draw(Graphics2D g2, int x, int y) {
-		Rectangle R = TileSet.GetInstance().GetCharacter(Tile);
+		char c = (Creature != null) ? Creature.GetCharacter() : (Item != null) ? Item.GetCharacter() : Tile;
+		Rectangle R = TileSet.GetInstance().GetCharacter(c);
 		if(R == new Rectangle(0, 0, 0, 0))
 			return;
 		int w = TileSet.GetInstance().GetTileWidth();
 		int h = TileSet.GetInstance().GetTileHeight();
 		BufferedImage Render = new BufferedImage(w, h, TileSet.GetInstance().GetTileImage().getType());
 		Graphics2D g2t = Render.createGraphics();
-		int Red = Color.getRed();
-		int Green = Color.getGreen();
-		int Blue = Color.getBlue();
-		//Color Tint = new Color(Red, Blue, Green, 0);
-		//g2t.setXORMode(Tint);
+		Color c2 = (Creature != null) ? Creature.GetColor() : (Item != null) ? Item.GetColor() : Color;
+		int Red = c2.getRed();
+		int Green = c2.getGreen();
+		int Blue = c2.getBlue();
 		g2t.drawImage(TileSet.GetInstance().GetTileImage(), 0, 0, w, h, R.Left(), R.Top(), R.Right(), R.Bottom(), null);
 		for(int X = 0; X < w; X++)
 			for(int Y = 0; Y < h; Y++ ) {

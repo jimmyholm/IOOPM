@@ -75,10 +75,7 @@ public class Game extends JFrame implements KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent key) {
-		// TODO Auto-generated method stub
 		D.KeyDown(key.getKeyCode());
-		//System.out.println("Test!");
-		MessageList.GetInstance().AddMessage("Test! " + D.GetPlayer().GetPlayerX() + "," + D.GetPlayer().GetPlayerY());
 	}
 
 	@Override

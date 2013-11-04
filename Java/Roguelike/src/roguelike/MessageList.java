@@ -37,5 +37,9 @@ public class MessageList extends JPanel {
 		Scroll.getViewport().setView(Messages);
 		Scroll.setHorizontalScrollBar(null);
 		add(Scroll);
+		Scroll.setFocusable(false);
+		Scroll.setEnabled(false);
+		Messages.setFocusable(false);
+		Messages.setEnabled(false);
 	}
 }

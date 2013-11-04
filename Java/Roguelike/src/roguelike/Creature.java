@@ -16,15 +16,19 @@ public abstract class Creature {
 public void Attack (Creature attacker, Creature defender){
 	int attackerOffense = (attacker.stats.GetInt("offense")) + (attacker.weapon.GetWeaponOffense());
 	int attackerDexterity = (attacker.stats.GetInt("dexterity")) + (attacker.weapon.GetWeaponDexterity());
-	int defenderDefense = (defender.stats.GetInt("defense")) + (defender.armor.GetArmorDefense());
+	//int defenderDefense = (defender.stats.GetInt("defense")) + (defender.armor.GetArmorDefense());
 }
 
 
 
 	public void step() {
 		if (stats.GetString("healthRegen") != "")
-			stats.Set("health", (Math.min(stats.GetInt("maxHealth"), (stats.GetInt("health")) + (stats.GetInt("healthRegen")))));//lägg till maxtak
+			stats.Set("health", (Math.min(stats.GetInt("maxHealth"), (stats.GetInt("health")) + (stats.GetInt("healthRegen")))));//lï¿½gg till maxtak
 	} 
+	
+	public boolean IsPlayer() {
+		return false;
+	}
 
 }
 
