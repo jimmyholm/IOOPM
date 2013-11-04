@@ -29,7 +29,7 @@ public class Player extends Creature{
 	}
 	
 	public void step(){
-
+		super.Step();
 	}
 	
 	public void Death() {}
