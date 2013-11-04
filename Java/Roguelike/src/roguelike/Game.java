@@ -1,22 +1,18 @@
 package roguelike;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import java.util.Random;
-public class Game extends JFrame implements ActionListener{
+public class Game extends JFrame implements KeyListener{
 	
 	private static final long serialVersionUID = -3442912778777128627L;
 	private static Random Randomizer = null;
 	private Dungeon D;
 	private MessageList ML;
-	public void actionPerformed(ActionEvent e)
-	{
-		
-	}
 	
 	public static Random GetRandomizer()
 	{
@@ -28,6 +24,7 @@ public class Game extends JFrame implements ActionListener{
 			Randomizer = new Random(Seed);
 		else
 			Randomizer.setSeed(Seed);
+		DiceRoller.GetInstance().SeedDice(Seed*2);
 	}
 	
 	public Game() {
@@ -51,6 +48,12 @@ public class Game extends JFrame implements ActionListener{
 		ML.setBorder(BorderFactory.createLineBorder(Color.gray));
 		ML.setBackground(java.awt.Color.black);
 		ML.setVisible(true);
+		D.setFocusable(false);
+		ML.setFocusable(false);
+		ML.setEnabled(false);
+		D.setEnabled(false);
+		setFocusable(true);
+		addKeyListener(this);
 		pack();
 	}
 	
@@ -68,6 +71,24 @@ public class Game extends JFrame implements ActionListener{
 				G.DoNothing();
 			}
 		});
+	}
+
+	@Override
+	public void keyPressed(KeyEvent key) {
+		// TODO Auto-generated method stub
+		D.KeyDown(key.getKeyCode());
+		//System.out.println("Test!");
+		MessageList.GetInstance().AddMessage("Test! " + D.GetPlayer().GetPlayerX() + "," + D.GetPlayer().GetPlayerY());
+	}
+
+	@Override
+	public void keyReleased(KeyEvent key) {
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent key) {
+		
 	}
 
 }

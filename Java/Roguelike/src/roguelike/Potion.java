@@ -9,7 +9,7 @@ public class Potion {
 	}	
 
 	public Potion () {
-		switch(DiceRoller.Roll("d3")){
+		switch(DiceRoller.GetInstance().Roll("1d3")){
 		case 1: this.size = Size.SMALL; break;
 		case 2: this.size = Size.MEDIUM; break;
 		case 3: this.size = Size.LARGE; break;

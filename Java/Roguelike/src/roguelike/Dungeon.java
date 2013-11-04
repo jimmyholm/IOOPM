@@ -1,5 +1,6 @@
 package roguelike;
 import java.util.*;
+import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 
 import java.awt.Color;
@@ -168,26 +169,31 @@ return false;
 		int playerY = player.GetPlayerY();
 		
 		switch(Key) {
-			case 0:
+			case KeyEvent.VK_RIGHT:
 				if(playerX < Width-1)
 					++playerX;
 				break;
-			case 1:
+			case KeyEvent.VK_DOWN:
 				if(playerY < Height-1)
 					++playerY;
 				break;
-			case 2:
+			case KeyEvent.VK_LEFT:
 				if(playerX > 0)
 					--playerX;
 				break;
-			default:
+			case KeyEvent.VK_UP:
 				if(playerY > 0)
 				--playerY;
 				break;
+			default:
+				break;
 		}
 		if (CanMove(playerX, playerY)) {
-			this.player.SetPlayerX(playerX);
-			this.player.SetPlayerY(playerY);
+			player.SetPlayerX(playerX);
+			player.SetPlayerY(playerY);
+			CenterCamera(player.GetPlayerX(), player.GetPlayerY());
+			MessageList.GetInstance().AddMessage(Camera.toString());
+			repaint();
 		}
 	}
 	
@@ -203,7 +209,7 @@ return false;
 				if(x == player.GetPlayerX() && y == player.GetPlayerY())
 					PlayerTile.Draw(g2, (x - Camera.Left())*w, (y - Camera.Top())*h);
 				else
-					Map[x+y*this.Width].Draw(g2, (x - Camera.Left())*w, (y - Camera.Top())*h);
+					Map[x+y*Width].Draw(g2, (x - Camera.Left())*w, (y - Camera.Top())*h);
 			}
 		}
 }

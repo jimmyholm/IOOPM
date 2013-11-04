@@ -23,6 +23,7 @@ public class Monster extends Creature {
 			stats.Add("offense", 2);
 			stats.Add("defense", 3);
 			stats.Add("health", 30);
+			stats.Add("maxHealth", 30);
 			stats.Add("dexterity", 8);
 		case 2:
 			this.monsterType = MonsterType.ZOMBIE;
@@ -37,6 +38,7 @@ public class Monster extends Creature {
 			stats.Add("offense", 3);
 			stats.Add("defense", 2);
 			stats.Add("health", 45);
+			stats.Add("maxHealth", 45);
 			stats.Add("dexterity", 7);
 		case 3:
 			this.monsterType = MonsterType.TROLL;
@@ -51,6 +53,7 @@ public class Monster extends Creature {
 			stats.Add("offense", 2);
 			stats.Add("defense", 2);
 			stats.Add("health", 200);
+			stats.Add("maxHealth", 200);
 			stats.Add("dexterity", 5);
 			stats.Add("healthRegen", 5);
 		}
@@ -109,7 +112,7 @@ private void MoveRoam () {
 
 	boolean foundMove = false;
 while (!foundMove){
-int randomDirection = DiceRoller.Roll("d4");
+int randomDirection = DiceRoller.GetInstance().Roll("1d4");
 switch (randomDirection){
 case 1:
 	if (dungeon.CanMove(this.x, this.y + 1)) {this.y = this.y + 1; foundMove = true;} 

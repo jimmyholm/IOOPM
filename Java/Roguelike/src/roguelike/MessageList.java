@@ -1,7 +1,5 @@
 package roguelike;
 import java.awt.Dimension;
-
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JList;
 import javax.swing.DefaultListModel;
