@@ -47,6 +47,14 @@ public class Tile {
 	    return Creature;
 	}
 	
+	public void SetCreatrue(Creature Creature) {
+		this.Creature = Creature; 
+	}
+	
+	public void SetItem(Item Item) {
+		this.Item = Item;
+	}
+	
 	public Tile Move(Tile nextTile) {
 		if(nextTile.CanMove())
 			nextTile.Creature = Creature;
@@ -108,6 +116,12 @@ public class Tile {
 	}
 	public String GetDescription() {
 		if(BlockMovement && BlockSight) {
-		if(Creature!= null)
+			return "This is a wall, very solid!";
+		}
+		if(Creature != null)
+			return Creature.GetDescription();
+		else if(Item != null)
+			return Item.GetDescription();
+		return "This is an empty piece of floor.";
 	}
 }

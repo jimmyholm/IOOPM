@@ -13,9 +13,9 @@ public class Potion extends Item{
 
 	public Potion () {
 		switch(DiceRoller.GetInstance().Roll("1d3")){
-		case 1: this.size = Size.SMALL; break;
-		case 2: this.size = Size.MEDIUM; break;
-		case 3: this.size = Size.LARGE; break;
+		case 1: this.size = Size.SMALL; this.description = "This is a small potion bottle."; break;
+		case 2: this.size = Size.MEDIUM; this.description = "This is a medium sized potion bottle."; break;
+		case 3: this.size = Size.LARGE; this.description = "This is a large sized potion bottle."; break;
 		}
 	}
 

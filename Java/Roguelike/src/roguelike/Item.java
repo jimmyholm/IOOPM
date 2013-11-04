@@ -7,7 +7,7 @@ public class Item {
 	protected Stats stat;
 	protected char character;
 	protected Color color;
-	
+	protected String description;
 	public Item() {
 		this.stat = null;
 	}
@@ -25,5 +25,9 @@ public class Item {
 	
 	public Color GetColor() {
 		return color;
+	}
+	
+	public String GetDescription() {
+		return description;
 	}
 }

@@ -82,7 +82,7 @@ public class Monster extends Creature {
 	
 
 	public boolean PlayerDetect(Player player) {
-		if (PlayerDistance(dungeon.GetPlayer()) < 4){
+		if (PlayerDistance(Player.GetInstance()) < 4){
 			return true;
 		}
 		return false;
@@ -93,8 +93,8 @@ public class Monster extends Creature {
 
 
 	public void Step() {
-		if (PlayerDetect(dungeon.GetPlayer())){
-			if (PlayerDistance(dungeon.GetPlayer()) < 2){
+		if (PlayerDetect(Player.GetInstance())){
+			if (PlayerDistance(Player.GetInstance()) < 2){
 //				AttackPlayer();
 				}
 			else
@@ -105,17 +105,17 @@ public class Monster extends Creature {
 	}
 
 private void MoveToPlayer () {
-	double northDistance = PlayerDistance(this.x, this.y + 1, dungeon.GetPlayer());
-	double southDistance = PlayerDistance(this.x, this.y - 1, dungeon.GetPlayer());
-	double westDistance = PlayerDistance(this.x -1, this.y, dungeon.GetPlayer());
-	double eastDistance = PlayerDistance(this.x +1, this.y, dungeon.GetPlayer());
-	if (northDistance < PlayerDistance(dungeon.GetPlayer()) || dungeon.CanMove(this.x, this.y +1)) {this.y = this.y + 1;}
+	double northDistance = PlayerDistance(this.x, this.y + 1, Player.GetInstance());
+	double southDistance = PlayerDistance(this.x, this.y - 1, Player.GetInstance());
+	double westDistance = PlayerDistance(this.x -1, this.y, Player.GetInstance());
+	double eastDistance = PlayerDistance(this.x +1, this.y, Player.GetInstance());
+	if (northDistance < PlayerDistance(Player.GetInstance()) || dungeon.CanMove(this.x, this.y +1)) {this.y = this.y + 1;}
 	else
-	if (southDistance < PlayerDistance(dungeon.GetPlayer()) || dungeon.CanMove(this.x, this.y -1)) {this.y = this.y - 1;}
+	if (southDistance < PlayerDistance(Player.GetInstance()) || dungeon.CanMove(this.x, this.y -1)) {this.y = this.y - 1;}
 	else
-	if (westDistance < PlayerDistance(dungeon.GetPlayer()) || dungeon.CanMove(this.x -1, this.y)) {this.x = this.x - 1;}
+	if (westDistance < PlayerDistance(Player.GetInstance()) || dungeon.CanMove(this.x -1, this.y)) {this.x = this.x - 1;}
 	else
-	if (eastDistance < PlayerDistance(dungeon.GetPlayer()) || dungeon.CanMove(this.x +1, this.y)) {this.x = this.x + 1;};
+	if (eastDistance < PlayerDistance(Player.GetInstance()) || dungeon.CanMove(this.x +1, this.y)) {this.x = this.x + 1;};
 	}
 
 private void MoveRoam () {

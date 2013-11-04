@@ -143,23 +143,22 @@ public class Dungeon extends JPanel{
 		MakeRooms();
 		Room R = Rooms.get(0);
 		Rectangle R1  = R.GetArea();
-		this.player = new Player((Rnd.nextInt((R1.Right()-R1.Left())) + R1.Left()), (Rnd.nextInt((R1.Bottom()-R1.Top())) + R1.Top()), new Stats());
+		player = Player.GetInstance();
+		player.Setup((Rnd.nextInt((R1.Right()-R1.Left())) + R1.Left()), (Rnd.nextInt((R1.Bottom()-R1.Top())) + R1.Top()), new Stats());
 
 		
-		CenterCamera(this.player.GetPlayerX(), this.player.GetPlayerY());
+		CenterCamera(player.GetPlayerX(), player.GetPlayerY());
 	}
 	
-public boolean CanMove (int x, int y) {
-if ((x < 0) || x >= this.Width) {return false;}
-if ((y < 0) || y >= this.Height) {return false;}
-if (Map[(x + y * this.Width) ].CanMove())
-	return true;
-return false;
+	public boolean CanMove (int x, int y) {
+	if ((x < 0) || x >= this.Width) {return false;}
+	if ((y < 0) || y >= this.Height) {return false;}
+	if (Map[(x + y * this.Width) ].CanMove())
+		return true;
+	return false;
+	
+	}	
 
-}	
-	
-	
-	public Player GetPlayer () {return this.player;}
 	public String toString()
 	{
 		String S = "";
