@@ -33,7 +33,7 @@ public class Tile {
 	}
 	
 	public boolean CanMove() {
-		return (!BlockMovement && Creature != null);
+		return (!BlockMovement && Creature == null);
 	}
 	public boolean CanAttack(boolean isPlayer) {
 		return (!BlockMovement && ((isPlayer && Creature != null) || (!isPlayer && Creature.IsPlayer() == true)));
@@ -47,7 +47,7 @@ public class Tile {
 	    return Creature;
 	}
 	
-	public void SetCreatrue(Creature Creature) {
+	public void SetCreature(Creature Creature) {
 		this.Creature = Creature; 
 	}
 	
@@ -55,11 +55,14 @@ public class Tile {
 		this.Item = Item;
 	}
 	
-	public Tile Move(Tile nextTile) {
+	public boolean Move(Tile nextTile) {
 		if(nextTile.CanMove())
+		{
 			nextTile.Creature = Creature;
 			Creature = null;
-			return nextTile;
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean BlocksMovement() {

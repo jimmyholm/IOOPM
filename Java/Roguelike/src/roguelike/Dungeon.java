@@ -16,9 +16,12 @@ public class Dungeon extends JPanel{
 	private int		MAXDIM	 = 8;
 	private int		MINROOMS = 10;
 	private int		MAXROOMS = 20;
-	private int		MAXTRIES = 1000;
 	private int		CurrentRooms = 0;
+	private int		MAXTRIES = 1000;
+	private int		MAXCREATURES = MAXROOMS *2;
+	private int		MINCREATURES = CurrentRooms-2;
 	private int		GoalRooms = 0;
+	private List<Creature> Creatures;
 	private Rectangle Camera = new Rectangle(0, 0, 26, 26);
 	private Random  Rnd;
 	private List<Room> Rooms;
@@ -35,6 +38,22 @@ public class Dungeon extends JPanel{
 	public void CameraToMap(Integer x, Integer y) {
 		x = Camera.Left() + x;
 		y = Camera.Top() + y;
+	}
+	
+	public void PopulateRooms() {
+		int CreatureCnt = Rnd.nextInt(MAXROOMS-MINROOMS) + MINROOMS;
+		for(int i = 0; i < CreatureCnt; i++) {
+			int n = Rnd.nextInt(CurrentRooms-2) + 1;
+			Room room = Rooms.get(n);
+			Rectangle r = room.GetArea();
+			int x = Rnd.nextInt(r.Right() - r.Left()) + r.Left();
+			int y = Rnd.nextInt(r.Bottom() - r.Top()) + r.Top();
+			Tile t = Map[x+y*Width];
+			int m = Rnd.nextInt(3) + 1;
+			System.out.println(m);
+			if(t.GetCreature() == null)
+				t.SetCreature(new Monster(m, x, y, this));
+		}
 	}
 	
 	public void AddHorizontalCorridor(int x1, int x2, int y) {
@@ -141,12 +160,12 @@ public class Dungeon extends JPanel{
 				Map[x+y*this.Width] = new Tile((char)219, true, true, new Color(255, 255, 255, 255));
 		Rooms = new ArrayList<Room>();
 		MakeRooms();
+		PopulateRooms();
 		Room R = Rooms.get(0);
 		Rectangle R1  = R.GetArea();
 		player = Player.GetInstance();
 		player.Setup((Rnd.nextInt((R1.Right()-R1.Left())) + R1.Left()), (Rnd.nextInt((R1.Bottom()-R1.Top())) + R1.Top()), new Stats());
-
-		
+		Map[player.GetPlayerX() + player.GetPlayerY() * this.Width].SetCreature(player);
 		CenterCamera(player.GetPlayerX(), player.GetPlayerY());
 	}
 	
@@ -196,11 +215,16 @@ public class Dungeon extends JPanel{
 			default:
 				break;
 		}
-		if (CanMove(playerX, playerY)) {
+		if (Map[player.GetPlayerX() + player.GetPlayerY() * this.Width].Move(Map[playerX+playerY*Width])) {
 			player.SetPlayerX(playerX);
 			player.SetPlayerY(playerY);
 			CenterCamera(player.GetPlayerX(), player.GetPlayerY());
 			MessageList.GetInstance().AddMessage(Camera.toString());
+			
+			for(ListIterator<Creature> it = Creatures.listIterator(); it.hasNext();)
+			{
+				it.next().Step();
+			}
 			repaint();
 		}
 	}
