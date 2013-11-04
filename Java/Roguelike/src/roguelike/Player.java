@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 public class Player extends Creature{
 	private String playerName;
-
+private char character;
 	
 	public Player (int x, int y, Stats stats)
 	{
+		this.character = '@';
 		this.x = x;
 		this.y = y;
 		this.stats = stats;
