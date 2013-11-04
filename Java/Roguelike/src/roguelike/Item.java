@@ -6,7 +6,7 @@ public class Item {
 	
 	protected char character;
 	protected Color color;
-	
+	protected String description;
 	public Item() {
 	
 	}
@@ -30,5 +30,9 @@ public class Item {
 	
 	public Color GetColor() {
 		return color;
+	}
+	
+	public String GetDescription() {
+		return description;
 	}
 }

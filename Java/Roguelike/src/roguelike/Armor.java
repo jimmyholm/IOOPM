@@ -7,6 +7,7 @@ public class Armor extends Item{
 	
 	public Armor () {
 		this.character = (char)14;
+		this.description = "This is a suit of armor.";
 		this.color = new Color(255, 128, 128, 128);
 		this.defense = DiceRoller.GetInstance().Roll("1d10");
 	}
