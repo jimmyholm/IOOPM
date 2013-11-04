@@ -7,15 +7,11 @@ public class Monster extends Creature {
 	private MonsterType monsterType;
 	private Dungeon dungeon;
 
-	
-
-	
-
 	public Monster (int monsterNumber, int x, int y, Dungeon dungeon) {
 		this.dungeon = dungeon;
 		switch(monsterNumber){
 		case 1:
-			this.color = new Color(255, 0 , 255, 0);
+			this.color = new Color(0 , 255, 0, 255);
 			this.character = '£';
 			this.description = "This is an ugly little green goblin";
 			this.monsterType = MonsterType.GOBLIN;
@@ -33,7 +29,7 @@ public class Monster extends Creature {
 			stats.Add("maxHealth", 30);
 			stats.Add("dexterity", 8);
 		case 2:
-			this.color = new Color(255, 124 , 30, 49);
+			this.color = new Color(124 , 30, 49, 255);
 			this.character = '¤';
 			this.description = "This zombie wants BRAIIINS";
 			this.monsterType = MonsterType.ZOMBIE;
@@ -51,7 +47,7 @@ public class Monster extends Creature {
 			stats.Add("maxHealth", 45);
 			stats.Add("dexterity", 7);
 		case 3:
-			this.color = new Color(255, 12 , 123, 40);
+			this.color = new Color(12 , 123, 40, 255);
 			this.character = '$';
 			this.description = "This is a stupid troll";
 			this.monsterType = MonsterType.TROLL;

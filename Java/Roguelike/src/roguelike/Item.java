@@ -4,10 +4,13 @@ import java.awt.Color;
 public class Item {
 	//public static string 
 	
-	private Stats stat;
+	protected Stats stat;
 	protected char character;
 	protected Color color;
 	
+	public Item() {
+		this.stat = null;
+	}
 	public Item (Stats stat, int value){
 		this.stat = stat;	
 	}

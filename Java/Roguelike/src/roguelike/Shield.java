@@ -1,10 +1,14 @@
 package roguelike;
 
-public class Shield {
+import java.awt.Color;
+
+public class Shield extends Item {
 	private int defense;
 	private int offense;
 	
 	public Shield () {
+		this.character = (char)15;
+		this.color = new Color(128, 128, 128, 255);
 		this.defense = DiceRoller.GetInstance().Roll("1d6");
 		this.offense = 0 - (DiceRoller.GetInstance().Roll("1d6"));
 	}

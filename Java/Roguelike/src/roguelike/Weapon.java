@@ -1,25 +1,31 @@
 package roguelike;
 
-public class Weapon {
+import java.awt.Color;
+
+public class Weapon extends Item{
 	public enum WeaponType {SWORD, AXE, FORK};
 	private WeaponType weaponType;
 	private int offense;
 	private int dexterity;
 
 	public Weapon (){
+		this.color = new Color(128, 128, 128, 255);
 		switch(DiceRoller.GetInstance().Roll("1d3")){
 		case 1: 
 			this.weaponType = WeaponType.SWORD;
 			this.offense = DiceRoller.GetInstance().Roll("1d6");
 			this.dexterity = DiceRoller.GetInstance().Roll("1d6");
+			this.character = (char)45;
 			break;
 		case 2:
 			this.weaponType = WeaponType.AXE;
+			this.character = (char)13;
 			this.offense = DiceRoller.GetInstance().Roll("1d10");
 			this.dexterity = DiceRoller.GetInstance().Roll("1d3");
 			break;
 		case 3:
 			this.weaponType = WeaponType.FORK;
+			this.character = (char)148;
 			this.offense = DiceRoller.GetInstance().Roll("1d2");
 			this.dexterity = DiceRoller.GetInstance().Roll("1d2");
 			break;

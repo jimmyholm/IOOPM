@@ -1,11 +1,13 @@
 package roguelike;
-
+import java.awt.Color;
 public class Potion extends Item{
 
 	public enum Size {SMALL, MEDIUM, LARGE};
-	private Size size;
+	protected Size size;
 
 	public Potion (Size size){
+		this.character = (char)5;
+		this.color = new Color(255, 200, 200, 220);
 		this.size = size; 
 	}	
 
