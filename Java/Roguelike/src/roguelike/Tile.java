@@ -106,4 +106,8 @@ public class Tile {
 		g2t.dispose();
 		g2.drawImage(Render, x, y, x+w, y+h, 0, 0, w, h, null);//R.Left(), R.Top(), R.Right(), R.Bottom(), null);
 	}
+	public String GetDescription() {
+		if(BlockMovement && BlockSight) {
+		if(Creature!= null)
+	}
 }
