@@ -22,10 +22,10 @@ public class Player extends Creature{
 
 	}
 	
-	public String GetPlayerName () {return this.playerName;};
-	public void SetPlayerName (String newName) {this.playerName = newName;}; 
-	public int GetPlayerX () {return this.x;};
-	public int GetPlayerY () {return this.y;};
+	public String GetPlayerName () {return this.playerName;}
+	public void SetPlayerName (String newName) {this.playerName = newName;} 
+	public int GetPlayerX () {return this.x;}
+	public int GetPlayerY () {return this.y;}
 	public void SetPlayerX (int x) {this.x = x;}
 	public void SetPlayerY (int y) {this.y = y;}
 	
