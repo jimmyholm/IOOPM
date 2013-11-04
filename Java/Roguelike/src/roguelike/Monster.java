@@ -71,21 +71,37 @@ public class Monster extends Creature {
 		}
 	}
 
-	public double PlayerDistance(Player player) {
-		int xDiff = (this.x - player.GetPlayerX());
-		int yDiff = (this.y - player.GetPlayerY());	
-		return (java.lang.Math.sqrt((xDiff * xDiff) + (yDiff * yDiff)));
+	public int PlayerDistance(Player player) {
+		int xDiff = Math.abs(this.x - player.GetPlayerX());
+		int yDiff = Math.abs(this.y - player.GetPlayerY());
+		return xDiff+yDiff;
+		//return (java.lang.Math.sqrt((xDiff * xDiff) + (yDiff * yDiff)));
 	}
 	
-	public double PlayerDistance(int x, int y, Player player) {
-		int xDiff = (x - player.GetPlayerX());
-		int yDiff = (y - player.GetPlayerY());	
-		return (java.lang.Math.sqrt((xDiff * xDiff) + (yDiff * yDiff)));
+	public int PlayerHorizDistance(Player player) {
+		return Math.abs(player.GetPlayerX() - x);
+	}
+	
+	public int PlayerHorizDistance(int x, Player player) {
+		return Math.abs(player.GetPlayerX() - x);
+	}
+	
+	public int PlayerVertDistance(Player player) {
+		return Math.abs(player.GetPlayerY() - y);
+	}
+	public int PlayerVertDistance(int y, Player player) {
+		return Math.abs(player.GetPlayerY() - y);
+	}
+	public int PlayerDistance(int x, int y, Player player) {
+		int xDiff = Math.abs(x - player.GetPlayerX());
+		int yDiff = Math.abs(y - player.GetPlayerY());	
+		return xDiff+yDiff;
+		//return (java.lang.Math.sqrt((xDiff * xDiff) + (yDiff * yDiff)));
 	}
 	
 
 	public boolean PlayerDetect(Player player) {
-		if (PlayerDistance(Player.GetInstance()) < 4){
+		if (PlayerHorizDistance(Player.GetInstance()) < 4 || PlayerVertDistance(Player.GetInstance()) < 4){
 			return true;
 		}
 		return false;
@@ -96,8 +112,9 @@ public class Monster extends Creature {
 
 
 	public void Step() {
+		super.Step();
 		if (PlayerDetect(Player.GetInstance())){
-			if (PlayerDistance(Player.GetInstance()) < 2){
+			if (PlayerHorizDistance(Player.GetInstance()) < 2 || PlayerVertDistance(Player.GetInstance()) < 2){
 //				AttackPlayer();
 				}
 			else
@@ -108,59 +125,53 @@ public class Monster extends Creature {
 	}
 
 private void MoveToPlayer () {
-	double northDistance = PlayerDistance(this.x, this.y - 1, Player.GetInstance());
-	double southDistance = PlayerDistance(this.x, this.y + 1, Player.GetInstance());
-	double westDistance = PlayerDistance(this.x -1, this.y, Player.GetInstance());
-	double eastDistance = PlayerDistance(this.x +1, this.y, Player.GetInstance());
+	int northDistance = PlayerDistance(this.x, this.y - 1, Player.GetInstance());
+	int southDistance = PlayerDistance(this.x, this.y + 1, Player.GetInstance());
+	int westDistance = PlayerDistance(this.x -1,this.y, Player.GetInstance());
+	int eastDistance = PlayerDistance(this.x +1, this.y, Player.GetInstance());
 	Tile T = dungeon.getTile(x, y);
-	if (northDistance < PlayerDistance(Player.GetInstance()) && T.Move(dungeon.getTile(this.x, this.y +1))) {this.y = this.y + 1;}
+	     if (northDistance < PlayerDistance(Player.GetInstance())  && T.Move(dungeon.getTile(this.x, this.y -1))) {this.y -= 1;}
+	else if (southDistance < PlayerDistance(Player.GetInstance())  && T.Move(dungeon.getTile(this.x, this.y +1))) {this.y += 1;}
+	else if (westDistance  < PlayerDistance(Player.GetInstance()) && T.Move(dungeon.getTile(this.x -1, this.y))) {this.x -= 1;}
+	else if (eastDistance  < PlayerDistance(Player.GetInstance()) && T.Move(dungeon.getTile(this.x +1, this.y))) {this.x += 1;}
 	else
-	if (southDistance < PlayerDistance(Player.GetInstance()) && T.Move(dungeon.getTile(this.x, this.y -1))) {this.y = this.y - 1;}
-	else
-	if (westDistance < PlayerDistance(Player.GetInstance()) && T.Move(dungeon.getTile(this.x -1, this.y))) {this.x = this.x - 1;}
-	else
-	if (eastDistance < PlayerDistance(Player.GetInstance()) && T.Move(dungeon.getTile(this.x +1, this.y))) {this.x = this.x + 1;};
+		System.out.println("error");
 	}
 
 private void MoveRoam () {
-
 	boolean foundMove = false;
-while (!foundMove){
-int randomDirection = DiceRoller.GetInstance().Roll("1d4");
-Tile T = dungeon.getTile(x, y);
-switch (randomDirection){
-case 1:
-	if (T.Move(dungeon.getTile(x, y+1))) { //CanMove(this.x, this.y + 1))  {
-			this.y = this.y + 1; 
-			foundMove = true;
-		} 
-	break;
-case 2:
-	if (T.Move(dungeon.getTile(x, y-1))) {//dungeon.CanMove(this.x, this.y - 1)) {
-		this.y = this.y - 1; 
-		foundMove = true;
+	int Tries = 0;
+	while (!foundMove && Tries < 20){
+		int randomDirection = DiceRoller.GetInstance().Roll("1d4");
+		Tile T = dungeon.getTile(x, y);
+		switch (randomDirection){
+			case 1:
+				if (T.Move(dungeon.getTile(x, y+1))) { //CanMove(this.x, this.y + 1))  {
+						this.y += 1; 
+						foundMove = true;
+					} 
+				break;
+			case 2:
+				if (T.Move(dungeon.getTile(x, y-1))) {//dungeon.CanMove(this.x, this.y - 1)) {
+					this.y -= 1; 
+					foundMove = true;
+				}
+				break;
+			case 3:
+				if (T.Move(dungeon.getTile(x+1, y))) {//dungeon.CanMove(this.x + 1, this.y)) {
+					this.x += 1; 
+					foundMove = true;
+				}
+				break;
+			case 4:
+				if (T.Move(dungeon.getTile(x-1, y))) {//if (dungeon.CanMove(this.x - 1, this.y)) {
+					this.x -= 1; 
+					foundMove = true;
+				}
+				break;
+		}
+		Tries++;
 	}
-	break;
-case 3:
-	if (T.Move(dungeon.getTile(x+1, y))) {//dungeon.CanMove(this.x + 1, this.y)) {
-		this.y = this.x + 1; 
-		foundMove = true;
-	}
-	break;
-case 4:
-	if (T.Move(dungeon.getTile(x-1, y))) {//if (dungeon.CanMove(this.x - 1, this.y)) {
-		this.y = this.x - 1; 
-		foundMove = true;
-	}
-	break;
-}
-
-
-
-
-
-}
-
 }
 
 }

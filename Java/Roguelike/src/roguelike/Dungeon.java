@@ -175,14 +175,14 @@ public class Dungeon extends JPanel{
 		CenterCamera(player.GetPlayerX(), player.GetPlayerY());
 	}
 	
-	public boolean CanMove (int x, int y) {
+	/*public boolean CanMove (int x, int y) {
 	if ((x < 0) || x >= this.Width) {return false;}
 	if ((y < 0) || y >= this.Height) {return false;}
 	if (Map[(x + y * this.Width) ].CanMove())
 		return true;
 	return false;
 	
-	}	
+	}*/	
 
 	public String toString()
 	{
