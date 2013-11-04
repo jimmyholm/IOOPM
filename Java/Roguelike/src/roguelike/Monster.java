@@ -6,11 +6,13 @@ public class Monster extends Creature {
 	public enum MonsterType {GOBLIN, ZOMBIE, TROLL};
 	private MonsterType monsterType;
 	private Dungeon dungeon;
+	private String description;
 
 	public Monster (int monsterNumber, int x, int y, Dungeon dungeon) {
 		this.dungeon = dungeon;
 		switch(monsterNumber){
 		case 1:
+			this.description = "This is an ugly little green goblin"
 			this.monsterType = MonsterType.GOBLIN;
 			this.stats = new Stats();
 			this.armor = null;
@@ -26,6 +28,7 @@ public class Monster extends Creature {
 			stats.Add("maxHealth", 30);
 			stats.Add("dexterity", 8);
 		case 2:
+			this.description = "This zoblie wants BRAIIINS"
 			this.monsterType = MonsterType.ZOMBIE;
 			this.stats = new Stats();
 			this.armor = null;
@@ -41,6 +44,7 @@ public class Monster extends Creature {
 			stats.Add("maxHealth", 45);
 			stats.Add("dexterity", 7);
 		case 3:
+			this.description = "This is a stupid troll"
 			this.monsterType = MonsterType.TROLL;
 			this.stats = new Stats();
 			this.armor = null;

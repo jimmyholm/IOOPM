@@ -23,7 +23,7 @@ public void Attack (Creature attacker, Creature defender){
 
 	public void step() {
 		if (stats.GetString("healthRegen") != "")
-			stats.Set("health", (Math.min(stats.GetInt("maxHealth"), (stats.GetInt("health")) + (stats.GetInt("healthRegen")))));//lägg till maxtak
+			stats.Set("health", (Math.min(stats.GetInt("maxHealth"), (stats.GetInt("health")) + (stats.GetInt("healthRegen")))));
 	} 
 
 }
