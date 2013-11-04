@@ -7,8 +7,7 @@ public class Monster extends Creature {
 	private MonsterType monsterType;
 	private Dungeon dungeon;
 	private String description;
-	private char character;
-	private Color color;
+
 	
 
 	public Monster (int monsterNumber, int x, int y, Dungeon dungeon) {
