@@ -108,17 +108,18 @@ public class Monster extends Creature {
 	}
 
 private void MoveToPlayer () {
-	double northDistance = PlayerDistance(this.x, this.y + 1, Player.GetInstance());
-	double southDistance = PlayerDistance(this.x, this.y - 1, Player.GetInstance());
+	double northDistance = PlayerDistance(this.x, this.y - 1, Player.GetInstance());
+	double southDistance = PlayerDistance(this.x, this.y + 1, Player.GetInstance());
 	double westDistance = PlayerDistance(this.x -1, this.y, Player.GetInstance());
 	double eastDistance = PlayerDistance(this.x +1, this.y, Player.GetInstance());
-	if (northDistance < PlayerDistance(Player.GetInstance()) || dungeon.CanMove(this.x, this.y +1)) {this.y = this.y + 1;}
+	Tile T = dungeon.getTile(x, y);
+	if (northDistance < PlayerDistance(Player.GetInstance()) && T.Move(dungeon.getTile(this.x, this.y +1))) {this.y = this.y + 1;}
 	else
-	if (southDistance < PlayerDistance(Player.GetInstance()) || dungeon.CanMove(this.x, this.y -1)) {this.y = this.y - 1;}
+	if (southDistance < PlayerDistance(Player.GetInstance()) && T.Move(dungeon.getTile(this.x, this.y -1))) {this.y = this.y - 1;}
 	else
-	if (westDistance < PlayerDistance(Player.GetInstance()) || dungeon.CanMove(this.x -1, this.y)) {this.x = this.x - 1;}
+	if (westDistance < PlayerDistance(Player.GetInstance()) && T.Move(dungeon.getTile(this.x -1, this.y))) {this.x = this.x - 1;}
 	else
-	if (eastDistance < PlayerDistance(Player.GetInstance()) || dungeon.CanMove(this.x +1, this.y)) {this.x = this.x + 1;};
+	if (eastDistance < PlayerDistance(Player.GetInstance()) && T.Move(dungeon.getTile(this.x +1, this.y))) {this.x = this.x + 1;};
 	}
 
 private void MoveRoam () {
@@ -126,18 +127,31 @@ private void MoveRoam () {
 	boolean foundMove = false;
 while (!foundMove){
 int randomDirection = DiceRoller.GetInstance().Roll("1d4");
+Tile T = dungeon.getTile(x, y);
 switch (randomDirection){
 case 1:
-	if (dungeon.CanMove(this.x, this.y + 1)) {this.y = this.y + 1; foundMove = true;} 
+	if (T.Move(dungeon.getTile(x, y+1))) { //CanMove(this.x, this.y + 1))  {
+			this.y = this.y + 1; 
+			foundMove = true;
+		} 
 	break;
 case 2:
-	if (dungeon.CanMove(this.x, this.y - 1)) {this.y = this.y - 1; foundMove = true;}
+	if (T.Move(dungeon.getTile(x, y-1))) {//dungeon.CanMove(this.x, this.y - 1)) {
+		this.y = this.y - 1; 
+		foundMove = true;
+	}
 	break;
 case 3:
-	if (dungeon.CanMove(this.x + 1, this.y)) {this.y = this.x + 1; foundMove = true;}
+	if (T.Move(dungeon.getTile(x+1, y))) {//dungeon.CanMove(this.x + 1, this.y)) {
+		this.y = this.x + 1; 
+		foundMove = true;
+	}
 	break;
 case 4:
-	if (dungeon.CanMove(this.x - 1, this.y)) {this.y = this.x - 1; foundMove = true;}
+	if (T.Move(dungeon.getTile(x-1, y))) {//if (dungeon.CanMove(this.x - 1, this.y)) {
+		this.y = this.x - 1; 
+		foundMove = true;
+	}
 	break;
 }
 

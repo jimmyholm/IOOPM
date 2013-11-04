@@ -51,8 +51,13 @@ public class Dungeon extends JPanel{
 			Tile t = Map[x+y*Width];
 			int m = Rnd.nextInt(3) + 1;
 			System.out.println(m);
+			Monster m2 = null;
 			if(t.GetCreature() == null)
-				t.SetCreature(new Monster(m, x, y, this));
+			{
+				m2 = new Monster(m, x, y, this);
+				t.SetCreature(m2);//new Monster(m, x, y, this));
+				Creatures.add(m2);
+			}
 		}
 	}
 	
@@ -144,7 +149,7 @@ public class Dungeon extends JPanel{
 
 
 	public Dungeon(int Width, int Height, int MinRooms, int MaxRooms, int MinDim, int MaxDim) {
-
+		
 		this.Width 	= Width; 
 		this.Height = Height;
 		Rnd = Game.GetRandomizer();
@@ -159,6 +164,7 @@ public class Dungeon extends JPanel{
 			for(int y = 0; y < this.Height; y++)
 				Map[x+y*this.Width] = new Tile((char)219, true, true, new Color(255, 255, 255, 255));
 		Rooms = new ArrayList<Room>();
+		Creatures = new ArrayList<Creature>();
 		MakeRooms();
 		PopulateRooms();
 		Room R = Rooms.get(0);
@@ -227,6 +233,11 @@ public class Dungeon extends JPanel{
 			}
 			repaint();
 		}
+	}
+	
+	public Tile getTile(int x, int y)
+	{
+		return Map[x+y*Width];
 	}
 	
 	@Override
