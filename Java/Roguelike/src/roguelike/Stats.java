@@ -1,5 +1,7 @@
 package roguelike;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 public class Stats {
 
 	private HashMap<String, String> Data;
@@ -54,5 +56,19 @@ public class Stats {
 	public void Add(String Name, String Value) {
 		if(!Data.containsKey(Name))
 			Data.put(Name,  Value);
+	}
+	
+	public boolean equals (Stats s) {
+		if(Data.entrySet().size() != s.Data.entrySet().size())
+			return false;
+		Iterator<Entry<String, String>> it1 = Data.entrySet().iterator();
+		for(; it1.hasNext();) {
+			Entry<String, String> e1 = it1.next();
+			if(!s.Data.containsKey(e1.getKey()))
+				return false;
+			if(s.Data.get(e1.getKey()) != e1.getValue())
+				return false;
+		}
+		return true;
 	}
 }

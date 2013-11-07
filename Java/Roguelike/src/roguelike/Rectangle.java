@@ -83,4 +83,13 @@ public class Rectangle {
 	public boolean equals(Rectangle R) {
 		return (Left == R.Left && Right == R.Right && Top == R.Top && Bottom == R.Bottom);
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		return (o instanceof Rectangle &&
+				Left == ((Rectangle)o).Left &&
+				Right == ((Rectangle)o).Right &&
+				Top == ((Rectangle)o).Top &&
+				Bottom == ((Rectangle)o).Bottom);
+	}
 }

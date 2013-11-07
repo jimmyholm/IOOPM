@@ -114,7 +114,7 @@ public class Monster extends Creature {
 	public void Step() {
 		super.Step();
 		if (PlayerDetect(Player.GetInstance())){
-			if (PlayerHorizDistance(Player.GetInstance()) < 2 || PlayerVertDistance(Player.GetInstance()) < 2){
+			if (PlayerDistance(Player.GetInstance()) == 1) { //(PlayerHorizDistance(Player.GetInstance()) < 2 || PlayerVertDistance(Player.GetInstance()) < 2){
 //				AttackPlayer();
 				}
 			else
@@ -137,6 +137,14 @@ private void MoveToPlayer () {
 	else
 		System.out.println("error");
 	}
+
+@Override
+public boolean equals (Object o) {
+	return (o instanceof Monster &&
+			this.monsterType.equals(((Monster)o).monsterType) &&
+			this.dungeon.equals(((Monster)o).dungeon));	
+}
+
 
 private void MoveRoam () {
 	boolean foundMove = false;

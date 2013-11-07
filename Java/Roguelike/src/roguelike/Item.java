@@ -7,6 +7,7 @@ public class Item {
 	protected char character;
 	protected Color color;
 	protected String description;
+	protected long id;
 	public Item() {
 	
 	}
@@ -23,6 +24,16 @@ public class Item {
 		}
 		
 	}
+	
+	public void SetId (long id) {
+		this.id = id;
+	} 
+	
+	public long GetId() {
+		return this.id;
+	}
+	
+	public boolean equals (Item i2) {return i2.id == id;}
 	
 	public char GetCharacter() {
 		return character;

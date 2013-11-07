@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public abstract class Creature {
 	//position
+	protected long id;
 	protected int x;
 	protected int y;
 	protected String description;
@@ -34,6 +35,18 @@ public abstract class Creature {
 	}
 
 
+	public void SetId (long id) {
+		this.id = id;
+	}
+	
+	public long GetId () {
+		return this.id;
+	}
+	
+	public boolean equals (Creature c2) {return c2.id == id;}
+	
+	
+	
 public abstract void Death ();
 
 public String GetDescription () {return this.description;}
