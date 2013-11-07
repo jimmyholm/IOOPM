@@ -25,14 +25,13 @@ public class Dungeon extends JPanel{
 	private Rectangle Camera = new Rectangle(0, 0, 26, 26);
 	private Random  Rnd;
 	private List<Room> Rooms;
-	private Tile PlayerTile = new Tile((char)2, false, false, new Color(255, 0, 0, 255));
+	private Tile LookTile = new Tile('X', false, false, new Color(255, 0, 255, 255));
 	private Player player;
 	private enum KeyMode { MOVE, LOOK};
 	private KeyMode Mode;
-	private int lookX;
-	private int lookY;
+	private int LookX;
+	private int LookY;
 	public void Step(long ElapsedTime) {
-		
 	}
 	
 	public void CameraToMap(Integer x, Integer y) {
@@ -41,7 +40,7 @@ public class Dungeon extends JPanel{
 	}
 	
 	public void PopulateRooms() {
-		int CreatureCnt = Rnd.nextInt(MAXROOMS-MINROOMS) + MINROOMS;
+		int CreatureCnt = Rnd.nextInt(MAXCREATURES-MINCREATURES) + MINCREATURES;
 		for(int i = 0; i < CreatureCnt; i++) {
 			int n = Rnd.nextInt(CurrentRooms-2) + 1;
 			Room room = Rooms.get(n);
@@ -173,17 +172,9 @@ public class Dungeon extends JPanel{
 		player.Setup((Rnd.nextInt((R1.Right()-R1.Left())) + R1.Left()), (Rnd.nextInt((R1.Bottom()-R1.Top())) + R1.Top()), new Stats());
 		Map[player.GetPlayerX() + player.GetPlayerY() * this.Width].SetCreature(player);
 		CenterCamera(player.GetPlayerX(), player.GetPlayerY());
+		Mode = KeyMode.MOVE;
 	}
 	
-	/*public boolean CanMove (int x, int y) {
-	if ((x < 0) || x >= this.Width) {return false;}
-	if ((y < 0) || y >= this.Height) {return false;}
-	if (Map[(x + y * this.Width) ].CanMove())
-		return true;
-	return false;
-	
-	}*/	
-
 	public String toString()
 	{
 		String S = "";
@@ -203,21 +194,57 @@ public class Dungeon extends JPanel{
 		
 		switch(Key) {
 			case KeyEvent.VK_RIGHT:
-				if(playerX < Width-1)
-					++playerX;
+				if(Mode == KeyMode.MOVE) {
+					if(playerX < Width-1)
+						++playerX;
+				}
+				else {
+					if(LookX < Camera.Width())
+						++LookX;
+				}
 				break;
 			case KeyEvent.VK_DOWN:
-				if(playerY < Height-1)
-					++playerY;
+				if(Mode == KeyMode.MOVE) {
+					if(playerY < Height-1)
+						++playerY;
+				}
+				else {
+					if(LookY < Camera.Height())
+						++LookY;
+				}
 				break;
 			case KeyEvent.VK_LEFT:
-				if(playerX > 0)
-					--playerX;
+				if(Mode == KeyMode.MOVE) {
+					if(playerX > 0)
+						--playerX;
+				}
+				else {
+					if(LookX > 0)
+						--LookX;
+				}
+					
 				break;
 			case KeyEvent.VK_UP:
-				if(playerY > 0)
-				--playerY;
+				if(Mode == KeyMode.MOVE) {
+					if(playerY > 0)
+						--playerY;
+				}
+				else {
+					if(LookY > 0)
+						--LookY;
+				}
 				break;
+			case KeyEvent.VK_K:
+				if(Mode == KeyMode.MOVE)
+				{
+					Mode = KeyMode.LOOK;
+					LookX = Camera.Right() - playerX;
+					LookY = Camera.Bottom() - playerY;
+				}
+				break;
+			case KeyEvent.VK_ESCAPE:
+				if(Mode == KeyMode.LOOK)
+					Mode = KeyMode.MOVE;
 			default:
 				break;
 		}
@@ -231,8 +258,8 @@ public class Dungeon extends JPanel{
 			{
 				it.next().Step();
 			}
-			repaint();
 		}
+		repaint();
 	}
 	
 	public Tile getTile(int x, int y)
@@ -249,7 +276,13 @@ public class Dungeon extends JPanel{
 		for(int y = Camera.Top(); y < Camera.Bottom(); y++)
 			for(int x = Camera.Left(); x < Camera.Right(); x++)
 			{
+				int X = x-Camera.Left();//Camera.Right() - x;
+				int Y = y-Camera.Top();//Camera.Bottom() - y;
+				if(Mode == KeyMode.LOOK && (X == LookX && Y == LookY))
+					LookTile.Draw(g2, (x-Camera.Left())*w, (y-Camera.Top())*h);
+				else
 					Map[x+y*Width].Draw(g2, (x - Camera.Left())*w, (y - Camera.Top())*h);
+
 			}
 		}
 }
