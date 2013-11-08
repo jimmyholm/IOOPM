@@ -54,7 +54,7 @@ public class DiceRoller {
 		}
 		int ret = 0;
 		for(int i = 0; i < numDice; i++)
-			ret += Dice.nextInt(diceMax-1) + 1;
+			ret += Dice.nextInt(diceMax) + 1;
 		ret += modifier;
 		return ret;
 	}

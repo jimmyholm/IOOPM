@@ -172,7 +172,7 @@ private void MoveRoam () {
 					foundMove = true;
 				}
 				break;
-			case 4:
+			default:
 				if (T.Move(dungeon.getTile(x-1, y))) {//if (dungeon.CanMove(this.x - 1, this.y)) {
 					this.x -= 1; 
 					foundMove = true;
