@@ -101,8 +101,9 @@ public class Monster extends Creature {
 	
 
 	public boolean PlayerDetect(Player player) {
-		if (PlayerHorizDistance(Player.GetInstance()) < 4 || PlayerVertDistance(Player.GetInstance()) < 4){
-			return true;
+		if // (PlayerHorizDistance(Player.GetInstance()) < 4 || PlayerVertDistance(Player.GetInstance()) < 4){
+		(PlayerDistance (x, y, Player.GetInstance()) < 4) {	
+		return true;
 		}
 		return false;
 	}
@@ -140,7 +141,7 @@ private void MoveToPlayer () {
 
 @Override
 public boolean equals (Object o) {
-	return (o instanceof Monster &&
+	return (o instanceof Monster &&	
 			this.monsterType.equals(((Monster)o).monsterType) &&
 			this.dungeon.equals(((Monster)o).dungeon));	
 }
