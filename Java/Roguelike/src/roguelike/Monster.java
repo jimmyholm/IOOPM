@@ -135,8 +135,6 @@ private void MoveToPlayer () {
 	else if (southDistance < PlayerDistance(Player.GetInstance())  && T.Move(dungeon.getTile(this.x, this.y +1))) {this.y += 1;}
 	else if (westDistance  < PlayerDistance(Player.GetInstance()) && T.Move(dungeon.getTile(this.x -1, this.y))) {this.x -= 1;}
 	else if (eastDistance  < PlayerDistance(Player.GetInstance()) && T.Move(dungeon.getTile(this.x +1, this.y))) {this.x += 1;}
-	else
-		System.out.println("error");
 	}
 
 @Override

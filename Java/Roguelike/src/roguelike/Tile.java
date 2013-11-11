@@ -6,18 +6,23 @@ public class Tile {
 	private char Tile;
 	private boolean BlockMovement;
 	private boolean BlockSight;
+	private boolean Visible;
 	private boolean Discovered;
 	private Creature Creature;
 	private Item Item; 
-	private Color	Color;
+	private Color	VisColor;
+	private Color   FogColor;
 	
-	public Tile(char Tile, boolean BlockMovement, boolean BlockSight, Color Color) {
+	public Tile(char Tile, boolean BlockMovement, boolean BlockSight, Color VisColor, Color FogColor) {
 		this.Tile = Tile;
 		this.BlockMovement = BlockMovement;
 		this.BlockSight = BlockSight;
-		this.Color = Color;
+		this.VisColor = VisColor;
+		this.FogColor = FogColor;
 		Creature = null;
 		Item = null;
+		Discovered = false;
+		Visible = false;
 	}
 	
 	public char GetTile() {
@@ -28,8 +33,9 @@ public class Tile {
 		this.Tile = Tile;
 	}
 	
-	public void SetColor(Color Color) {
-		this.Color = Color;
+	public void SetColor(Color VisColor, Color FogColor) {
+		this.VisColor = VisColor;
+		this.FogColor = FogColor;
 	}
 	
 	public boolean CanMove() {
@@ -53,6 +59,10 @@ public class Tile {
 	
 	public void SetItem(Item Item) {
 		this.Item = Item;
+	}
+	
+	public void SetVisible(boolean Visible) {
+		this.Visible = Visible;
 	}
 	
 	public boolean Move(Tile nextTile) {
@@ -85,12 +95,16 @@ public class Tile {
 		return Discovered;
 	}
 	
+	public boolean IsVisible() {
+		return Visible;
+	}
+	
 	public void SetDiscovered(boolean Discovered) {
 		this.Discovered = Discovered;
 	}
 	
 	public void Draw(Graphics2D g2, int x, int y) {
-		char c = (Creature != null) ? Creature.GetCharacter() : (Item != null) ? Item.GetCharacter() : Tile;
+		char c = (!Discovered) ? (char)178 : (Creature != null && Visible) ? Creature.GetCharacter() : (Item != null) ? Item.GetCharacter() : Tile;
 		Rectangle R = TileSet.GetInstance().GetCharacter(c);
 		if(R == new Rectangle(0, 0, 0, 0))
 			return;
@@ -98,7 +112,7 @@ public class Tile {
 		int h = TileSet.GetInstance().GetTileHeight();
 		BufferedImage Render = new BufferedImage(w, h, TileSet.GetInstance().GetTileImage().getType());
 		Graphics2D g2t = Render.createGraphics();
-		Color c2 = (Creature != null) ? Creature.GetColor() : (Item != null) ? Item.GetColor() : Color;
+		Color c2 = (!Discovered) ? new Color(50, 50, 50, 255) : (!Visible) ? FogColor : (Creature != null) ? Creature.GetColor() : (Item != null) ? Item.GetColor() : VisColor;
 		int Red = c2.getRed();
 		int Green = c2.getGreen();
 		int Blue = c2.getBlue();

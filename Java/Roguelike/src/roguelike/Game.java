@@ -13,6 +13,7 @@ public class Game extends JFrame implements KeyListener{
 	private static Random Randomizer = null;
 	private Dungeon D;
 	private MessageList ML;
+	private InfoPanel IP;
 	
 	public static Random GetRandomizer()
 	{
@@ -51,10 +52,19 @@ public class Game extends JFrame implements KeyListener{
 		D.setFocusable(false);
 		ML.setFocusable(false);
 		ML.setEnabled(false);
+		IP = new InfoPanel();
+		add(IP);
+		IP.setBounds(26*TileSet.GetInstance().GetTileHeight()+1, 0, 800 - 26*TileSet.GetInstance().GetTileHeight()+1, 760);
+		IP.setBorder(BorderFactory.createLineBorder(Color.gray));
+		IP.setBackground(java.awt.Color.black);
+		IP.setVisible(true);
+		IP.setFocusable(false);
+		IP.setEnabled(false);
 		D.setEnabled(false);
 		setFocusable(true);
 		addKeyListener(this);
 		pack();
+		IP.Update();
 	}
 	
 	public void DoNothing() { }

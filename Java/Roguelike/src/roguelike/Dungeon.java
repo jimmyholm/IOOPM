@@ -21,22 +21,95 @@ public class Dungeon extends JPanel{
 	private int		MAXCREATURES = MAXROOMS *2;
 	private int		MINCREATURES = CurrentRooms-2;
 	private int		GoalRooms = 0;
+	private int		ViewRadius = 4;
 	private List<Creature> Creatures;
 	private Rectangle Camera = new Rectangle(0, 0, 26, 26);
 	private Random  Rnd;
 	private List<Room> Rooms;
-	private Tile LookTile = new Tile('X', false, false, new Color(255, 0, 255, 255));
+	private Tile LookTile = new Tile('X', false, false, new Color(255, 0, 255, 255), new Color(255, 0, 255, 255));
 	private Player player;
 	private enum KeyMode { MOVE, LOOK};
 	private KeyMode Mode;
 	private int LookX;
 	private int LookY;
+	
 	public void Step(long ElapsedTime) {
 	}
 	
 	public void CameraToMap(Integer x, Integer y) {
 		x = Camera.Left() + x;
 		y = Camera.Top() + y;
+	}
+
+	private void VisibilityLine(int x1, int y1, int x2, int y2) {
+		/*
+		 function line(x0, y0, x1, y1)
+		   dx := abs(x1-x0)
+		   dy := abs(y1-y0) 
+		   if x0 < x1 then sx := 1 else sx := -1
+		   if y0 < y1 then sy := 1 else sy := -1
+		   err := dx-dy
+		 
+		   loop
+		     plot(x0,y0)
+		     if x0 = x1 and y0 = y1 exit loop
+		     e2 := 2*err
+		     if e2 > -dy then 
+		       err := err - dy
+		       x0 := x0 + sx
+		     end if
+		     if x0 = x1 and y0 = y1 then 
+		       plot(x0,y0)
+		       exit loop
+		     end if
+		     if e2 <  dx then 
+		       err := err + dx
+		       y0 := y0 + sy 
+		     end if
+		  end loop
+ */
+		int dx = Math.abs(x2-x1);
+		int dy = Math.abs(y2-y1);
+		int sx = (x1 < x2) ? 1 : -1;
+		int sy = (y1 < y2) ? 1 : -1;
+		int err = dx - dy;
+		
+		while(true) {
+			Map[x1+y1*Width].SetVisible(true);
+			Map[x1+y1*Width].SetDiscovered(true);
+			int e2 = 2*err;
+			if(e2 > dy*-1) {
+				err -= dy;
+				x1 += sx;
+			}
+			if(x1 >= 0 && x1 < Width && y1 >= 0 && y1 < Height) {
+				if( (((sx > 0) ? x1 >= x2-1 : x1 <= x2+1) && ((sy > 0) ? y1 >= y2-1 : y1 <= y2+1)) || Map[x1+y1*Width].BlocksSight()) {
+					
+					Map[x1+y1*Width].SetVisible(true);
+					Map[x1+y1*Width].SetDiscovered(true);
+					break;
+				}
+				if(e2 < dx) {
+					err += dx;
+					y1 += sy;
+				}
+			}
+		}
+	}
+	
+	public void SetVisible() {
+		int CX = Player.GetInstance().GetPlayerX();
+		int CY = Player.GetInstance().GetPlayerY();
+		int R = ViewRadius;
+		//VisibilityLine(CX, CY, CX+R, CY+R);
+		for(int i = 0; i < 360; i += 1) {
+			double r = ((double)i * (Math.PI/180.0));
+			int x = CX + (int)((double)R* Math.cos(r));
+			int y = CY + (int)((double)R * Math.sin(r));
+			VisibilityLine(CX, CY, x, y);
+			/*Map[x+y*Width].SetVisible(true);
+			Map[x+y*Width].SetDiscovered(true);*/
+		}
 	}
 	
 	public void PopulateRooms() {
@@ -49,7 +122,6 @@ public class Dungeon extends JPanel{
 			int y = Rnd.nextInt(r.Bottom() - r.Top()) + r.Top();
 			Tile t = Map[x+y*Width];
 			int m = Rnd.nextInt(3) + 1;
-			System.out.println(m);
 			Monster m2 = null;
 			if(t.GetCreature() == null)
 			{
@@ -57,15 +129,6 @@ public class Dungeon extends JPanel{
 				t.SetCreature(m2);//new Monster(m, x, y, this));
 				Creatures.add(m2);
 			}
-		}
-	}
-	
-	public void AddHorizontalCorridor(int x1, int x2, int y) {
-		for(int i = Math.min(x1,  x2); i < Math.max(x1, x2) + 1; i++) {
-			Map[i+y*Width].SetTile(' ');
-			Map[i+y*Width].SetBlocksMovement(false);
-			Map[i+y*Width].SetBlocksSight(false);
-			Map[i+y*Width].SetColor(Color.black);
 		}
 	}
 	
@@ -87,12 +150,26 @@ public class Dungeon extends JPanel{
 		Camera = new Rectangle(l, t, r, b);
 	}
 	
+	public boolean IsVisible(int X, int Y) {
+		int d = (int)(Math.pow(X - Player.GetInstance().GetPlayerX(), 2.0) + Math.pow(Y - Player.GetInstance().GetPlayerY(), 2.0));
+		return d <= Math.pow(ViewRadius, 2.0);
+	}
+	
+	public void AddHorizontalCorridor(int x1, int x2, int y) {
+		for(int i = Math.min(x1,  x2); i < Math.max(x1, x2) + 1; i++) {
+			//Map[i+y*Width].SetTile(' ');
+			Map[i+y*Width].SetBlocksMovement(false);
+			Map[i+y*Width].SetBlocksSight(false);
+			Map[i+y*Width].SetColor(Color.black, new Color(25, 25, 25, 255));
+		}
+	}
+	
 	public void AddVerticalCorridor(int y1, int y2, int x) {
 		for(int i = Math.min(y1,  y2); i < Math.max(y1, y2) + 1; i++) {
-			Map[x+i*Width].SetTile(' ');
+			//Map[x+i*Width].SetTile(' ');
 			Map[x+i*Width].SetBlocksMovement(false);
 			Map[x+i*Width].SetBlocksSight(false);
-			Map[x+i*Width].SetColor(Color.black);
+			Map[x+i*Width].SetColor(Color.black, new Color(25, 25, 25, 255));
 		}
 	}
 	
@@ -136,10 +213,10 @@ public class Dungeon extends JPanel{
 			R = it.next().GetArea();
 			for(int x = R.Left(); x < R.Right(); x++)
 				for(int y = R.Top(); y < R.Bottom(); y++){
-					Map[x+y*Width].SetTile(' ');
+					//Map[x+y*Width].SetTile(' ');
 					Map[x+y*Width].SetBlocksMovement(false);
 					Map[x+y*Width].SetBlocksSight(false);
-					Map[x+y*Width].SetColor(Color.black);
+					Map[x+y*Width].SetColor(Color.black, new Color(25, 25, 25, 255));
 				}
 		}
 	}
@@ -161,7 +238,7 @@ public class Dungeon extends JPanel{
 		
 		for(int x = 0; x < this.Width; x++)
 			for(int y = 0; y < this.Height; y++)
-				Map[x+y*this.Width] = new Tile((char)219, true, true, new Color(255, 255, 255, 255));
+				Map[x+y*this.Width] = new Tile((char)219, true, true, new Color(255, 255, 255, 255), new Color(127, 127, 127, 255));
 		Rooms = new ArrayList<Room>();
 		Creatures = new ArrayList<Creature>();
 		MakeRooms();
@@ -199,8 +276,10 @@ public class Dungeon extends JPanel{
 						++playerX;
 				}
 				else {
-					if(LookX < Camera.Width())
+					if(LookX < Camera.Width() && LookX < Width) {
 						++LookX;
+						InfoPanel.GetInstance().SetDescription(Map[LookX+LookY*Width].GetDescription());
+					}
 				}
 				break;
 			case KeyEvent.VK_DOWN:
@@ -209,8 +288,10 @@ public class Dungeon extends JPanel{
 						++playerY;
 				}
 				else {
-					if(LookY < Camera.Height())
+					if(LookY < Camera.Height() && LookY < Width) {
 						++LookY;
+						InfoPanel.GetInstance().SetDescription(Map[LookX+LookY*Width].GetDescription());
+					}
 				}
 				break;
 			case KeyEvent.VK_LEFT:
@@ -219,8 +300,10 @@ public class Dungeon extends JPanel{
 						--playerX;
 				}
 				else {
-					if(LookX > 0)
+					if(LookX > 0 && LookX > Camera.Left()) {
 						--LookX;
+						InfoPanel.GetInstance().SetDescription(Map[LookX+LookY*Width].GetDescription());
+					}
 				}
 					
 				break;
@@ -230,8 +313,10 @@ public class Dungeon extends JPanel{
 						--playerY;
 				}
 				else {
-					if(LookY > 0)
+					if(LookY > 0 && LookY > Camera.Top()) {
 						--LookY;
+						InfoPanel.GetInstance().SetDescription(Map[LookX+LookY*Width].GetDescription());
+					}
 				}
 				break;
 			case KeyEvent.VK_K:
@@ -259,6 +344,8 @@ public class Dungeon extends JPanel{
 				it.next().Step();
 			}
 		}
+		InfoPanel.GetInstance().Update();
+		InfoPanel.GetInstance().repaint();
 		repaint();
 	}
 	
@@ -271,6 +358,7 @@ public class Dungeon extends JPanel{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
+		SetVisible();
 		int w = TileSet.GetInstance().GetTileWidth();
 		int h = TileSet.GetInstance().GetTileHeight();
 		for(int y = Camera.Top(); y < Camera.Bottom(); y++)
@@ -280,9 +368,17 @@ public class Dungeon extends JPanel{
 				int Y = y-Camera.Top();//Camera.Bottom() - y;
 				if(Mode == KeyMode.LOOK && (X == LookX && Y == LookY))
 					LookTile.Draw(g2, (x-Camera.Left())*w, (y-Camera.Top())*h);
-				else
+				else {
+					/*if(Map[x+y*Width].IsVisible(x, y)) {
+						//Map[x+y*Width].SetVisible(true);
+						Map[x+y*Width].SetDiscovered(true);
+					}
+					/*else {
+						Map[x+y*Width].SetVisible(false);
+					}*/
 					Map[x+y*Width].Draw(g2, (x - Camera.Left())*w, (y - Camera.Top())*h);
-
+					Map[x+y*Width].SetVisible(false);
+				}
 			}
 		}
 }

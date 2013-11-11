@@ -47,9 +47,15 @@ public abstract class Creature {
 	
 	
 	
-public abstract void Death ();
+	public abstract void Death ();
 
-public String GetDescription () {return this.description;}
+	public String GetDescription () {
+		return this.description;
+	}
+	
+	public Stats GetStats() {
+		return stats;
+	}
 
 	public void Step() {
 		if (stats.GetString("healthRegen") != "")
