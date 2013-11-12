@@ -1,0 +1,142 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "dbCasesBtree.h"
+
+static void readline(char *dest, int n, FILE *source){
+  fgets(dest, n, source);
+  int len = strlen(dest);
+  if(dest[len-1] == '\n')
+    dest[len-1] = '\0';
+}
+
+typedef struct btree{
+  char *key;
+  char *value;
+  struct btree *left;
+  struct btree *right;
+} *btree;
+
+btree btree = NULL;
+
+btree createBranch (char* key, char* value){
+    btree newBranch = malloc(sizeof(struct btree));
+    newBranch->key = malloc(strlen(key) + 1);
+    strcpy(newBranch->key, key);
+    newBranch->value = malloc(strlen(value) + 1);
+    strcpy(newBranch->value, value);
+    newBranch->left = NULL;
+    newBranch->right = NULL; 
+    return newBranch;  
+  }
+
+int insert (char* key, char* value){
+  returnExtededResult = insertExtended(key, value, btree);
+  if (returnExtendedResult == NULL){
+    return 0;
+  }
+  btree = returnExtendedResult;
+  return 1;
+}
+
+btree insertExtended (char* key, char* value, btree* cursor){
+  if (strcmp(key, cursor->key) == 0){
+    return NULL;
+  }
+  if (strcmp(key, cursor->key) > 0){
+    if (cursor->right == NULL){
+      cursor->right = createBranch(key, value);
+      return cursor;      
+    }        
+    cursor->right = insertExtended(key, value, cursor->right);
+    return cursor;
+  }
+  if (cursor->left == NULL){
+    cursor->left = createBranch(key, value);
+    return cursor;      
+  }
+  cursor->left = insertExtended(key, value, cursor->left);
+  return cursor;
+}
+
+int readDatabase (char* filename){
+  printf("Loading database \"%s\"...\n\n", filename);
+  FILE *database = fopen(filename, "r");
+  char bufferkey[128];
+  char buffervalue[128];
+  while(!(feof(database))){
+    readline(bufferkey, 128, database);
+    readline(buffervalue, 128, database);
+    Btree = insert(, newBranch);
+  }
+  return 0;
+}
+
+char* query (char* key){
+  btree cursor = btree;
+  while (cursor != 0){
+    if (strcmp(key, cursor->key) == 0){
+      return cursor->value;
+    }
+  if (strcmp(key, cursor->key) > 0){
+    cursor = cursor->right;
+    query(key);
+  }
+  cursor = cursor->left;
+  query(key);
+  return NULL;
+}
+
+int update (char* key, char* value){
+  updateExtededResult = updateExtended(key, value, btree);
+  if (returnExtendedResult == NULL){
+    return 0;
+  }
+  btree = returnExtendedResult;
+  return 1;
+}
+
+btree updateExtended (char* key, char* value, btree* cursor){
+  if (strcmp(key, cursor->key) == 0){
+    cursor->value = value;
+    return cursor;
+  }
+  if (strcmp(key, cursor->key) > 0){
+    if (cursor->right == NULL){
+      return NULL;      
+    }
+    cursor->right = updateExtended(key, value, cursor->right);
+    return cursor;
+  }
+  if (cursor->left == NULL){
+    return NULL;     
+  }
+  cursor->left = updateExtended(key, value, cursor->left);
+  return cursor;
+}
+
+ char* delete (char* key){
+   btree cursor = btree;
+   int casecursor = -1;
+     if (strcmp(key, cursorkey) == 0){
+       if (cursor->left == NULL && cursor->right == NULL){casecursor = 1;}
+       if (cursor->left == NULL && cursor->right != NULL){casecursor = 2;}
+       if (cursor->left != NULL && cursor->right == NULL){casecursor = 3;}
+       if (cursor->left != NULL && cursor->right != NULL){casecursor = 4;}
+       switch (casecursor){
+
+       case 1:
+         cursor = NULL;
+
+       case 2:
+         cursor = cursor->right;
+
+       case 3:
+         cursor = cursor->left;
+
+       case 4:
+         cursor = mostLeftOfRight(cursor);
+       }
+       return cursor->value;
+     }
+
