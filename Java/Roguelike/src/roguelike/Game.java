@@ -75,19 +75,25 @@ public class Game extends JFrame implements KeyListener{
 		pack();
 		IP.Update();
 	}
-	
-	public void DoNothing() { }
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
+				for (int i = 0; i < 1000; i++) {
+					int d = DiceRoller.GetInstance().Roll("1d4");
+					if(d == 4) {
+						System.out.println("4!");
+					}
+					if(d == 0) {
+						System.out.println("0!");
+					}
+				}
 				long Seed = System.currentTimeMillis();
 				Game.SetRandomizer(Seed);
 				TileSet.GetInstance().Load("Tileset.png", 20, 20, 16, 16);
 				EntryRepo.GetInstance().Load("Entries.txt");
 				G = new Game();
-				G.DoNothing();
 			}
 		});
 	}

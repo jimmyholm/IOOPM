@@ -1,44 +1,85 @@
 [ITEM]
 Type=Weapon
 Name=Sword
-Offense=2
+Offense=1d4
+Dexterity=1d4
 DamageDie=4
 MinDice=1
 MaxDice=3
+Color=127,127,127
+Description=It's a sharp, bladed weapon.
 [/ITEM]
 
 [ITEM]
 Type=Weapon
 Name=Axe
-Offense=3
+Offense=1d6
+Dexterity=1d2
 DamageDie=6
 MinDice=1
 MaxDice=3
+Color=127,127,127
+Description=It's a heavy, bladed weapon.
 [/ITEM]
 
 [ITEM]
 Type=Weapon
 Name=Mace
-Offense=3
+Offense=1d8
+Dexterity=0d0
 DamageDie=8
 MinDice=2
 MaxDice=4
+Color=127,127,127
+Description=It's a heavy, blunt weapon.
 [/ITEM]
 
 [ITEM]
 Type=Potion
-Name=Healing
-HealDie=3
-MinDice=2
-MaxDice=4
+Name=Potion of Healing
+Sizes=Small,Medium,Large
+Effect=3,7,10
+Color=127,0,127
 [/ITEM]
 
 [CREATURE]
-Type=Goblin
+Type=Monster
 Name=Goblin
 HitDie=1d6+2
 OffenseDie=1d2+1
-DefenceDie=1d2+1
-ItemList=Sword,Armor
+DefenseDie=1d2+1
+ItemList=Weapon,Shield,Potions
 Keychance=0.321
+HealthRegen=
+Description=It's small and green.
+MinLevel=1
+Experience=10
+[/CREATURE]
+
+[CREATURE]
+Type=Monster
+Name=Zombie
+HitDie=1d8+2
+OffenseDie=1d4
+DefenseDie=1d2
+ItemList=Potion
+Keychance=0.4
+HealthRegen=
+Description=It's the dead come to life... Or unlife. Or something. Either way, it stinks.
+MinLevel=2
+Experience=20
+[/CREATURE]
+
+[CREATURE]
+Type=Monster
+Name=Troll
+HitDie=2d10
+OffenseDie=1d6
+DefenseDie=1d5
+ItemList=Weapon,Armor
+Keychance=0.5
+HealthRegen=
+Description=It's huge and lumbering - definitely a dangerous creature!
+MinLevel=3
+Experience=30
 [/CREATURE]

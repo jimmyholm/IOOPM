@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
       continue;
     }
     // Check for star collisions
-    checkCollisions(sim);
+    //  checkCollisions(sim);
     // Do the necessary calculation to determine the velocity of this frame
     calculateNextFrame(sim);
     // Set new star-coordinates, based on speed and time to elapse since last frame.
