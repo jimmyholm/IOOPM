@@ -41,8 +41,13 @@ public class Tile {
 	public boolean CanMove() {
 		return (!BlockMovement && Creature == null);
 	}
+	
 	public boolean CanAttack(boolean isPlayer) {
 		return (!BlockMovement && ((isPlayer && Creature != null) || (!isPlayer && Creature.IsPlayer() == true)));
+	}
+	
+	public boolean CanHaveItem() {
+		return (!BlockMovement && Item == null);
 	}
 	
 	public Item GetItem() {

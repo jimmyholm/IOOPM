@@ -1,6 +1,6 @@
 package roguelike;
 import java.awt.Color;
-import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Creature {
 	//position
@@ -12,28 +12,62 @@ public abstract class Creature {
 	protected Weapon weapon;
 	protected Shield shield;
 	protected Armor armor;
-	protected ArrayList<Potion> potions;
+	protected List<Potion> potions;
 	protected boolean key;
 	protected char character;
 	protected Color color;
 
+	public Weapon GetWeapon() {
+		return weapon;
+	}
+	
+	public Shield GetShield() {
+		return shield;
+	}
+	
+	public Armor GetArmor() {
+		return armor;
+	}
+	
+	public int GetPotionCount() {
+		return potions.size();
+	}
+	
+	public boolean HasKey() {
+		return key;
+	}
+	
 	public void Attack (Creature attacker, Creature defender){
-		int attackerOffense = (attacker.stats.GetInt("offense")) + (attacker.weapon.GetWeaponOffense());
-		int attackerDexterity = (attacker.stats.GetInt("dexterity")) + (attacker.weapon.GetWeaponDexterity());
-		int defenderDefense = (defender.stats.GetInt("defense")) + (defender.armor.GetArmorDefense()) + defender.shield.GetShieldDefense();
-		int defenderDexterity = (defender.stats.GetInt("dexterity")) + (defender.weapon.GetWeaponDexterity());
+		if(attacker == null || defender == null)
+			return;
+		int attackerOffense = (attacker.stats.GetInt("offense")) + ((attacker.weapon != null) ? attacker.weapon.GetWeaponOffense() : 0);
+		int attackerDexterity = (attacker.stats.GetInt("dexterity")) + ((attacker.weapon != null) ? attacker.weapon.GetWeaponDexterity() : 0);
+		int defenderDefense = (defender.stats.GetInt("defense")) + ((defender.armor != null) ? defender.armor.GetArmorDefense() + ((defender.shield != null) ? defender.shield.GetShieldDefense() : 0) : 0);
+		int defenderDexterity = (defender.stats.GetInt("dexterity")) + ((defender.weapon != null) ? defender.weapon.GetWeaponDexterity() : 0);
 		
 		if (DiceRoller.GetInstance().Roll("1d" + attackerDexterity) > DiceRoller.GetInstance().Roll("1d" + defenderDexterity)) {
-			defender.stats.Set("health", defender.stats.GetInt("health") - Math.max(0,(DiceRoller.GetInstance().Roll("1d" + attackerOffense) 
-					- DiceRoller.GetInstance().Roll("1d" + defenderDefense))));
+			int Damage = Math.max(1,(DiceRoller.GetInstance().Roll("1d" + attackerOffense) - DiceRoller.GetInstance().Roll("1d" + defenderDefense)));
+			defender.stats.Set("health", defender.stats.GetInt("health") - Damage);
+			MessageList.GetInstance().AddMessage(attacker.GetStats().GetString("Name") + " attacks " + defender.GetStats().GetString("Name") + " and hits for " + Damage + " points of damage!");
 			if (defender.stats.GetInt("health") <= 0) {defender.Death();}
-			
-			if (DiceRoller.GetInstance().Roll("1d" + attackerDexterity) > DiceRoller.GetInstance().Roll("1d" + defenderDexterity)) {
-				
-			}
+		}
+		else {
+			MessageList.GetInstance().AddMessage(attacker.GetStats().GetString("Name") + " attacks " + defender.GetStats().GetString("Name") + " but misses!");
 		}
 	}
 
+	public void GetPos(Integer X, Integer Y) {
+		X = this.x;
+		Y = this.y;
+	}
+	
+	public int GetXPos() {
+		return x;
+	}
+	
+	public int GetYPos() {
+		return y;
+	}
 
 	public void SetId (long id) {
 		this.id = id;
@@ -43,8 +77,20 @@ public abstract class Creature {
 		return this.id;
 	}
 	
-	public boolean equals (Creature c2) {return c2.id == id;}
+	public boolean equals (Creature c2) {
+		return c2.id == id;
+		}
 	
+	@Override
+	public boolean equals (Object O) {
+		return (O instanceof Creature && (
+				id == ((Creature)O).id &&
+				 x == ((Creature)O).x &&
+				 y == ((Creature)O).y &&
+				 description == ((Creature)O).description &&
+				 stats.equals(((Creature)O).stats)
+				 ));
+	}
 	
 	
 	public abstract void Death ();

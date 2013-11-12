@@ -9,6 +9,7 @@ public class Monster extends Creature {
 
 	public Monster (int monsterNumber, int x, int y, Dungeon dungeon) {
 		this.dungeon = dungeon;
+		int H = 0;
 		switch(monsterNumber){
 		case 1:
 			this.color = new Color(0 , 255, 0, 255);
@@ -16,18 +17,20 @@ public class Monster extends Creature {
 			this.description = "This is an ugly little green goblin";
 			this.monsterType = MonsterType.GOBLIN;
 			this.stats = new Stats();
-			this.armor = null;
-			this.weapon = null;
-			this.shield = null;
+			this.armor = new Armor();
+			this.weapon = new Weapon();
+			this.shield = new Shield();
 			this.key = false;
 			this.potions = new ArrayList<Potion>();
 			this.x = x;
 			this.y = y;
-			stats.Add("offense", 2);
-			stats.Add("defense", 3);
-			stats.Add("health", 30);
-			stats.Add("maxHealth", 30);
-			stats.Add("dexterity", 8);
+			stats.Add("Name", "Goblin");
+			stats.Add("offense", 1);
+			stats.Add("defense", 1);
+			H = DiceRoller.GetInstance().Roll("2d4");
+			stats.Add("health", H);
+			stats.Add("maxHealth", H);
+			stats.Add("dexterity", 2);
 			break;
 		case 2:
 			this.color = new Color(124 , 30, 49, 255);
@@ -42,16 +45,18 @@ public class Monster extends Creature {
 			this.potions = new ArrayList<Potion>();
 			this.x = x;
 			this.y = y;
+			stats.Add("Name", "Zombie");
 			stats.Add("offense", 3);
 			stats.Add("defense", 2);
-			stats.Add("health", 45);
-			stats.Add("maxHealth", 45);
+			H = DiceRoller.GetInstance().Roll("3d6");
+			stats.Add("health", H);
+			stats.Add("maxHealth", H);
 			stats.Add("dexterity", 7);
 			break;
 		case 3:
 			this.color = new Color(12 , 123, 40, 255);
 			this.character = 'T';
-			this.description = "This is a stupid troll";
+			this.description = "This is a big and stupid troll";
 			this.monsterType = MonsterType.TROLL;
 			this.stats = new Stats();
 			this.armor = null;
@@ -61,10 +66,12 @@ public class Monster extends Creature {
 			this.potions = new ArrayList<Potion>();
 			this.x = x;
 			this.y = y;
+			stats.Add("Name", "Troll");;
 			stats.Add("offense", 2);
 			stats.Add("defense", 2);
-			stats.Add("health", 200);
-			stats.Add("maxHealth", 200);
+			H = DiceRoller.GetInstance().Roll("3d8");
+			stats.Add("health", H);
+			stats.Add("maxHealth", H);
 			stats.Add("dexterity", 5);
 			stats.Add("healthRegen", 5);
 			break;
@@ -77,46 +84,32 @@ public class Monster extends Creature {
 		return xDiff+yDiff;
 		//return (java.lang.Math.sqrt((xDiff * xDiff) + (yDiff * yDiff)));
 	}
-	
-	public int PlayerHorizDistance(Player player) {
-		return Math.abs(player.GetPlayerX() - x);
-	}
-	
-	public int PlayerHorizDistance(int x, Player player) {
-		return Math.abs(player.GetPlayerX() - x);
-	}
-	
-	public int PlayerVertDistance(Player player) {
-		return Math.abs(player.GetPlayerY() - y);
-	}
-	public int PlayerVertDistance(int y, Player player) {
-		return Math.abs(player.GetPlayerY() - y);
-	}
 	public int PlayerDistance(int x, int y, Player player) {
 		int xDiff = Math.abs(x - player.GetPlayerX());
 		int yDiff = Math.abs(y - player.GetPlayerY());	
 		return xDiff+yDiff;
-		//return (java.lang.Math.sqrt((xDiff * xDiff) + (yDiff * yDiff)));
 	}
 	
 
 	public boolean PlayerDetect(Player player) {
-		if // (PlayerHorizDistance(Player.GetInstance()) < 4 || PlayerVertDistance(Player.GetInstance()) < 4){
-		(PlayerDistance (x, y, Player.GetInstance()) < 4) {	
+		if (PlayerDistance (x, y, Player.GetInstance()) < 4) {	
 		return true;
 		}
 		return false;
 	}
 
-	public void Death () {}
+	public void Death () {
+		MessageList.GetInstance().AddMessage(stats.GetString("Name") + " dies a horrible bloody death; good job, Hero!");
+		Game.GetInstance().GetDungeon().KillCreature(this);
+	}
 
 //
 
 	public void Step() {
 		super.Step();
 		if (PlayerDetect(Player.GetInstance())){
-			if (PlayerDistance(Player.GetInstance()) == 1) { //(PlayerHorizDistance(Player.GetInstance()) < 2 || PlayerVertDistance(Player.GetInstance()) < 2){
-//				AttackPlayer();
+			if (PlayerDistance(Player.GetInstance()) <= 1) {
+				Attack(this, Player.GetInstance());
 				}
 			else
 				MoveToPlayer();

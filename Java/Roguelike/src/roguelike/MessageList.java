@@ -24,6 +24,7 @@ public class MessageList extends JPanel {
 			ListModel.remove(0);
 		}
 		ListModel.addElement(Message);
+		Messages.ensureIndexIsVisible(ListModel.getSize()-1);
 	}
 	
 	public MessageList() {

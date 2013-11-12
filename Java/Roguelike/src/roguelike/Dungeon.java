@@ -21,53 +21,88 @@ public class Dungeon extends JPanel{
 	private int		MAXCREATURES = MAXROOMS *2;
 	private int		MINCREATURES = CurrentRooms-2;
 	private int		GoalRooms = 0;
-	private int		ViewRadius = 4;
+	private int		ViewRadius = 6;
 	private List<Creature> Creatures;
 	private Rectangle Camera = new Rectangle(0, 0, 26, 26);
 	private Random  Rnd;
 	private List<Room> Rooms;
 	private Tile LookTile = new Tile('X', false, false, new Color(255, 0, 255, 255), new Color(255, 0, 255, 255));
 	private Player player;
-	private enum KeyMode { MOVE, LOOK};
+	private enum KeyMode { MOVE, LOOK, DEAD};
 	private KeyMode Mode;
 	private int LookX;
 	private int LookY;
-	
+	private boolean HasKey = false;
 	public void Step(long ElapsedTime) {
+	}
+	
+	public int CreatureCount() {
+		return Creatures.size();
+	}
+	
+	public void KillCreature(Creature C) {
+		// Drop items.
+		int CX = C.GetXPos();
+		int CY = C.GetYPos();
+		int x = 0;
+		int y = 0;
+		int Tries = 0;
+		if(C.GetWeapon() != null) {
+			do {
+				x = Rnd.nextInt(3)+1;
+				y = Rnd.nextInt(3)+1;
+				int nx = Rnd.nextInt(1);
+				int ny = Rnd.nextInt(1);
+				if(nx == 1) x *= -1;
+				if(ny == 1) y *= -1;
+				x += CX;
+				y += CY;
+				Tries++;
+			} while(!Map[x+y*Width].CanHaveItem() && Tries < 10);
+			Map[x+y*Width].SetItem(C.GetWeapon());
+		}
+		Tries = 0;
+		if(C.GetArmor() != null) {
+			do {
+				x = Rnd.nextInt(3)+1;
+				y = Rnd.nextInt(3)+1;
+				int nx = Rnd.nextInt(1);
+				int ny = Rnd.nextInt(1);
+				if(nx == 1) x *= -1;
+				if(ny == 1) y *= -1;
+				x += CX;
+				y += CY;
+				Tries++;
+			} while(!Map[x+y*Width].CanHaveItem() && Tries < 10);
+			Map[x+y*Width].SetItem(C.GetArmor());
+		}
+		Tries = 0;
+		if(C.GetArmor() != null) {
+			do {
+				x = Rnd.nextInt(3)+1;
+				y = Rnd.nextInt(3)+1;
+				int nx = Rnd.nextInt(1);
+				int ny = Rnd.nextInt(1);
+				if(nx == 1) x *= -1;
+				if(ny == 1) y *= -1;
+				x += CX;
+				y += CY;
+				Tries++;
+			} while(!Map[x+y*Width].CanHaveItem() && Tries < 10);
+			Map[x+y*Width].SetItem(C.GetShield());
+		}
+		Tries = 0;
+		Map[CX+CY*Width].SetCreature(null);
+		Creatures.remove(C);
 	}
 	
 	public void CameraToMap(Integer x, Integer y) {
 		x = Camera.Left() + x;
 		y = Camera.Top() + y;
 	}
-
+		
 	private void VisibilityLine(int x1, int y1, int x2, int y2) {
-		/*
-		 function line(x0, y0, x1, y1)
-		   dx := abs(x1-x0)
-		   dy := abs(y1-y0) 
-		   if x0 < x1 then sx := 1 else sx := -1
-		   if y0 < y1 then sy := 1 else sy := -1
-		   err := dx-dy
-		 
-		   loop
-		     plot(x0,y0)
-		     if x0 = x1 and y0 = y1 exit loop
-		     e2 := 2*err
-		     if e2 > -dy then 
-		       err := err - dy
-		       x0 := x0 + sx
-		     end if
-		     if x0 = x1 and y0 = y1 then 
-		       plot(x0,y0)
-		       exit loop
-		     end if
-		     if e2 <  dx then 
-		       err := err + dx
-		       y0 := y0 + sy 
-		     end if
-		  end loop
- */
+		// Bresenham line
 		int dx = Math.abs(x2-x1);
 		int dy = Math.abs(y2-y1);
 		int sx = (x1 < x2) ? 1 : -1;
@@ -98,6 +133,9 @@ public class Dungeon extends JPanel{
 	}
 	
 	public void SetVisible() {
+		for(int x = Camera.Left(); x < Camera.Right(); x++)
+			for(int y = Camera.Top(); y < Camera.Bottom(); y++)
+				Map[x+y*Width].SetVisible(false);
 		int CX = Player.GetInstance().GetPlayerX();
 		int CY = Player.GetInstance().GetPlayerY();
 		int R = ViewRadius;
@@ -135,12 +173,12 @@ public class Dungeon extends JPanel{
 	public void CenterCamera(int x, int y) {
 		if((x - Camera.Width()/2) < 0)
 			x = Camera.Width()/2;
-		if((x + Camera.Width() / 2) >= Width)
-			x = Width-1 - Camera.Width() / 2;
+		if((x + Camera.Width() / 2) > Width)
+			x = Width - Camera.Width() / 2;
 		if((y - Camera.Height() / 2) < 0)
 			y = Camera.Height() / 2;
-		if((y + Camera.Height() / 2) >= Height)
-			y = Height-1 - Camera.Height() / 2;
+		if((y + Camera.Height() / 2) > Height)
+			y = Height - Camera.Height() / 2;
 		int CW = Camera.Width()/2;
 		int CH = Camera.Height()/2;
 		int l = x - CW;
@@ -220,29 +258,17 @@ public class Dungeon extends JPanel{
 				}
 		}
 	}
-	
-
-
-
-	public Dungeon(int Width, int Height, int MinRooms, int MaxRooms, int MinDim, int MaxDim) {
-		
-		this.Width 	= Width; 
-		this.Height = Height;
-		Rnd = Game.GetRandomizer();
-		MAXROOMS = MaxRooms;
-		MINROOMS = MinRooms;
-		MINDIM   = MinDim;
-		MAXDIM   = MaxDim;
+	public void CreateDungeon() {
 		GoalRooms = Rnd.nextInt(MAXROOMS-MINROOMS) + MINROOMS; 
-		Map = new Tile[this.Width*this.Height];
-		
 		for(int x = 0; x < this.Width; x++)
 			for(int y = 0; y < this.Height; y++)
 				Map[x+y*this.Width] = new Tile((char)219, true, true, new Color(255, 255, 255, 255), new Color(127, 127, 127, 255));
-		Rooms = new ArrayList<Room>();
-		Creatures = new ArrayList<Creature>();
+		Rooms.clear();
+		Creatures.clear();
 		MakeRooms();
+		MINCREATURES = CurrentRooms-2;
 		PopulateRooms();
+		System.out.println(CreatureCount());
 		Room R = Rooms.get(0);
 		Rectangle R1  = R.GetArea();
 		player = Player.GetInstance();
@@ -250,6 +276,19 @@ public class Dungeon extends JPanel{
 		Map[player.GetPlayerX() + player.GetPlayerY() * this.Width].SetCreature(player);
 		CenterCamera(player.GetPlayerX(), player.GetPlayerY());
 		Mode = KeyMode.MOVE;
+	}
+	public Dungeon(int Width, int Height, int MinRooms, int MaxRooms, int MinDim, int MaxDim) {
+		this.Width 	= Width; 
+		this.Height = Height;
+		Map = new Tile[this.Width*this.Height];
+		Rnd = Game.GetRandomizer();
+		MAXROOMS = MaxRooms;
+		MINROOMS = MinRooms;
+		MINDIM   = MinDim;
+		MAXDIM   = MaxDim;
+		Rooms = new ArrayList<Room>();
+		Creatures = new ArrayList<Creature>();
+		CreateDungeon();
 	}
 	
 	public String toString()
@@ -268,7 +307,6 @@ public class Dungeon extends JPanel{
 	{
 		int playerX = player.GetPlayerX();
 		int playerY = player.GetPlayerY();
-		
 		switch(Key) {
 			case KeyEvent.VK_RIGHT:
 				if(Mode == KeyMode.MOVE) {
@@ -276,9 +314,13 @@ public class Dungeon extends JPanel{
 						++playerX;
 				}
 				else {
-					if(LookX < Camera.Width() && LookX < Width) {
+					if(LookX < Camera.Right()-1 && LookX < Width) {
 						++LookX;
-						InfoPanel.GetInstance().SetDescription(Map[LookX+LookY*Width].GetDescription());
+						if(Map[LookX+LookY*Width].IsDiscovered()) {
+							InfoPanel.GetInstance().SetDescription(Map[LookX+LookY*Width].GetDescription() + ((Map[LookX+LookY*Width].IsVisible()) ? "" : "But it's out of sight."));
+						}
+						else
+							InfoPanel.GetInstance().SetDescription("I don't know what's there; but with my luck there's probably a hungry dragon waiting to eat me.");
 					}
 				}
 				break;
@@ -288,9 +330,13 @@ public class Dungeon extends JPanel{
 						++playerY;
 				}
 				else {
-					if(LookY < Camera.Height() && LookY < Width) {
+					if(LookY < Camera.Bottom()-1 && LookY < Width) {
 						++LookY;
-						InfoPanel.GetInstance().SetDescription(Map[LookX+LookY*Width].GetDescription());
+						if(Map[LookX+LookY*Width].IsDiscovered()) {
+							InfoPanel.GetInstance().SetDescription(Map[LookX+LookY*Width].GetDescription() + ((Map[LookX+LookY*Width].IsVisible()) ? "" : "But it's out of sight."));
+						}
+						else
+							InfoPanel.GetInstance().SetDescription("I don't know what's there; but with my luck there's probably a hungry dragon waiting to eat me.");
 					}
 				}
 				break;
@@ -302,7 +348,11 @@ public class Dungeon extends JPanel{
 				else {
 					if(LookX > 0 && LookX > Camera.Left()) {
 						--LookX;
-						InfoPanel.GetInstance().SetDescription(Map[LookX+LookY*Width].GetDescription());
+						if(Map[LookX+LookY*Width].IsDiscovered()) {
+							InfoPanel.GetInstance().SetDescription(Map[LookX+LookY*Width].GetDescription() + ((Map[LookX+LookY*Width].IsVisible()) ? "" : "But it's out of sight."));
+						}
+						else
+							InfoPanel.GetInstance().SetDescription("I don't know what's there; but with my luck there's probably a hungry dragon waiting to eat me.");
 					}
 				}
 					
@@ -315,7 +365,11 @@ public class Dungeon extends JPanel{
 				else {
 					if(LookY > 0 && LookY > Camera.Top()) {
 						--LookY;
-						InfoPanel.GetInstance().SetDescription(Map[LookX+LookY*Width].GetDescription());
+						if(Map[LookX+LookY*Width].IsDiscovered()) {
+							InfoPanel.GetInstance().SetDescription(Map[LookX+LookY*Width].GetDescription() + ((Map[LookX+LookY*Width].IsVisible()) ? "" : "But it's out of sight."));
+						}
+						else
+							InfoPanel.GetInstance().SetDescription("I don't know what's there; but with my luck there's probably a hungry dragon waiting to eat me.");
 					}
 				}
 				break;
@@ -323,8 +377,13 @@ public class Dungeon extends JPanel{
 				if(Mode == KeyMode.MOVE)
 				{
 					Mode = KeyMode.LOOK;
-					LookX = Camera.Right() - playerX;
-					LookY = Camera.Bottom() - playerY;
+					LookX = playerX;
+					LookY = playerY;
+					if(Map[LookX+LookY*Width].IsDiscovered()) {
+						InfoPanel.GetInstance().SetDescription(Map[LookX+LookY*Width].GetDescription() + ((Map[LookX+LookY*Width].IsVisible()) ? "" : "But it's out of sight."));
+					}
+					else
+						InfoPanel.GetInstance().SetDescription("I don't know what's there; but with my luck there's probably a hungry dragon waiting to eat me.");
 				}
 				break;
 			case KeyEvent.VK_ESCAPE:
@@ -333,19 +392,23 @@ public class Dungeon extends JPanel{
 			default:
 				break;
 		}
-		if (Map[player.GetPlayerX() + player.GetPlayerY() * this.Width].Move(Map[playerX+playerY*Width])) {
+		if((playerX != Player.GetInstance().GetPlayerX() || playerY != Player.GetInstance().GetPlayerY()) && Map[playerX + playerY * Width].CanAttack(true)){
+			Player.GetInstance().Attack(Player.GetInstance(), Map[playerX + playerY*Width].GetCreature());
+			for(ListIterator<Creature> it = Creatures.listIterator(); it.hasNext();)
+			{
+				it.next().Step();
+			}
+		}
+		else if (Map[player.GetPlayerX() + player.GetPlayerY() * this.Width].Move(Map[playerX+playerY*Width])) {
 			player.SetPlayerX(playerX);
 			player.SetPlayerY(playerY);
-			CenterCamera(player.GetPlayerX(), player.GetPlayerY());
-			MessageList.GetInstance().AddMessage(Camera.toString());
-			
+			CenterCamera(player.GetPlayerX(), player.GetPlayerY());		
 			for(ListIterator<Creature> it = Creatures.listIterator(); it.hasNext();)
 			{
 				it.next().Step();
 			}
 		}
 		InfoPanel.GetInstance().Update();
-		InfoPanel.GetInstance().repaint();
 		repaint();
 	}
 	
@@ -353,7 +416,7 @@ public class Dungeon extends JPanel{
 	{
 		return Map[x+y*Width];
 	}
-	
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -364,10 +427,11 @@ public class Dungeon extends JPanel{
 		for(int y = Camera.Top(); y < Camera.Bottom(); y++)
 			for(int x = Camera.Left(); x < Camera.Right(); x++)
 			{
-				int X = x-Camera.Left();//Camera.Right() - x;
-				int Y = y-Camera.Top();//Camera.Bottom() - y;
-				if(Mode == KeyMode.LOOK && (X == LookX && Y == LookY))
+				if(Mode == KeyMode.LOOK && (x == LookX && y == LookY)) {
+					LookTile.SetVisible(true);
+					LookTile.SetDiscovered(true);;
 					LookTile.Draw(g2, (x-Camera.Left())*w, (y-Camera.Top())*h);
+				}
 				else {
 					/*if(Map[x+y*Width].IsVisible(x, y)) {
 						//Map[x+y*Width].SetVisible(true);
@@ -377,7 +441,6 @@ public class Dungeon extends JPanel{
 						Map[x+y*Width].SetVisible(false);
 					}*/
 					Map[x+y*Width].Draw(g2, (x - Camera.Left())*w, (y - Camera.Top())*h);
-					Map[x+y*Width].SetVisible(false);
 				}
 			}
 		}

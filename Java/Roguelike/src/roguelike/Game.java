@@ -11,13 +11,22 @@ public class Game extends JFrame implements KeyListener{
 	
 	private static final long serialVersionUID = -3442912778777128627L;
 	private static Random Randomizer = null;
+	private static Game G = null;
 	private Dungeon D;
 	private MessageList ML;
 	private InfoPanel IP;
-	
+	enum State { PLAYING, DEAD};
+	State GameState = State.PLAYING;
+	public static Game GetInstance() {
+		return G;
+	}
 	public static Random GetRandomizer()
 	{
 		return Randomizer;
+	}
+	
+	public void GameOver() {
+		GameState = State.DEAD;
 	}
 	
 	public static void SetRandomizer(long Seed) {
@@ -52,9 +61,9 @@ public class Game extends JFrame implements KeyListener{
 		D.setFocusable(false);
 		ML.setFocusable(false);
 		ML.setEnabled(false);
-		IP = new InfoPanel();
+		IP = InfoPanel.GetInstance();
 		add(IP);
-		IP.setBounds(26*TileSet.GetInstance().GetTileHeight()+1, 0, 800 - 26*TileSet.GetInstance().GetTileHeight()+1, 760);
+		IP.setBounds(26*TileSet.GetInstance().GetTileHeight()+1, 0, 800 - 26*TileSet.GetInstance().GetTileHeight()+1, 26*TileSet.GetInstance().GetTileHeight());
 		IP.setBorder(BorderFactory.createLineBorder(Color.gray));
 		IP.setBackground(java.awt.Color.black);
 		IP.setVisible(true);
@@ -77,15 +86,20 @@ public class Game extends JFrame implements KeyListener{
 				Game.SetRandomizer(Seed);
 				TileSet.GetInstance().Load("Tileset.png", 20, 20, 16, 16);
 				EntryRepo.GetInstance().Load("Entries.txt");
-				Game G = new Game();
+				G = new Game();
 				G.DoNothing();
 			}
 		});
 	}
-
+	
+	public Dungeon GetDungeon() {
+		return D;
+	}
+	
 	@Override
 	public void keyPressed(KeyEvent key) {
-		D.KeyDown(key.getKeyCode());
+		if(GameState == State.PLAYING)
+			D.KeyDown(key.getKeyCode());
 	}
 
 	@Override

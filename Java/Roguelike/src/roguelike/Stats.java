@@ -11,51 +11,51 @@ public class Stats {
 	}
 	
 	public int GetInt(String Name) {
-		if(Data.containsKey(Name))
-			return Integer.valueOf(Data.get(Name));
+		if(Data.containsKey(Name.toUpperCase()))
+			return Integer.valueOf(Data.get(Name.toUpperCase()));
 		return Integer.MIN_VALUE;
 	}
 	
 	public float GetFloat(String Name) {
-		if(Data.containsKey(Name))
-			return Float.valueOf(Data.get(Name));
+		if(Data.containsKey(Name.toUpperCase()))
+			return Float.valueOf(Data.get(Name.toUpperCase()));
 		return Float.MIN_VALUE;
 	}
 	
 	public String GetString(String Name) {
-		if(Data.containsKey(Name))
-			return Data.get(Name);
+		if(Data.containsKey(Name.toUpperCase()))
+			return Data.get(Name.toUpperCase());
 		return "";
 	}
 	
 	public void Set(String Name, Integer Value) {
-		if(Data.containsKey(Name))
-			Data.put(Name, Value.toString());
+		if(Data.containsKey(Name.toUpperCase()))
+			Data.put(Name.toUpperCase(), Value.toString());
 	}
 	
 	public void Set(String Name, Float Value) {
-		if(Data.containsKey(Name))
-			Data.put(Name, Value.toString());
+		if(Data.containsKey(Name.toUpperCase()))
+			Data.put(Name.toUpperCase(), Value.toString());
 	}
 	
 	public void Set(String Name, String Value) {
-		if(Data.containsKey(Name))
-			Data.put(Name, Value);
+		if(Data.containsKey(Name.toUpperCase()))
+			Data.put(Name.toUpperCase(), Value);
 	}
 	
 	public void Add(String Name, Integer Value) {
-		if(!Data.containsKey(Name))
-			Data.put(Name,  Value.toString());
+		if(!Data.containsKey(Name.toUpperCase()))
+			Data.put(Name.toUpperCase(),  Value.toString());
 	}
 	
 	public void Add(String Name, Float Value) {
-		if(!Data.containsKey(Name))
-			Data.put(Name,  Value.toString());
+		if(!Data.containsKey(Name.toUpperCase()))
+			Data.put(Name.toUpperCase(),  Value.toString());
 	}
 	
 	public void Add(String Name, String Value) {
-		if(!Data.containsKey(Name))
-			Data.put(Name,  Value);
+		if(!Data.containsKey(Name.toUpperCase()))
+			Data.put(Name.toUpperCase(),  Value);
 	}
 	
 	public boolean equals (Stats s) {
