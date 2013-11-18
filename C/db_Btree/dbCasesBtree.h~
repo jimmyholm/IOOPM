@@ -1,0 +1,13 @@
+typedef struct btree{
+  char *key;
+  char *value;
+  struct btree  *left;
+  struct btree *right;
+} *Btree; 
+
+
+extern int readDatabase (char* filename);
+extern Btree insertBranch (Btree initialBtree, Btree newBranch);
+extern Btree createBranch (char* key, char* value);
+
+

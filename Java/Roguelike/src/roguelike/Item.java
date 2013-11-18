@@ -7,12 +7,19 @@ public class Item {
 	protected char character;
 	protected Color color;
 	protected String description;
+	protected Stats stats;
 	protected long id;
 	public Item() {
-	
+		stats = new Stats();
 	}
 	
+	public void SetChar(char c) {
+		character = c;
+	}
 	
+	public void SetColor(Color c) {
+		color = c;
+	}
 	public static Item Create (){
 		int dropSwitch = DiceRoller.GetInstance().Roll("1d10");
 		switch (dropSwitch){
@@ -31,6 +38,10 @@ public class Item {
 	
 	public long GetId() {
 		return this.id;
+	}
+	
+	public Stats GetStats() {
+		return stats;
 	}
 	
 	public boolean equals (Item i2) {return i2.id == id;}

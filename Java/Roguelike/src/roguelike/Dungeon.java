@@ -18,7 +18,7 @@ public class Dungeon extends JPanel{
 	private int		MAXROOMS = 20;
 	private int		CurrentRooms = 0;
 	private int		MAXTRIES = 1000;
-	private int		MAXCREATURES = MAXROOMS *2;
+	private int		MAXCREATURES = MAXROOMS * 2;
 	private int		MINCREATURES = CurrentRooms-2;
 	private int		GoalRooms = 0;
 	private int		ViewRadius = 6;
@@ -139,14 +139,11 @@ public class Dungeon extends JPanel{
 		int CX = Player.GetInstance().GetPlayerX();
 		int CY = Player.GetInstance().GetPlayerY();
 		int R = ViewRadius;
-		//VisibilityLine(CX, CY, CX+R, CY+R);
 		for(int i = 0; i < 360; i += 1) {
 			double r = ((double)i * (Math.PI/180.0));
 			int x = CX + (int)((double)R* Math.cos(r));
 			int y = CY + (int)((double)R * Math.sin(r));
 			VisibilityLine(CX, CY, x, y);
-			/*Map[x+y*Width].SetVisible(true);
-			Map[x+y*Width].SetDiscovered(true);*/
 		}
 	}
 	
@@ -164,7 +161,7 @@ public class Dungeon extends JPanel{
 			if(t.GetCreature() == null)
 			{
 				m2 = new Monster(m, x, y, this);
-				t.SetCreature(m2);//new Monster(m, x, y, this));
+				t.SetCreature(m2);
 				Creatures.add(m2);
 			}
 		}
@@ -195,7 +192,6 @@ public class Dungeon extends JPanel{
 	
 	public void AddHorizontalCorridor(int x1, int x2, int y) {
 		for(int i = Math.min(x1,  x2); i < Math.max(x1, x2) + 1; i++) {
-			//Map[i+y*Width].SetTile(' ');
 			Map[i+y*Width].SetBlocksMovement(false);
 			Map[i+y*Width].SetBlocksSight(false);
 			Map[i+y*Width].SetColor(Color.black, new Color(25, 25, 25, 255));
@@ -204,7 +200,6 @@ public class Dungeon extends JPanel{
 	
 	public void AddVerticalCorridor(int y1, int y2, int x) {
 		for(int i = Math.min(y1,  y2); i < Math.max(y1, y2) + 1; i++) {
-			//Map[x+i*Width].SetTile(' ');
 			Map[x+i*Width].SetBlocksMovement(false);
 			Map[x+i*Width].SetBlocksSight(false);
 			Map[x+i*Width].SetColor(Color.black, new Color(25, 25, 25, 255));
