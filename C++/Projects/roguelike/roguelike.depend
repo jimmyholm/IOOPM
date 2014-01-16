@@ -1,0 +1,315 @@
+# depslib dependency file v1.0
+1389733348 source:/home/senilica/programmering/C++/Projects/roguelike/main.cpp
+	"libtcod.hpp"
+	"CGame.h"
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/libtcod.hpp
+	"libtcod.h"
+	"list.hpp"
+	"color.hpp"
+	"console.hpp"
+	"image.hpp"
+	"sys.hpp"
+	"mersenne.hpp"
+	"mouse.hpp"
+	"bresenham.hpp"
+	"noise.hpp"
+	"fov.hpp"
+	"path.hpp"
+	"lex.hpp"
+	"parser.hpp"
+	"tree.hpp"
+	"bsp.hpp"
+	"heightmap.hpp"
+	"zip.hpp"
+	"namegen.hpp"
+	"txtfield.hpp"
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/libtcod.h
+	<wchar.h>
+	"SDL/SDL.h"
+	"list.h"
+	"color.h"
+	"console.h"
+	"image.h"
+	"mouse.h"
+	"sys.h"
+	"mersenne.h"
+	"bresenham.h"
+	"noise.h"
+	"fov.h"
+	"path.h"
+	"lex.h"
+	"parser.h"
+	"tree.h"
+	"bsp.h"
+	"heightmap.h"
+	"zip.h"
+	"namegen.h"
+	"txtfield.h"
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/list.h
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/color.h
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/console.h
+	"console_types.h"
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/console_types.h
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/image.h
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/mouse.h
+	"mouse_types.h"
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/mouse_types.h
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/sys.h
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/mersenne.h
+	"mersenne_types.h"
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/mersenne_types.h
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/bresenham.h
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/noise.h
+	"noise_defaults.h"
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/noise_defaults.h
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/fov.h
+	"fov_types.h"
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/fov_types.h
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/path.h
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/lex.h
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/parser.h
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/tree.h
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/bsp.h
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/heightmap.h
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/zip.h
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/namegen.h
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/txtfield.h
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/list.hpp
+	<string.h>
+	<stdlib.h>
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/color.hpp
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/console.hpp
+	"console_types.h"
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/image.hpp
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/sys.hpp
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/mersenne.hpp
+	"mersenne_types.h"
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/mouse.hpp
+	"mouse_types.h"
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/bresenham.hpp
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/noise.hpp
+	"noise_defaults.h"
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/fov.hpp
+	"fov_types.h"
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/path.hpp
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/lex.hpp
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/parser.hpp
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/tree.hpp
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/bsp.hpp
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/heightmap.hpp
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/zip.hpp
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/namegen.hpp
+
+1371066078 /home/senilica/Libs/libtcod-1.5.2/include/txtfield.hpp
+	"color.hpp"
+
+1389740682 /home/senilica/programmering/C++/Projects/roguelike/include/CGame.h
+	"libtcod.hpp"
+	"CActor.h"
+	"CMap.h"
+
+1389732683 /home/senilica/programmering/C++/Projects/roguelike/include/CActor.h
+	"libtcod.hpp"
+
+1389904240 /home/senilica/programmering/C++/Projects/roguelike/include/CMap.h
+	"libtcod.hpp"
+
+1389732677 source:/home/senilica/programmering/C++/Projects/roguelike/src/CActor.cpp
+	"CActor.h"
+
+1389740578 source:/home/senilica/programmering/C++/Projects/roguelike/src/CGame.cpp
+	<iostream>
+	"CGame.h"
+
+1389912679 source:/home/senilica/programmering/C++/Projects/roguelike/src/CMap.cpp
+	"CMap.h"
+	"CGame.h"
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/libtcod.hpp
+	"libtcod.h"
+	"list.hpp"
+	"color.hpp"
+	"console.hpp"
+	"image.hpp"
+	"sys.hpp"
+	"mersenne.hpp"
+	"mouse.hpp"
+	"bresenham.hpp"
+	"noise.hpp"
+	"fov.hpp"
+	"path.hpp"
+	"lex.hpp"
+	"parser.hpp"
+	"tree.hpp"
+	"bsp.hpp"
+	"heightmap.hpp"
+	"zip.hpp"
+	"namegen.hpp"
+	"txtfield.hpp"
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/libtcod.h
+	<wchar.h>
+	"SDL/SDL.h"
+	"list.h"
+	"color.h"
+	"console.h"
+	"image.h"
+	"mouse.h"
+	"sys.h"
+	"mersenne.h"
+	"bresenham.h"
+	"noise.h"
+	"fov.h"
+	"path.h"
+	"lex.h"
+	"parser.h"
+	"tree.h"
+	"bsp.h"
+	"heightmap.h"
+	"zip.h"
+	"namegen.h"
+	"txtfield.h"
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/list.h
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/color.h
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/console.h
+	"console_types.h"
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/console_types.h
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/image.h
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/mouse.h
+	"mouse_types.h"
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/mouse_types.h
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/sys.h
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/mersenne.h
+	"mersenne_types.h"
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/mersenne_types.h
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/bresenham.h
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/noise.h
+	"noise_defaults.h"
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/noise_defaults.h
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/fov.h
+	"fov_types.h"
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/fov_types.h
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/path.h
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/lex.h
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/parser.h
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/tree.h
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/bsp.h
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/heightmap.h
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/zip.h
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/namegen.h
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/txtfield.h
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/list.hpp
+	<string.h>
+	<stdlib.h>
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/color.hpp
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/console.hpp
+	"console_types.h"
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/image.hpp
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/sys.hpp
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/mersenne.hpp
+	"mersenne_types.h"
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/mouse.hpp
+	"mouse_types.h"
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/bresenham.hpp
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/noise.hpp
+	"noise_defaults.h"
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/fov.hpp
+	"fov_types.h"
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/path.hpp
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/lex.hpp
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/parser.hpp
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/tree.hpp
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/bsp.hpp
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/heightmap.hpp
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/zip.hpp
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/namegen.hpp
+
+1346276536 /home/senilica/Libs/libtcod-1.5.1/include/txtfield.hpp
+	"color.hpp"
+
