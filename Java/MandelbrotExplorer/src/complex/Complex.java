@@ -135,7 +135,7 @@ public final class Complex {
 	 * Create a complex number as the product of two given complex numbers
 	 * @param Z1 The first of the two complex numbers to multiply together
 	 * @param Z2 The second of the two complex numbers to multiply together
-	 * @return The new complex number Z3 so that Z3 = Z1×Z2
+	 * @return The new complex number Z3 so that Z3 = Z1ï¿½Z2
 	 */
 	public static Complex Mul(Complex Z1, Complex Z2) {
 		if(Z1 == null || Z2 == null)
@@ -158,7 +158,7 @@ public final class Complex {
 	 * Create a new complex number as the quotient of a division of the two complex numbers. 
 	 * @param Z1 The numerator of the division
 	 * @param Z2 The denominator of the division.
-	 * @return The new complex number Z3 so that Z3 = Z1÷Z2
+	 * @return The new complex number Z3 so that Z3 = Z1ï¿½Z2
 	 * @throws Throws IllegalArgumentException if |Z2| = 0.
 	 */
 	public static Complex Div(Complex Z1, Complex Z2) {
@@ -211,7 +211,7 @@ public final class Complex {
 	/** 
 	 * Calculate the squared magnitude of Z
 	 * @param Z the complex number whose squared magnitude is to be calculated.
-	 * @return The squared magnitude of Z (|Z|²)
+	 * @return The squared magnitude of Z (|Z|^2)
 	 */
 	public static double Abs2(Complex Z) {
 		if(Z == null)

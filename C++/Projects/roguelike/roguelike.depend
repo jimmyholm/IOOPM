@@ -147,27 +147,29 @@
 1371066078 /home/senilica/Libs/libtcod-1.5.2/include/txtfield.hpp
 	"color.hpp"
 
-1389740682 /home/senilica/programmering/C++/Projects/roguelike/include/CGame.h
+1390251968 /home/senilica/programmering/C++/Projects/roguelike/include/CGame.h
 	"libtcod.hpp"
 	"CActor.h"
 	"CMap.h"
 
-1389732683 /home/senilica/programmering/C++/Projects/roguelike/include/CActor.h
+1390418716 /home/senilica/programmering/C++/Projects/roguelike/include/CActor.h
 	"libtcod.hpp"
 
-1389904240 /home/senilica/programmering/C++/Projects/roguelike/include/CMap.h
+1390254599 /home/senilica/programmering/C++/Projects/roguelike/include/CMap.h
 	"libtcod.hpp"
 
-1389732677 source:/home/senilica/programmering/C++/Projects/roguelike/src/CActor.cpp
+1390418692 source:/home/senilica/programmering/C++/Projects/roguelike/src/CActor.cpp
 	"CActor.h"
 
-1389740578 source:/home/senilica/programmering/C++/Projects/roguelike/src/CGame.cpp
+1390418868 source:/home/senilica/programmering/C++/Projects/roguelike/src/CGame.cpp
 	<iostream>
 	"CGame.h"
 
-1389912679 source:/home/senilica/programmering/C++/Projects/roguelike/src/CMap.cpp
+1390418943 source:/home/senilica/programmering/C++/Projects/roguelike/src/CMap.cpp
 	"CMap.h"
 	"CGame.h"
+	"CActor.h"
+	<iostream>
 
 1346276536 /home/senilica/Libs/libtcod-1.5.1/include/libtcod.hpp
 	"libtcod.h"

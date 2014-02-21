@@ -114,4 +114,26 @@ public class ComplexTest {
 		double r = Math.PI/4;
 		Assert.assertEquals("Argument function failed!", r, a, 10);
 	}	
+	
+	@Test
+	public void TestException() {
+		// Catch thrown exceptions.
+		try	{
+			Complex Z = null;
+			double a = Complex.Arg(Z);
+			Complex Z2 = new Complex(1, 1);
+			Complex Z3 = new Complex(0, 0);
+			Complex Z4 = Complex.Div(Z2, Z3); 	// This will not run, since the above null-pointer exception thrown
+												// halts execution.
+											  	// But if it it was to run, IllegalArgumentException (divide by 0) 
+			  									// would be thrown.
+		} catch(NullPointerException e) {
+			System.out.println("Null pointer exception!");
+		} catch(IllegalArgumentException e) {
+			System.out.println(e); // Catch divide by 0.
+		}/*finally {
+			If there was something that needed to be cleaned up regardless of if an exception is caught or not,
+			put it in here.
+		}*/
+	}
 }

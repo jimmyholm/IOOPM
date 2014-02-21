@@ -161,7 +161,9 @@ profile_mutli_threaded(struct bst_node **root, int *data,
     /* Join the threads. Causes an implicit barrier since the
      * pthread_join() call waits until the exits. */
     for (int i = 0; i < nthreads; i++)
-	pthread_join(threads[i].pthread, NULL);
+    {
+        pthread_join(threads[i].pthread, NULL);
+    }
 
     int errors = 0;
     for (int i = 0; i < nthreads; i++)
@@ -182,7 +184,7 @@ int main()
     int *data;
     struct bst_node** root = NULL;
     const int nthreads = 4;
-    const int thread_iterations = 10000;
+    const int thread_iterations = 1000000;
     const int iterations = nthreads * thread_iterations;
     const int n = iterations;
 

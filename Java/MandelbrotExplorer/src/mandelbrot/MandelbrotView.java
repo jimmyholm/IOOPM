@@ -67,6 +67,57 @@ public class MandelbrotView implements Observer {
 	 */
 	private BufferedImage Image;
 	
+	private Color[] Palette;
+		
+	public void BuildPalette()
+	{
+		Palette = new Color[256];
+		
+		Palette[0] = Color.black;
+		Color c0 = new Color(69, 139,116);
+		Color c1 = new Color(255, 0, 0);
+		float t = 0.0f;
+		int r = 0;
+		int g = 0;
+		int b = 0;
+		for(int i = 1; i <= 85; i++) // Blue->Red gradient.
+		{
+			t = ((float)i/85.0f);
+			r = (int)((1.0f-t)*(float)c0.getRed()  +t*(float)c1.getRed());
+			g = (int)((1.0f-t)*(float)c0.getGreen()+t*(float)c1.getGreen());
+			b = (int)((1.0f-t)*(float)c0.getBlue() +t*(float)c1.getBlue());
+			Palette[i] = new Color(r, g, b);
+		}
+		c0 = new Color(255, 0, 0);
+		c1 = new Color(0, 139, 69);
+		t = 0.0f;
+		r = 0;
+		g = 0;
+		b = 0;
+		for(int i = 1; i <= 85; i++) // Blue->Red gradient.
+		{
+			t = ((float)i/85.0f);
+			r = (int)((1.0f-t)*(float)c0.getRed()  +t*(float)c1.getRed());
+			g = (int)((1.0f-t)*(float)c0.getGreen()+t*(float)c1.getGreen());
+			b = (int)((1.0f-t)*(float)c0.getBlue() +t*(float)c1.getBlue());
+			Palette[i+85] = new Color(r, g, b);
+		}
+		c0 = new Color(0, 139, 69);
+		c1 = new Color(0, 255, 127);
+		t = 0.0f;
+		r = 0;
+		g = 0;
+		b = 0;
+		for(int i = 1; i <= 85; i++) // Blue->Red gradient.
+		{
+			t = ((float)i/85.0f);
+			r = (int)((1.0f-t)*(float)c0.getRed()  +t*(float)c1.getRed());
+			g = (int)((1.0f-t)*(float)c0.getGreen()+t*(float)c1.getGreen());
+			b = (int)((1.0f-t)*(float)c0.getBlue() +t*(float)c1.getBlue());
+			Palette[i+85+85] = new Color(r, g, b);
+		}
+	}
+	
 	public MandelbrotView(MandelbrotModel Model) {
 		this.Model = Model;
 		this.Model.addObserver(this);
@@ -100,6 +151,7 @@ public class MandelbrotView implements Observer {
 			System.out.println("Failed to setup MandelbrotView with exception: " + e);
 		}
 		this.Frame = Frame;	
+		BuildPalette();
 	}
 	
 	/**
@@ -162,6 +214,9 @@ public class MandelbrotView implements Observer {
 								double nu = Math.log( Math.log(ia) / (2*Math.log(2))) / Math.log(2);
 								float f = ((float)I+(float)(1.0 - nu)) / MI;
 								rgb = Color.HSBtoRGB(0.5f+f%0.25f, 0.8f, 0.85f);
+								float fi = ((float)I/(float)MI);
+								int i = (int)((fi)*(Palette.length-1));
+								rgb = Palette[i].getRGB();
 							}
 							else
 								rgb = 0;

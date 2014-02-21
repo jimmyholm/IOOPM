@@ -50,7 +50,7 @@ struct bst_node {
     void* data;
     struct bst_node* left;
     struct bst_node* right;
-    pthread_mutex_t lock;
+     pthread_mutex_t lock;
 };
 
 

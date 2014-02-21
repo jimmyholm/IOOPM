@@ -5,7 +5,7 @@
 class CActor
 {
     public:
-        CActor(int x, int y, int ch, const TCODColor &color);
+        CActor(int x, int y, const char* name, int ch, const TCODColor &color);
         virtual ~CActor();
         int Getx() { return x; }
         void Setx(int val) { x = val; }
@@ -16,6 +16,9 @@ class CActor
         TCODColor Getcol() { return col; }
         void Setcol(TCODColor val) { col = val; }
         void Render();
+        const char* name;
+        void Update();
+        bool MoveOrAttack(int x, int y);
     protected:
     private:
         int x;

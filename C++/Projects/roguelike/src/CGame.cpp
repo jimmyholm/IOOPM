@@ -10,7 +10,7 @@ CGame* CGame::GetInstance()
     return Instance;
 }
 
-CGame::CGame()
+CGame::CGame() : FOVRadius(10), computeFOV(true)
 {
     //ctor
 }
@@ -23,9 +23,9 @@ CGame::~CGame()
 int CGame::Initialize(int width, int height, const char* title, bool fullscreen)
 {
     TCODConsole::initRoot(width, height,title,fullscreen);
-    player = new CActor(width/2, height/2, (int)'@', TCODColor::white);
+    player = new CActor(width/2, height/2, "Player", (int)'@',  TCODColor::white);
     actors.push(player);
-    map = new CMap(80, 45);
+    map = new CMap(80, 50);
     return 0;
 }
 
@@ -35,10 +35,16 @@ int CGame::StartMainLoop()
     {
         Update();
         TCODConsole::root->clear();
+        if(computeFOV)
+        {
+            map->ComputeFOV();
+            computeFOV = false;
+        }
         map->Render();
         for(CActor ** it = actors.begin(); it != actors.end(); it++)
         {
-            (*it)->Render();
+            if(map->IsInFOV((*it)->Getx(), (*it)->Gety()))
+                (*it)->Render();
         }
         TCODConsole::flush();
     }
@@ -51,23 +57,31 @@ void CGame::Update()
     TCODSystem::checkForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL);
     switch(key.vk) {
         case TCODK_UP :
-            if ( !map->IsWall(player->Getx(),player->Gety()-1)) {
+            if ( !map->IsWall(player->Getx(),player->Gety()-1))
+            {
                 player->Sety(player->Gety()-1);
+                computeFOV = true;
             }
         break;
         case TCODK_DOWN :
-            if ( ! map->IsWall(player->Getx(),player->Gety()+1)) {
+            if ( ! map->IsWall(player->Getx(),player->Gety()+1))
+            {
                 player->Sety(player->Gety()+1);
+                computeFOV = true;
             }
         break;
         case TCODK_LEFT :
-            if ( ! map->IsWall(player->Getx()-1,player->Gety())) {
+            if ( ! map->IsWall(player->Getx()-1,player->Gety()))
+            {
                 player->Setx(player->Getx()-1);
+                computeFOV = true;
             }
         break;
         case TCODK_RIGHT :
-            if ( ! map->IsWall(player->Getx()+1,player->Gety())) {
+            if ( ! map->IsWall(player->Getx()+1,player->Gety()))
+            {
                 player->Setx(player->Getx()+1);
+                computeFOV = true;
             }
         break;
         default:break;

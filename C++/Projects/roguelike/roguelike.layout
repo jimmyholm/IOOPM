@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="include/CGame.h" open="1" top="0" tabpos="2">
-		<Cursor position="381" topLine="6" />
+	<File name="include/CActor.h" open="1" top="0" tabpos="6">
+		<Cursor position="618" topLine="1" />
 	</File>
-	<File name="include/CMap.h" open="1" top="0" tabpos="6">
-		<Cursor position="91" topLine="0" />
+	<File name="include/CGame.h" open="1" top="0" tabpos="2">
+		<Cursor position="453" topLine="8" />
+	</File>
+	<File name="include/CMap.h" open="1" top="0" tabpos="4">
+		<Cursor position="1271" topLine="31" />
 	</File>
 	<File name="main.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="188" topLine="0" />
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="src/CActor.cpp" open="1" top="1" tabpos="7">
+		<Cursor position="819" topLine="19" />
 	</File>
 	<File name="src/CGame.cpp" open="1" top="0" tabpos="3">
-		<Cursor position="1682" topLine="53" />
+		<Cursor position="470" topLine="15" />
 	</File>
-	<File name="src/CMap.cpp" open="1" top="1" tabpos="7">
-		<Cursor position="226" topLine="11" />
+	<File name="src/CMap.cpp" open="1" top="0" tabpos="5">
+		<Cursor position="3656" topLine="142" />
 	</File>
 </CodeBlocks_layout_file>

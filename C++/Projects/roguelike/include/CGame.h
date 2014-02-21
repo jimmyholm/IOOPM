@@ -13,9 +13,11 @@ class CGame
         static int ShutDown();
         static CGame* GetInstance();
         void Update();
+        const int FOVRadius;
     protected:
     private:
     friend class CMap;
+        bool computeFOV;
         static CGame* Instance;
         CGame();
         CMap* map;

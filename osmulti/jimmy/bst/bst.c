@@ -53,24 +53,43 @@
 struct bst_node**
 search(struct bst_node** root, comparator compare, void* data)
 {
-    /* TODO: For the Step 2 you will have to make this function thread-safe */
-
     struct bst_node** node = root;
-    while (*node != NULL) {
+    struct bst_node* oldnode;
+    // Lock this node.
+    if(*node != NULL)
         pthread_mutex_lock(&(*node)->lock);
+    while (*node != NULL) 
+    {
+        oldnode = *node;
+        // Lock left and right nodes.
+        if((*node)->left != NULL)
+            pthread_mutex_lock(&(*node)->left->lock);
+        if((*node)->right != NULL)
+        pthread_mutex_lock(&(*node)->right->lock);
         int compare_result = compare(data, (*node)->data);
         if (compare_result < 0)
         {
-            pthread_mutex_unlock(&(*node)->lock);
+            // Unlock this and right node's lock.
+            if((*node)->right != NULL)
+              pthread_mutex_unlock(&(*node)->right->lock);
             node = &(*node)->left;
+            pthread_mutex_unlock(&oldnode->lock);
         }
         else if (compare_result > 0)
         {
-            pthread_mutex_unlock(&(*node)->lock);
+            // Unlock this and left node's lock.
+            if((*node)->left != NULL)
+            pthread_mutex_unlock(&(*node)->left->lock);
             node = &(*node)->right;
+            pthread_mutex_unlock(&oldnode->lock);
         }
         else
         {
+            // Unlock all nodes
+            if((*node)->right != NULL)
+                pthread_mutex_unlock(&(*node)->right->lock);
+            if((*node)->left != NULL)
+                pthread_mutex_unlock(&(*node)->left->lock);
             pthread_mutex_unlock(&(*node)->lock);
             break;
         }
@@ -87,22 +106,26 @@ search(struct bst_node** root, comparator compare, void* data)
 static void
 node_delete_aux(struct bst_node** node)
 {
-    /* TODO: For Step 2 you will have to make this function thread-safe */
+    if(node == NULL || *node == NULL)
+        return;
+    // Lock our nodes
     pthread_mutex_lock(&(*node)->lock);
     struct bst_node* old_node = *node;
-    if ((*node)->left == NULL) 
+    if ((*node)->left == NULL)
     {
+        // Unlock and delete.
         *node = (*node)->right;
-        pthread_mutex_unlock(&(old_node)->lock);
+        pthread_mutex_unlock(&old_node->lock);
         free_node(old_node);
-    } else if ((*node)->right == NULL) 
+    } 
+    else if ((*node)->right == NULL) 
     {
         *node = (*node)->left;
-        pthread_mutex_unlock(&(old_node)->lock);
+        pthread_mutex_unlock(&old_node->lock);
         free_node(old_node);
-    } else 
+    } 
+    else 
     {
-        pthread_mutex_unlock(&(*node)->lock);
         struct bst_node** pred = &(*node)->left;
         pthread_mutex_lock(&(*pred)->lock);
         while ((*pred)->right != NULL) 
@@ -116,6 +139,7 @@ node_delete_aux(struct bst_node** node)
         void* temp = (*pred)->data;
         (*pred)->data = (*node)->data;
         (*node)->data = temp;
+        pthread_mutex_unlock(&(*node)->lock);
         pthread_mutex_unlock(&(*pred)->lock);
         node_delete_aux(pred);
     }
@@ -282,7 +306,8 @@ free_node(struct bst_node* node)
 {
     if (node == NULL)
         fprintf(stderr, "Invalid node\n");
-    else {
+    else 
+    {
         pthread_mutex_destroy(&node->lock);
         free(node);
     }

@@ -24,7 +24,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class MandelbrotModel extends Observable {
 		/**
-		 * The thread-pool used for concurrent calculation of the mandelbrot set.
+		 * The thread-pool used for concurrent calculation of the Mandelbrot set.
 		 */
 		private ForkJoinPool ThreadPool;
 	
